@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para ti ❤️</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -20,10 +24,10 @@
         .container {
             text-align: center;
             background: white;
-            padding: 25px;
+            padding: 25px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 500px;
+            max-width: 450px;
             width: 90%;
             position: relative;
             max-height: 90vh;
@@ -31,37 +35,36 @@
         }
 
         /* Pantalla 1: Pregunta */
-        #question-screen img {
-            width: 160px;
-            height: 160px;
+        .sticker-img {
+            width: 170px;
+            height: 170px;
             object-fit: contain;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         h1 {
             color: #d81b60;
             font-size: 24px;
-            margin-bottom: 25px;
+            margin: 15px 0 20px 0;
         }
 
         .buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
             min-height: 120px;
-            position: relative;
+            width: 100%;
         }
 
         .btn {
-            padding: 12px 30px;
+            padding: 12px 28px;
             font-size: 18px;
             font-weight: bold;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            transform-origin: center center;
         }
 
         #yes-btn {
@@ -75,6 +78,12 @@
             color: white;
         }
 
+        .buttons.single-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         /* Pantalla 2: Regalos */
         .hidden {
             display: none !important;
@@ -84,24 +93,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
-            min-height: 160px;
+            min-height: 150px;
         }
 
         .gift-card {
             background: #f8bbd0;
-            padding: 6px;
-            border-radius: 18px;
+            padding: 5px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 85px;
             height: 110px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
 
         .gift-card img {
@@ -113,35 +121,31 @@
 
         .gift-card.featured {
             width: 105px;
-            height: 135px;
+            height: 130px;
             background: #f48fb1;
             box-shadow: 0 8px 20px rgba(216, 27, 96, 0.3);
         }
 
         .gift-card:hover {
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
-        /* ESTILOS REGALO 1 */
+        /* REGALO 1 (FOTO COLLAGE) */
         .gift-img-single {
             width: 100%;
-            max-width: 300px;
-            max-height: 55vh;
+            max-width: 290px;
+            max-height: 52vh;
             object-fit: contain;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
             margin-top: 5px;
         }
 
-        #gift-1-content .volver-box-btn {
-            margin-top: 10px !important;
-        }
-
-        /* ESTILOS REGALO 2 (REPRODUCTOR CON DISCO DEBAJO) */
+        /* REGALO 2 (REPRODUCTOR Y DISCO) */
         .player-wrapper {
             position: relative;
-            width: 260px;
-            margin: 25px auto 10px auto;
+            width: 240px;
+            margin: 20px auto 35px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -150,10 +154,10 @@
         .player-card {
             position: relative;
             z-index: 2;
-            background: #6a5763;
-            border-radius: 25px;
-            padding: 20px;
-            width: 220px;
+            background: #5c4b56;
+            border-radius: 22px;
+            padding: 18px;
+            width: 210px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             color: white;
             text-align: center;
@@ -161,9 +165,9 @@
 
         .vinyl-record {
             position: absolute;
-            bottom: -30px;
-            width: 160px;
-            height: 160px;
+            bottom: -20px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             background: radial-gradient(circle, #222 20%, #111 21%, #111 30%, #222 31%, #111 60%, #333 61%, #111 62%);
             border: 2px solid #000;
@@ -177,15 +181,15 @@
 
         .vinyl-record::after {
             content: '';
-            width: 35px;
-            height: 35px;
+            width: 32px;
+            height: 32px;
             background: #e0e0e0;
             border-radius: 50%;
             border: 4px solid #d81b60;
         }
 
         .vinyl-record.playing {
-            bottom: -50px;
+            bottom: -45px;
             animation: spin 3s linear infinite;
         }
 
@@ -194,12 +198,11 @@
         }
 
         .player-cover {
-            width: 180px;
-            height: 180px;
+            width: 170px;
+            height: 170px;
             border-radius: 12px;
             object-fit: cover;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
         }
 
         .progress-container {
@@ -207,9 +210,8 @@
             background: rgba(255, 255, 255, 0.2);
             height: 5px;
             border-radius: 5px;
-            margin: 15px 0 5px 0;
+            margin: 12px 0 5px 0;
             cursor: pointer;
-            position: relative;
         }
 
         .progress-bar {
@@ -230,69 +232,63 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            margin-top: 15px;
+            margin-top: 12px;
         }
 
         .control-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .control-btn:active {
-            transform: scale(0.85);
         }
 
         .play-pause-btn {
             background: white;
-            color: #6a5763;
-            width: 42px;
-            height: 42px;
+            color: #5c4b56;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            font-size: 16px;
         }
 
-        /* ESTILOS REGALO 3 (CARTA) */
+        /* REGALO 3 (CARTA) */
         .letter-card {
             background: #fff0f5;
-            padding: 20px;
+            padding: 18px;
             border-radius: 15px;
             border: 1px solid #f8bbd0;
             text-align: left;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
             margin-top: 10px;
         }
 
         .letter-card p {
             color: #4a4a4a;
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 15px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
 
-        /* CUADRO ROSADO PARA VOLVER */
+        /* BOTÓN VOLVER ROSADO */
         .volver-box-btn {
             background-color: #f8bbd0;
             color: #000000;
             font-weight: 900;
-            font-size: 20px;
+            font-size: 18px;
             letter-spacing: 2px;
             text-align: center;
-            padding: 10px 24px;
+            padding: 8px 22px;
             border-radius: 8px;
             cursor: pointer;
             border: none;
             display: inline-block;
-            margin-top: 25px;
+            margin-top: 15px;
             transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
             user-select: none;
         }
 
@@ -301,12 +297,8 @@
             transform: scale(1.03);
         }
 
-        .volver-box-btn:active {
-            transform: scale(0.97);
-        }
-
         .content-box {
-            margin-top: 10px;
+            margin-top: 5px;
             text-align: center;
         }
     </style>
@@ -316,40 +308,38 @@
     <div class="container">
         <!-- PANTALLA 1: LA PREGUNTA -->
         <div id="question-screen">
-            <!-- Sticker Michi 1 -->
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z0bjJvdG11bzRmd240OGEwOHRjcWN2dnh2eG1qbm1pMmkyNzg0diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lq0h93752f6J9tijrh/giphy.gif" alt="Gatito Tierno 1">
+            <img class="sticker-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z0bjJvdG11bzRmd240OGEwOHRjcWN2dnh2eG1qbm1pMmkyNzg0diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lq0h93752f6J9tijrh/giphy.gif" alt="Gatito Tierno 1">
+            
             <h1 id="question-text">¿Me amas? 🥺</h1>
-            <div class="buttons">
+            
+            <div id="buttons-container" class="buttons">
                 <button id="yes-btn" class="btn" onclick="mostrarRegalos()">SÍ</button>
                 <button id="no-btn" class="btn" onclick="manejarClickNo()">NO</button>
             </div>
         </div>
 
-        <!-- PANTALLA 2: LOS REGALOS -->
+        <!-- PANTALLA 2: SECCIÓN DE REGALOS -->
         <div id="gifts-screen" class="hidden">
-            <!-- Sticker Michi 2 (Diferente) -->
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmQzZjA1MjE1NGYyYjRjYjVjOGEzYmY2MTk0Mzk3MGYyYWQxY2RmYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/C1hk82jMzaFI4/giphy.gif" alt="Gatito Tierno 2" style="width: 150px; height: 130px; border-radius: 10px; object-fit: contain;">
+            <img class="sticker-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmQzZjA1MjE1NGYyYjRjYjVjOGEzYmY2MTk0Mzk3MGYyYWQxY2RmYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/C1hk82jMzaFI4/giphy.gif" alt="Gatito Tierno 2">
+            
             <h1>Sabía que dirías que sí 💕</h1>
             
             <div class="gifts-grid">
-                <!-- Regalo 1 con su imagen previa -->
                 <div id="gift-1" class="gift-card" onclick="abrirRegalo(1)">
-                    <img src="https://lh3.googleusercontent.com/d/1gRGAD3ddDaoKb2fNh3m5BtUkgjL_iDoV" alt="Foto Regalo 1">
+                    <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" alt="Foto 1">
                 </div>
-                <!-- Regalo 2 con su imagen previa -->
                 <div id="gift-2" class="gift-card" onclick="abrirRegalo(2)">
-                    <img src="https://lh3.googleusercontent.com/d/1HUpnDSGg0umO8_lW16UW412cRYmECIVl" alt="Foto Regalo 2">
+                    <img src="https://lh3.googleusercontent.com/d/1HUpnDSGg0umO8_lW16UW412cRYmECIVl" alt="Foto 2">
                 </div>
-                <!-- Regalo 3 con icono de Carta -->
                 <div id="gift-3" class="gift-card" onclick="abrirRegalo(3)">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213626.png" alt="Carta Regalo 3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213626.png" alt="Carta">
                 </div>
             </div>
         </div>
 
         <!-- CONTENIDO REGALO 1 -->
         <div id="gift-1-content" class="hidden content-box">
-            <img src="https://lh3.googleusercontent.com/d/1gRGAD3ddDaoKb2fNh3m5BtUkgjL_iDoV" class="gift-img-single" alt="Collage de Fotos">
+            <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos">
 
             <div>
                 <div class="volver-box-btn" onclick="mostrarRegalos()">
@@ -358,7 +348,7 @@
             </div>
         </div>
 
-        <!-- CONTENIDO REGALO 2 (REPRODUCTOR) -->
+        <!-- CONTENIDO REGALO 2 -->
         <div id="gift-2-content" class="hidden content-box">
             <div class="player-wrapper">
                 <div class="player-card">
@@ -379,20 +369,21 @@
                     </div>
                 </div>
 
-                <!-- Disco girando colocado debajo del reproductor -->
                 <div id="vinyl-record" class="vinyl-record"></div>
             </div>
 
             <audio id="audio-player" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
-            <div class="volver-box-btn" onclick="mostrarRegalos()" style="margin-top: 45px;">
-                VOLVER
+            <div>
+                <div class="volver-box-btn" onclick="mostrarRegalos()">
+                    VOLVER
+                </div>
             </div>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA) -->
+        <!-- CONTENIDO REGALO 3 -->
         <div id="gift-3-content" class="hidden content-box">
-            <h2 style="color: #d81b60; margin-bottom: 10px;">Para ti, mi amor ✉️❤️</h2>
+            <h2 style="color: #d81b60; margin-bottom: 10px; font-size: 20px;">Para ti, mi amor ✉️❤️</h2>
             
             <div class="letter-card">
                 <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo. Haces que los momentos ordinarios se sientan especiales solo por ser tú. No importa a dónde nos lleve la vida, siempre serás mi lugar favorito. Amarte es lo más fácil y hermoso que conozco. Estar contigo se siente como estar en casa. En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y profundamente amado, y eso es algo que nunca daré por sentado.</p>
@@ -419,6 +410,7 @@
 
         const botonSi = document.getElementById('yes-btn');
         const botonNo = document.getElementById('no-btn');
+        const contenedorBotones = document.getElementById('buttons-container');
         const textoPregunta = document.getElementById('question-text');
 
         const audio = document.getElementById('audio-player');
@@ -434,17 +426,17 @@
             if (contadorNo <= mensajes.length) {
                 textoPregunta.innerText = mensajes[contadorNo - 1];
 
-                let escalaSi = 1 + (contadorNo * 0.35);
+                let escalaSi = 1 + (contadorNo * 0.3);
                 botonSi.style.transform = `scale(${escalaSi})`;
 
-                let escalaNo = Math.max(0, 1 - (contadorNo * 0.25));
+                let escalaNo = Math.max(0, 1 - (contadorNo * 0.22));
                 botonNo.style.transform = `scale(${escalaNo})`;
                 
                 if (contadorNo === mensajes.length) {
                     botonNo.style.opacity = '0';
                     setTimeout(() => {
                         botonNo.style.display = 'none';
-                        botonSi.style.margin = '0 auto';
+                        contenedorBotones.classList.add('single-button');
                     }, 300);
                 }
             }
