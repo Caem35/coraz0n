@@ -24,13 +24,13 @@
         .container {
             text-align: center;
             background: white;
-            padding: 20px 15px;
+            padding: 25px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             max-width: 450px;
-            width: 90%;
+            width: 95%;
             position: relative;
-            max-height: 90vh;
+            max-height: 95vh;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -40,11 +40,10 @@
 
         /* Pantalla 1: Pregunta */
         .sticker-img {
-            width: 150px;
-            height: 150px;
+            width: 170px;
+            height: 170px;
             object-fit: contain;
-            margin-bottom: 5px;
-            display: block;
+            margin-bottom: 10px;
         }
 
         h1 {
@@ -102,6 +101,7 @@
             min-height: 150px;
         }
 
+        /* AJUSTE CAJITAS: Sin borde blanco interno */
         .gift-card {
             background: transparent;
             padding: 0;
@@ -123,7 +123,7 @@
             object-fit: cover;
             border-radius: 16px;
             display: block;
-            transform: scale(1.1); /* Zoom ligero para borrar cualquier filamento blanco sobrante */
+            transform: scale(1.08); /* Elimina el borde blanco propio de la imagen */
         }
 
         .gift-card.featured {
@@ -136,22 +136,26 @@
             transform: scale(1.05);
         }
 
-        /* REGALO 1 (FOTO COLLAGE GIGANTE) */
+        /* REGALO 1 (FOTO COLLAGE GRANDE) */
         #gift-1-content {
             width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            padding: 0;
         }
 
         .gift-img-single {
             width: 100%;
+            max-width: none;
             height: auto;
-            max-height: 70vh;
-            object-fit: cover;
-            border-radius: 12px;
-            display: block;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 15px;
+            border: 15px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 10px;
         }
 
         /* REGALO 2 (REPRODUCTOR Y DISCO) */
@@ -271,21 +275,19 @@
         /* REGALO 3 (CARTA) */
         .letter-card {
             background: #fff0f5;
-            padding: 15px;
+            padding: 18px;
             border-radius: 15px;
             border: 1px solid #f8bbd0;
             text-align: left;
             box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-            margin-top: 5px;
-            max-height: 45vh;
-            overflow-y: auto;
+            margin-top: 10px;
         }
 
         .letter-card p {
             color: #4a4a4a;
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
 
         /* BOTÓN VOLVER ROSADO */
@@ -293,7 +295,7 @@
             background-color: #f8bbd0;
             color: #000000;
             font-weight: 900;
-            font-size: 18px;
+            font-size: 20px;
             letter-spacing: 2px;
             text-align: center;
             padding: 10px 25px;
@@ -301,7 +303,7 @@
             cursor: pointer;
             border: none;
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 20px;
             transition: transform 0.2s, background-color 0.2s;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             user-select: none;
@@ -353,7 +355,7 @@
             </div>
         </div>
 
-        <!-- CONTENIDO REGALO 1 (COLLAGE GIGANTE) -->
+        <!-- CONTENIDO REGALO 1 (COLLAGE GRANDE) -->
         <div id="gift-1-content" class="hidden content-box">
             <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos">
 
@@ -395,7 +397,7 @@
 
         <!-- CONTENIDO REGALO 3 (CARTA) -->
         <div id="gift-3-content" class="hidden content-box">
-            <img class="sticker-img" style="width: 100px; height: 100px; margin: 0 auto 5px auto;" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWk2YTZpdTByOHdtZWw1ZW4zOXJkMGJndXo5cnd3NXlhdHRucGZ4ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/du9tUY0lHz3y/giphy.gif" alt="Sticker carta">
+            <h2 style="color: #d81b60; margin-bottom: 10px; font-size: 22px;">Para ti, mi amor ✉️❤️</h2>
             
             <div class="letter-card">
                 <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo.</p>
@@ -418,6 +420,7 @@
         const botonSi = document.getElementById('yes-btn');
         const botonNo = document.getElementById('no-btn');
         const contenedorBotones = document.getElementById('buttons-container');
+        const textoPregunta = document.getElementById('question-text');
 
         const audio = document.getElementById('audio-player');
         const playBtn = document.getElementById('play-btn');
