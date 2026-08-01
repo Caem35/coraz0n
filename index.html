@@ -48,18 +48,20 @@
 
         h1 {
             color: #d81b60;
-            font-size: 26px;
+            font-size: 24px;
             margin: 15px 0 20px 0;
+            transition: all 0.2s ease;
         }
 
         .buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
             align-items: center;
-            min-height: 120px;
+            gap: 35px; /* <--- Aumentado un poquito más para separar los botones */
+            min-height: 140px;
             width: 100%;
             position: relative;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -70,6 +72,7 @@
             border-radius: 12px;
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            transform-origin: center center;
         }
 
         #yes-btn {
@@ -81,6 +84,7 @@
         #no-btn {
             background-color: #e57373;
             color: white;
+            z-index: 1;
         }
 
         .buttons.single-button {
@@ -101,7 +105,6 @@
             min-height: 150px;
         }
 
-        /* AJUSTE CAJITAS: Sin borde blanco interno */
         .gift-card {
             background: transparent;
             padding: 0;
@@ -121,9 +124,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             border-radius: 16px;
             display: block;
-            transform: scale(1.08); /* Elimina el borde blanco propio de la imagen */
+            transform: scale(1.22);
         }
 
         .gift-card.featured {
@@ -417,6 +421,14 @@
         let contadorNo = 0;
         let regaloActivo = 1;
 
+        const mensajesNo = [
+            "¿Segura/o? 🥺",
+            "Piénsalo bien... 💔",
+            "¡Me vas a romper el corazón! 😭",
+            "¡Anda, di que sí! 🌹",
+            "¡No te queda otra opción! 😈"
+        ];
+
         const botonSi = document.getElementById('yes-btn');
         const botonNo = document.getElementById('no-btn');
         const contenedorBotones = document.getElementById('buttons-container');
@@ -431,8 +443,12 @@
 
         function manejarClickNo() {
             contadorNo++;
+
+            if (contadorNo <= mensajesNo.length) {
+                textoPregunta.innerText = mensajesNo[contadorNo - 1];
+            }
             
-            let escalaSi = 1 + (contadorNo * 0.4);
+            let escalaSi = 1 + (contadorNo * 0.3); // Crecimiento un pelín más controlado para cuidar el espacio
             botonSi.style.transform = `scale(${escalaSi})`;
 
             let escalaNo = Math.max(0, 1 - (contadorNo * 0.2));
