@@ -32,16 +32,16 @@
 
         /* Pantalla 1: Pregunta */
         #question-screen img {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             object-fit: contain;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         h1 {
             color: #d81b60;
             font-size: 24px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .buttons {
@@ -108,8 +108,8 @@
         }
 
         .gift-card.featured {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             background: #f48fb1;
             box-shadow: 0 8px 20px rgba(216, 27, 96, 0.3);
         }
@@ -118,33 +118,14 @@
             transform: scale(1.08);
         }
 
-        /* ESTILOS REGALO 1 (COLLAGE) */
-        .collage-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            padding: 10px;
-        }
-
-        .polaroid {
-            background: white;
-            padding: 8px 8px 15px 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-            border-radius: 6px;
-            max-width: 130px;
-        }
-
-        .polaroid img {
+        /* ESTILOS REGALO 1 */
+        .gift-img-single {
             width: 100%;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 4px;
+            max-width: 320px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            margin-top: 10px;
         }
-
-        .rot-1 { transform: rotate(-4deg); }
-        .rot-2 { transform: rotate(3deg); }
-        .rot-3 { transform: rotate(-2deg); }
 
         /* ESTILOS REGALO 2 (REPRODUCTOR CON DISCO) */
         .player-wrapper {
@@ -156,7 +137,6 @@
             align-items: center;
         }
 
-        /* Disco de vinilo */
         .vinyl-record {
             position: absolute;
             right: 0px;
@@ -182,7 +162,6 @@
             border: 4px solid #d81b60;
         }
 
-        /* Animación de rotación del disco */
         .vinyl-record.playing {
             right: -45px;
             animation: spin 3s linear infinite;
@@ -192,7 +171,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Caja principal del Reproductor */
         .player-card {
             position: relative;
             z-index: 2;
@@ -214,26 +192,12 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .song-title {
-            font-size: 15px;
-            font-weight: bold;
-            margin: 5px 0 2px 0;
-            color: #fff;
-        }
-
-        .song-artist {
-            font-size: 12px;
-            color: #d1c4e9;
-            margin-bottom: 15px;
-        }
-
-        /* Barra de tiempo */
         .progress-container {
             width: 100%;
             background: rgba(255, 255, 255, 0.2);
             height: 5px;
             border-radius: 5px;
-            margin: 10px 0 5px 0;
+            margin: 15px 0 5px 0;
             cursor: pointer;
             position: relative;
         }
@@ -252,7 +216,6 @@
             color: #e0e0e0;
         }
 
-        /* Controles */
         .player-controls {
             display: flex;
             justify-content: space-around;
@@ -343,8 +306,8 @@
     <div class="container">
         <!-- PANTALLA 1: LA PREGUNTA -->
         <div id="question-screen">
-            <img src="https://media1.giphy.com/media/UUED86bV60u6Q/giphy.gif" alt="Gatito tierno">
-            <h1 id="question-text">¿Me amas? 💕</h1>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z0bjJvdG11bzRmd240OGEwOHRjcWN2dnh2eG1qbm1pMmkyNzg0diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lq0h93752f6J9tijrh/giphy.gif" alt="Gatito tierno">
+            <h1 id="question-text">¿Me amas? 🥺</h1>
             <div class="buttons">
                 <button id="yes-btn" class="btn" onclick="mostrarRegalos()">SÍ</button>
                 <button id="no-btn" class="btn" onclick="manejarClickNo()">NO</button>
@@ -357,51 +320,35 @@
             <h1>Sabía que dirías que sí 💕</h1>
             <div class="gifts-grid">
                 <div id="gift-1" class="gift-card" onclick="abrirRegalo(1)">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213626.png" alt="Regalo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213626.png" alt="Regalo 1">
                 </div>
                 <div id="gift-2" class="gift-card" onclick="abrirRegalo(2)">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213626.png" alt="Regalo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213626.png" alt="Regalo 2">
                 </div>
                 <div id="gift-3" class="gift-card" onclick="abrirRegalo(3)">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213626.png" alt="Regalo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4213/4213626.png" alt="Regalo 3">
                 </div>
             </div>
         </div>
 
-        <!-- CONTENIDO REGALO 1 -->
+        <!-- CONTENIDO REGALO 1 (IMAGEN NUEVA) -->
         <div id="gift-1-content" class="hidden content-box">
-            <div class="collage-container">
-                <div class="polaroid rot-1">
-                    <img src="https://lh3.googleusercontent.com/d/13BBS92NQ0RVy-zNxwiSCc6CTw3oPTVBb" alt="Foto 1">
-                </div>
-                <div class="polaroid rot-2">
-                    <img src="https://lh3.googleusercontent.com/d/1g9Qirr7JwncqS5X0118Rh04d36FVSVBQ" alt="Foto 2">
-                </div>
-                <div class="polaroid rot-3">
-                    <img src="https://lh3.googleusercontent.com/d/1KnPGugL7ye1cMxzL8N5CopXfsNR50FC0" alt="Foto 3">
-                </div>
-            </div>
+            <img src="https://lh3.googleusercontent.com/d/1gRGAD3ddDaoKb2fNh3m5BtUkgjL_iDoV" class="gift-img-single" alt="Collage de Fotos">
 
-            <!-- CUADRO ROSADO EXACTO "VOLVER" -->
             <div class="volver-box-btn" onclick="mostrarRegalos()">
                 VOLVER
             </div>
         </div>
 
-        <!-- CONTENIDO REGALO 2 -->
+        <!-- CONTENIDO REGALO 2 (REPRODUCTOR) -->
         <div id="gift-2-content" class="hidden content-box">
             <h2>Una canción especial 🎶</h2>
             
             <div class="player-wrapper">
-                <!-- Disco Vinilo Giratorio -->
                 <div id="vinyl-record" class="vinyl-record"></div>
 
-                <!-- Tarjeta Reproductor -->
                 <div class="player-card">
-                    <img src="https://lh3.googleusercontent.com/d/13BBS92NQ0RVy-zNxwiSCc6CTw3oPTVBb" class="player-cover" alt="Portada de la Canción">
-                    
-                    <div class="song-title">Risk It All</div>
-                    <div class="song-artist">Bruno Mars</div>
+                    <img src="https://lh3.googleusercontent.com/d/13BBS92NQ0RVy-zNxwiSCc6CTw3oPTVBb" class="player-cover" alt="Portada">
 
                     <div class="progress-container" onclick="seekAudio(event)">
                         <div id="progress-bar" class="progress-bar"></div>
@@ -419,25 +366,22 @@
                 </div>
             </div>
 
-            <!-- Audio oculto -->
             <audio id="audio-player" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
-            <!-- CUADRO ROSADO EXACTO "VOLVER" -->
             <div class="volver-box-btn" onclick="mostrarRegalos()">
                 VOLVER
             </div>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA COMPLETA) -->
+        <!-- CONTENIDO REGALO 3 (CARTA) -->
         <div id="gift-3-content" class="hidden content-box">
             <h2 style="color: #d81b60; margin-bottom: 10px;">Para ti, mi amor ✉️❤️</h2>
             
             <div class="letter-card">
-                <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo. Haces que los momentos ordinarios se sientan especiales solo por ser tú. No importa a dónde nos lleve la vida, siempre serás mi lugar favorito. Amarte es lo más fácil y hermoso que conozco. Estar contigo se siente como estar en casa. En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y profundamente amado, y eso es algo que nunca daré por sentado.</p>
+                <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo. Haces que los momentos ordinarios se sientan especiales solo por ser tú. No importa a dónde nos lleve la vida, siempre serás mi lugar favorito. Amarte es lo más fácil y hermoso que conozco. Estar contigo se siente como estar en casa. En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y deeply amado, y eso es algo que nunca daré por sentado.</p>
                 <p>Y no importa lo que la vida nos depare, sé que una cosa siempre permanecerá igual: la forma en que mi corazón se siente cuando estoy contigo. Es en los pequeños momentos, en los tranquilos, en los que nadie más ve, donde me doy cuenta de la suerte que tengo de amarte. No eres solo una parte de mi vida... eres la mejor parte de ella.</p>
             </div>
             
-            <!-- CUADRO ROSADO EXACTO "VOLVER" -->
             <div class="volver-box-btn" onclick="mostrarRegalos()">
                 VOLVER
             </div>
@@ -460,7 +404,6 @@
         const botonNo = document.getElementById('no-btn');
         const textoPregunta = document.getElementById('question-text');
 
-        // Elementos de Audio
         const audio = document.getElementById('audio-player');
         const playBtn = document.getElementById('play-btn');
         const vinyl = document.getElementById('vinyl-record');
@@ -504,7 +447,6 @@
         }
 
         function mostrarRegalos() {
-            // Pausar música al volver al menú
             if (!audio.paused) {
                 togglePlay();
             }
@@ -531,7 +473,6 @@
             }
         }
 
-        /* LÓGICA DEL REPRODUCTOR */
         function togglePlay() {
             if (audio.paused) {
                 audio.play();
@@ -548,13 +489,11 @@
             const progressPercent = (audio.currentTime / audio.duration) * 100;
             progressBar.style.width = `${progressPercent}%`;
 
-            // Tiempo transcurrido
             let currentMin = Math.floor(audio.currentTime / 60);
             let currentSec = Math.floor(audio.currentTime % 60);
             if (currentSec < 10) currentSec = `0${currentSec}`;
             currentTimeEl.innerText = `${currentMin}:${currentSec}`;
 
-            // Tiempo total
             if (audio.duration) {
                 let durationMin = Math.floor(audio.duration / 60);
                 let durationSec = Math.floor(audio.duration % 60);
