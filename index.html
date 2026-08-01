@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fce4ec;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* Pantalla 1: Pregunta */
+        #question-screen img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #yes-btn {
+            background-color: #81c784;
+            color: white;
+        }
+
+        #no-btn {
+            background-color: #e57373;
+            color: white;
+        }
+
+        /* Pantalla 2: Regalos */
+        .hidden {
+            display: none !important;
+        }
+
+        .gifts-grid {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .gift-card {
+            background: #f8bbd0;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+            color: #d81b60;
+        }
+
+        .gift-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Vistas de Regalos */
+        .content-box {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .back-btn {
+            background-color: #d81b60;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- PANTALLA 1: LA PREGUNTA -->
+        <div id="question-screen">
+            <img src="https://media1.giphy.com/media/UUED86bV60u6Q/giphy.gif" alt="Gatito tierno">
+            <h1 id="question-text">¿Me amas? 💕</h1>
+            <div class="buttons">
+                <button id="yes-btn" class="btn" onclick="mostrarRegalos()">SÍ</button>
+                <button id="no-btn" class="btn" onclick="manejarClickNo()">NO</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 2: LOS REGALOS -->
+        <div id="gifts-screen" class="hidden">
+            <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Gatito feliz" style="width: 100px;">
+            <h1>Sabía que dirías que sí 💕</h1>
+            <div class="gifts-grid">
+                <div class="gift-card" onclick="abrirRegalo(1)">REGALO 1</div>
+                <div class="gift-card" onclick="abrirRegalo(2)">REGALO 2</div>
+                <div class="gift-card" onclick="abrirRegalo(3)">REGALO 3</div>
+            </div>
+        </div>
+
+        <!-- CONTENIDO REGALO 1 -->
+        <div id="gift-1-content" class="hidden content-box">
+            <h2>Momentos Capturados 📸</h2>
+            <p>Aquí puedes colocar las fotos más bonitas de ustedes dos.</p>
+            <button class="back-btn" onclick="mostrarRegalos()">Regresar</button>
+        </div>
+
+        <!-- CONTENIDO REGALO 2 -->
+        <div id="gift-2-content" class="hidden content-box">
+            <h2>Una canción que nos recuerda 🎶</h2>
+            <p><strong>Risk It All - Bruno Mars</strong></p>
+            <div style="background:#eee; padding:15px; border-radius:10px; text-align:center;">▶️ [Reproductor de música]</div>
+            <button class="back-btn" onclick="mostrarRegalos()">Regresar</button>
+        </div>
+
+        <!-- CONTENIDO REGALO 3 -->
+        <div id="gift-3-content" class="hidden content-box">
+            <h2>Mi amor,</h2>
+            <p style="font-size: 14px; line-height: 1.6;">Hoy es un día especial para recordarte lo mucho que significas para mí. Desde que llegaste a mi vida, todo es más cálido, más bonito y tiene más sentido...</p>
+            <p style="text-align: right; font-style: italic;">Por siempre tuyo/a ❤️</p>
+            <button class="back-btn" onclick="mostrarRegalos()">Regresar</button>
+        </div>
+    </div>
+
+    <script>
+        let contadorNo = 0;
+        const mensajes = [
+            "¿Es en serio?... ¿Estás segura? 🥺",
+            "Nop, eso no es correcto...",
+            "Habla en serio...",
+            "Oye, ya estás jugando demasiado...",
+            "Okay, última oportunidad..."
+        ];
+
+        const botonSi = document.getElementById('yes-btn');
+        const botonNo = document.getElementById('no-btn');
+        const textoPregunta = document.getElementById('question-text');
+
+        function manejarClickNo() {
+            contadorNo++;
+            if (contadorNo <= mensajes.length) {
+                textoPregunta.innerText = mensajes[contadorNo - 1];
+                // Hacer que el botón de SÍ crezca de tamaño progresivamente
+                let escalaActual = 1 + (contadorNo * 0.3);
+                botonSi.style.transform = `scale(${escalaActual})`;
+            }
+            if (contadorNo > mensajes.length) {
+                botonNo.style.display = 'none'; // Oculta el botón NO al agotar los mensajes
+            }
+        }
+
+        function mostrarRegalos() {
+            document.getElementById('question-screen').classList.add('hidden');
+            document.getElementById('gifts-screen').classList.remove('hidden');
+            document.getElementById('gift-1-content').classList.add('hidden');
+            document.getElementById('gift-2-content').classList.add('hidden');
+            document.getElementById('gift-3-content').classList.add('hidden');
+        }
+
+        function abrirRegalo(numeroRegalo) {
+            document.getElementById('gifts-screen').classList.add('hidden');
+            document.getElementById(`gift-${numeroRegalo}-content`).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
