@@ -148,19 +148,20 @@
             line-height: 1.3;
         }
 
+        /* Contenedor de botones en columna (uno arriba del otro) */
         .buttons {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            min-height: 100px;
+            gap: 15px;
+            min-height: 130px;
             width: 100%;
             position: relative;
-            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 10px 24px;
+            padding: 12px 28px;
             font-size: 15px;
             font-weight: bold;
             border: none;
@@ -168,6 +169,8 @@
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, box-shadow 0.2s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 240px;
         }
 
         #yes-btn {
@@ -183,10 +186,6 @@
             background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
             color: white;
             z-index: 1;
-        }
-
-        .buttons.single-button {
-            justify-content: center;
         }
 
         /* Pantalla 2: Regalos */
@@ -485,7 +484,7 @@
             <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 2 (REPRODUCTOR) -->
+        <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON SHORT DE YOUTUBE) -->
         <div id="gift-2-content" class="hidden content-box">
             <div style="width: 100%;"></div>
             <div class="player-wrapper">
@@ -510,8 +509,10 @@
                 <div id="vinyl-record" class="vinyl-record"></div>
             </div>
 
-            <!-- Audio configurado exactamente a la duración del short (56 segundos) -->
-            <audio id="audio-player" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata"></audio>
+            <!-- Iframe oculto con el short exacto de YouTube (Duración: 56 segundos) -->
+            <div style="display:none;" id="youtube-audio-container">
+                <iframe id="youtube-short-iframe" width="0" height="0" src="" title="Café Tacvba - Eres Short" frameborder="0" allow="autoplay"></iframe>
+            </div>
 
             <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
         </div>
@@ -535,6 +536,9 @@
     <script>
         let contadorNo = 0;
         let toquesCount = 0;
+        let reproduciendo = false;
+        let tiempoActualSeg = 0;
+        let timerInterval = null;
 
         const mensajesNo = [
             "¿Estás completamente segura???🥺",
@@ -547,17 +551,15 @@
 
         const botonSi = document.getElementById('yes-btn');
         const botonNo = document.getElementById('no-btn');
-        const contenedorBotones = document.getElementById('buttons-container');
         const textoPregunta = document.getElementById('question-text');
 
-        const audio = document.getElementById('audio-player');
         const playBtn = document.getElementById('play-btn');
         const vinyl = document.getElementById('vinyl-record');
         const progressBar = document.getElementById('progress-bar');
         const currentTimeEl = document.getElementById('current-time');
-        const durationTimeEl = document.getElementById('duration-time');
+        const youtubeContainer = document.getElementById('youtube-audio-container');
 
-        const duracionShort = 56; // 56 segundos exactos del short
+        const duracionShort = 56; // 56 segundos exactos del short de YouTube
 
         // Fondo de corazones flotantes
         function crearCorazones() {
@@ -636,7 +638,7 @@
                 textoPregunta.innerText = mensajesNo[contadorNo - 1];
             }
             
-            let escalaSi = 1 + (contadorNo * 0.18);
+            let escalaSi = 1 + (contadorNo * 0.15);
             botonSi.style.transform = `scale(${escalaSi})`;
 
             let escalaNo = Math.max(0, 1 - (contadorNo * 0.16));
@@ -646,18 +648,21 @@
                 botonNo.style.opacity = '0';
                 setTimeout(() => {
                     botonNo.style.display = 'none';
-                    contenedorBotones.classList.add('single-button');
                     botonSi.style.margin = '0 auto';
                 }, 300);
             }
         }
 
+        function detenerAudioYouTube() {
+            reproduciendo = false;
+            playBtn.innerText = '▶';
+            vinyl.classList.remove('playing');
+            clearInterval(timerInterval);
+            youtubeContainer.innerHTML = '';
+        }
+
         function mostrarRegalos() {
-            if (!audio.paused) {
-                audio.pause();
-                playBtn.innerText = '▶';
-                vinyl.classList.remove('playing');
-            }
+            detenerAudioYouTube();
 
             document.getElementById('question-screen').classList.add('hidden');
             document.getElementById('gifts-screen').classList.remove('hidden');
@@ -671,55 +676,65 @@
             document.getElementById(`gift-${numeroRegalo}-content`).classList.remove('hidden');
         }
 
+        function actualizarBarraProgreso() {
+            if (tiempoActualSeg >= duracionShort) {
+                detenerAudioYouTube();
+                tiempoActualSeg = 0;
+                actualizarUIProgreso();
+                return;
+            }
+            tiempoActualSeg++;
+            actualizarUIProgreso();
+        }
+
+        function actualizarUIProgreso() {
+            const progressPercent = (tiempoActualSeg / duracionShort) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            let currentMin = Math.floor(tiempoActualSeg / 60);
+            let currentSec = Math.floor(tiempoActualSeg % 60);
+            if (currentSec < 10) currentSec = `0${currentSec}`;
+            currentTimeEl.innerText = `${currentMin}:${currentSec}`;
+        }
+
         function togglePlay() {
-            if (audio.paused) {
-                audio.play().catch(e => console.log("Esperando interacción de usuario"));
+            if (!reproduciendo) {
+                reproduciendo = true;
                 playBtn.innerText = '❚❚';
                 vinyl.classList.add('playing');
+                
+                youtubeContainer.innerHTML = `<iframe id="youtube-short-iframe" width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="Café Tacvba - Eres Short" frameborder="0" allow="autoplay"></iframe>`;
+                
+                clearInterval(timerInterval);
+                timerInterval = setInterval(actualizarBarraProgreso, 1000);
             } else {
-                audio.pause();
-                playBtn.innerText = '▶';
-                vinyl.classList.remove('playing');
+                detenerAudioYouTube();
             }
         }
 
         function reiniciarAudio() {
-            audio.currentTime = 0;
+            detenerAudioYouTube();
+            tiempoActualSeg = 0;
+            actualizarUIProgreso();
+            togglePlay();
         }
 
         function adelantarAudio() {
-            audio.currentTime = Math.min(duracionShort, audio.currentTime + 5);
-        }
-
-        audio.addEventListener('timeupdate', () => {
-            let tiempoActual = audio.currentTime;
-            if (tiempoActual >= duracionShort) {
-                audio.pause();
-                audio.currentTime = 0;
-                playBtn.innerText = '▶';
-                vinyl.classList.remove('playing');
-                return;
+            tiempoActualSeg = Math.min(duracionShort, tiempoActualSeg + 5);
+            actualizarUIProgreso();
+            if (reproduciendo) {
+                youtubeContainer.innerHTML = `<iframe id="youtube-short-iframe" width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="Café Tacvba - Eres Short" frameborder="0" allow="autoplay"></iframe>`;
             }
-
-            const progressPercent = (tiempoActual / duracionShort) * 100;
-            progressBar.style.width = `${progressPercent}%`;
-
-            let currentMin = Math.floor(tiempoActual / 60);
-            let currentSec = Math.floor(tiempoActual % 60);
-            if (currentSec < 10) currentSec = `0${currentSec}`;
-            currentTimeEl.innerText = `${currentMin}:${currentSec}`;
-        });
-
-        audio.addEventListener('ended', () => {
-            playBtn.innerText = '▶';
-            vinyl.classList.remove('playing');
-            audio.currentTime = 0;
-        });
+        }
 
         function seekAudio(e) {
             const width = e.target.clientWidth;
             const clickX = e.offsetX;
-            audio.currentTime = (clickX / width) * duracionShort;
+            tiempoActualSeg = Math.floor((clickX / width) * duracionShort);
+            actualizarUIProgreso();
+            if (reproduciendo) {
+                youtubeContainer.innerHTML = `<iframe id="youtube-short-iframe" width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="Café Tacvba - Eres Short" frameborder="0" allow="autoplay"></iframe>`;
+            }
         }
     </script>
 </body>
