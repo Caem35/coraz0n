@@ -41,22 +41,22 @@
 
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(16px);
-            padding: 35px 25px;
+            padding: 30px 20px;
             border-radius: 30px;
             box-shadow: 0 20px 45px rgba(216, 27, 96, 0.2);
-            max-width: 480px;
+            max-width: 460px;
             width: 92%;
             position: relative;
             z-index: 10;
-            max-height: 96vh;
+            max-height: 94vh;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.9);
         }
 
         /* Contador de Toques con Corazón Rojo */
@@ -82,17 +82,14 @@
         .heart-counter-badge:hover {
             transform: scale(1.05);
         }
-        .heart-counter-badge span {
-            font-size: 15px;
-        }
 
         /* Contador de Tiempo juntos en Negro */
         .time-counter-box {
             background: linear-gradient(135deg, #fff0f5 0%, #ffebee 100%);
             border: 1px solid #f8bbd0;
             border-radius: 16px;
-            padding: 12px 15px;
-            margin-bottom: 15px;
+            padding: 10px 15px;
+            margin-bottom: 12px;
             width: 100%;
             box-shadow: inset 0 2px 5px rgba(216, 27, 96, 0.05);
         }
@@ -102,7 +99,7 @@
             letter-spacing: 1.2px;
             color: #000000;
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         .time-digits {
             display: flex;
@@ -114,31 +111,30 @@
         }
         .time-digit-item span {
             display: block;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #000000;
         }
 
         /* Pantalla 1: Pregunta */
         .sticker-img {
-            width: 150px;
-            height: 150px;
+            width: 135px;
+            height: 135px;
             object-fit: contain;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             animation: bounce 2s infinite ease-in-out;
-            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.08));
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.06));
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-6px); }
         }
 
         h1 {
             color: #ad1457;
-            font-size: 22px;
-            margin: 10px 0 20px 0;
-            transition: all 0.3s ease;
+            font-size: 21px;
+            margin: 8px 0 15px 0;
             font-weight: 700;
             line-height: 1.3;
         }
@@ -147,22 +143,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 25px;
-            min-height: 130px;
+            gap: 20px;
+            min-height: 120px;
             width: 100%;
-            position: relative;
-            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 12px 28px;
-            font-size: 16px;
+            padding: 12px 26px;
+            font-size: 15px;
             font-weight: bold;
             border: none;
             border-radius: 16px;
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, box-shadow 0.2s;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
         }
 
         #yes-btn {
@@ -170,18 +164,11 @@
             color: white;
             z-index: 2;
         }
-        #yes-btn:hover {
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
-        }
 
         #no-btn {
             background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
             color: white;
             z-index: 1;
-        }
-
-        .buttons.single-button {
-            justify-content: center;
         }
 
         /* Pantalla 2: Regalos */
@@ -193,48 +180,49 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 14px;
+            gap: 15px;
             margin-top: 10px;
-            min-height: 130px;
+            min-height: 120px;
         }
 
+        /* Tarjetas de regalo sin marcos blancos extraños */
         .gift-card {
-            background: white;
+            background: transparent;
             padding: 0;
             border-radius: 20px;
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 95px;
-            height: 95px;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.12);
-            border: 2px solid transparent;
+            width: 85px;
+            height: 85px;
+            border: none;
         }
 
         .gift-card img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 18px;
+            object-fit: contain;
             display: block;
+            filter: drop-shadow(0 4px 8px rgba(216, 27, 96, 0.15));
+            transition: transform 0.4s ease;
+        }
+
+        /* Estado activo/resaltado secuencial (el que toca abrir se hace grande) */
+        .gift-card.active-gift {
+            transform: scale(1.25);
+            z-index: 5;
+        }
+        .gift-card.active-gift img {
+            filter: drop-shadow(0 8px 16px rgba(216, 27, 96, 0.35));
         }
 
         .gift-card:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: scale(1.15);
         }
-
-        /* Animación de secuencia única para los regalos (se hacen grandes uno por uno) */
-        @keyframes pulseSequence {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.18); box-shadow: 0 10px 25px rgba(216, 27, 96, 0.3); }
-            100% { transform: scale(1); }
-        }
-
-        .pulse-once {
-            animation: pulseSequence 0.7s ease-in-out;
+        .gift-card.active-gift:hover {
+            transform: scale(1.32);
         }
 
         /* REGALO 1 (FOTO COLLAGE GRANDE) */
@@ -248,19 +236,19 @@
         .gift-img-single {
             width: 100%;
             height: auto;
-            max-height: 65vh;
+            max-height: 60vh;
             object-fit: contain;
-            border-radius: 18px;
-            border: 8px solid white;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            border-radius: 16px;
+            border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             margin-top: 5px;
         }
 
         /* REGALO 2 (REPRODUCTOR Y DISCO) */
         .player-wrapper {
             position: relative;
-            width: 240px;
-            margin: 10px auto 25px auto;
+            width: 230px;
+            margin: 10px auto 20px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -270,10 +258,10 @@
             position: relative;
             z-index: 2;
             background: linear-gradient(145deg, #4a3b46, #332731);
-            border-radius: 25px;
-            padding: 20px;
-            width: 215px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            border-radius: 22px;
+            padding: 18px;
+            width: 205px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             color: white;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.1);
@@ -281,15 +269,15 @@
 
         .vinyl-record {
             position: absolute;
-            bottom: -20px;
-            width: 155px;
-            height: 155px;
+            bottom: -18px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             background: radial-gradient(circle, #222 20%, #111 21%, #111 30%, #222 31%, #111 60%, #333 61%, #111 62%);
             border: 2px solid #000;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.4);
             z-index: 1;
-            transition: bottom 0.5s ease;
+            transition: bottom 0.4s ease;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -297,15 +285,15 @@
 
         .vinyl-record::after {
             content: '';
-            width: 35px;
-            height: 35px;
+            width: 32px;
+            height: 32px;
             background: #fce4ec;
             border-radius: 50%;
-            border: 4px solid #d81b60;
+            border: 3px solid #d81b60;
         }
 
         .vinyl-record.playing {
-            bottom: -50px;
+            bottom: -45px;
             animation: spin 3s linear infinite;
         }
 
@@ -314,20 +302,20 @@
         }
 
         .player-cover {
-            width: 175px;
-            height: 175px;
-            border-radius: 14px;
+            width: 160px;
+            height: 160px;
+            border-radius: 12px;
             object-fit: cover;
-            margin-bottom: 10px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            margin-bottom: 8px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
         }
 
         .progress-container {
             width: 100%;
             background: rgba(255, 255, 255, 0.25);
-            height: 6px;
+            height: 5px;
             border-radius: 5px;
-            margin: 14px 0 6px 0;
+            margin: 12px 0 5px 0;
             cursor: pointer;
             overflow: hidden;
         }
@@ -342,7 +330,7 @@
         .time-stamps {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 10px;
             color: #fce4ec;
         }
 
@@ -350,14 +338,14 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            margin-top: 14px;
+            margin-top: 12px;
         }
 
         .control-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             transition: transform 0.2s;
         }
@@ -368,35 +356,52 @@
         .play-pause-btn {
             background: #ffffff;
             color: #4a3b46;
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
         }
 
-        /* REGALO 3 (CARTA CON TU INTERFAZ ANTIGUA EXACTA) */
+        /* REGALO 3 (CARTA REDISEÑADA CON LETRAS MÁS GRANDES) */
         .letter-card {
-            background: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
-            padding: 18px;
-            border-radius: 18px;
-            border: 1px solid #f8bbd0;
+            background: linear-gradient(135deg, #fffafc 0%, #ffffff 100%);
+            padding: 24px;
+            border-radius: 20px;
+            border: 1.5px solid #f8bbd0;
             text-align: left;
-            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.06);
-            margin-top: 5px;
+            box-shadow: 0 8px 22px rgba(216, 27, 96, 0.08);
+            margin-top: 8px;
             max-height: 52vh;
             overflow-y: auto;
+            position: relative;
+        }
+
+        .letter-card::-webkit-scrollbar {
+            width: 6px;
+        }
+        .letter-card::-webkit-scrollbar-thumb {
+            background: #f48fb1;
+            border-radius: 10px;
         }
 
         .letter-card p {
-            color: #4a4a4a;
-            font-size: 13.5px;
-            line-height: 1.6;
-            margin-bottom: 12px;
+            color: #3b3b3b;
+            font-size: 15px; /* Letra más grande y cómoda de leer */
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .letter-card p:last-child {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: #ad1457;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 16px;
         }
 
         /* BOTÓN VOLVER */
@@ -404,23 +409,23 @@
             background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
             color: #ad1457;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 14px;
             letter-spacing: 0.8px;
             text-align: center;
-            padding: 12px 24px;
+            padding: 11px 22px;
             border-radius: 14px;
             cursor: pointer;
             border: none;
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 12px;
             transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.15);
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.15);
             user-select: none;
         }
 
         .volver-box-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(216, 27, 96, 0.25);
+            box-shadow: 0 7px 18px rgba(216, 27, 96, 0.25);
         }
 
         .content-box {
@@ -460,7 +465,7 @@
                 <div class="time-digits" id="time-counter-display"></div>
             </div>
 
-            <img class="sticker-img" style="width: 120px; height: 120px; margin-bottom: 5px;" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Sticker Feliz">
+            <img class="sticker-img" style="width: 110px; height: 110px; margin-bottom: 2px;" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Sticker Feliz">
             
             <h1>¡Sabía que dirías que sí, mi vida! 💕</h1>
             
@@ -480,7 +485,7 @@
         <!-- CONTENIDO REGALO 1 (COLLAGE GRANDE) -->
         <div id="gift-1-content" class="hidden content-box">
             <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos">
-            <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
+            <button class="volver-box-btn" onclick="cerrarRegalo(1)">VOLVER A LOS REGALOS</button>
         </div>
 
         <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON YOUTUBE SHORT) -->
@@ -510,22 +515,22 @@
             <!-- Contenedor dinámico para el audio de YouTube Short -->
             <div style="display:none;" id="youtube-audio-container"></div>
 
-            <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
+            <button class="volver-box-btn" onclick="cerrarRegalo(2)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA CON INTERFAZ ANTIGUA) -->
+        <!-- CONTENIDO REGALO 3 (CARTA REDISEÑADA Y LETRA MÁS GRANDE) -->
         <div id="gift-3-content" class="hidden content-box">
-            <h2 style="color: #ad1457; margin-bottom: 8px; font-size: 19px;">Para ti, mi amor ✉️❤️</h2>
+            <h2 style="color: #ad1457; margin-bottom: 6px; font-size: 19px;">Para ti, mi amor ✉️❤️</h2>
             
             <div class="letter-card">
                 <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo.</p>
                 <p>Haces que los momentos ordinarios se sientan especiales solo por ser tú. No importa a dónde nos lleve la vida, siempre serás mi lugar favorito. Amarte es lo más fácil y hermoso que conozco. Estar contigo se siente como estar en casa.</p>
                 <p>En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y profundamente amado, y eso es algo que nunca daré por sentado.</p>
                 <p>Y no importa lo que la vida nos depare, sé que una cosa siempre permanecerá igual: la forma en que mi corazón se siente cuando estoy contigo. Es en los pequeños momentos, en los tranquilos, en los que nadie más ve, donde me doy cuenta de la suerte que tengo de amarte.</p>
-                <p>No eres solo una parte de mi vida... eres la mejor parte de ella.</p>
+                <p>No eres solo una parte de mi vida... eres la mejor parte de ella. ❤️</p>
             </div>
             
-            <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
+            <button class="volver-box-btn" onclick="cerrarRegalo(3)">VOLVER A LOS REGALOS</button>
         </div>
     </div>
 
@@ -535,7 +540,8 @@
         let reproduciendo = false;
         let tiempoActualSeg = 0;
         let timerInterval = null;
-        let yaSeMostroSecuencia = false; // Control para que la animación de las cajas pase solo una vez
+        let regaloActualIndex = 1; // 1, 2, 3 en orden
+        let secuenciaCompletada = false; // Controla si ya terminó el ciclo único
 
         const mensajesNo = [
             "¿Estás completamente segura? 🥺",
@@ -548,7 +554,6 @@
 
         const botonSi = document.getElementById('yes-btn');
         const botonNo = document.getElementById('no-btn');
-        const contenedorBotones = document.getElementById('buttons-container');
         const textoPregunta = document.getElementById('question-text');
 
         const playBtn = document.getElementById('play-btn');
@@ -570,7 +575,7 @@
                 heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
                 bg.appendChild(heart);
                 setTimeout(() => { heart.remove(); }, 8000);
-            }, 450);
+            }, 500);
         }
         crearCorazones();
 
@@ -611,18 +616,13 @@
             const horasTotales = Math.floor(minutosTotales / 60);
             const diasTotales = Math.floor(horasTotales / 24);
 
-            const dias = diasTotales;
-            const horas = horasTotales % 24;
-            const minutos = minutosTotales % 60;
-            const segundos = segundosTotales % 60;
-
             const display = document.getElementById('time-counter-display');
             if (display) {
                 display.innerHTML = `
-                    <div class="time-digit-item"><span>${dias}</span>Días</div>
-                    <div class="time-digit-item"><span>${horas}</span>Horas</div>
-                    <div class="time-digit-item"><span>${minutos}</span>Min</div>
-                    <div class="time-digit-item"><span>${segundos}</span>Seg</div>
+                    <div class="time-digit-item"><span>${diasTotales}</span>Días</div>
+                    <div class="time-digit-item"><span>${horasTotales % 24}</span>Horas</div>
+                    <div class="time-digit-item"><span>${minutosTotales % 60}</span>Min</div>
+                    <div class="time-digit-item"><span>${segundosTotales % 60}</span>Seg</div>
                 `;
             }
         }
@@ -631,12 +631,11 @@
 
         function manejarClickNo() {
             contadorNo++;
-
             if (contadorNo <= mensajesNo.length) {
                 textoPregunta.innerText = mensajesNo[contadorNo - 1];
             }
             
-            let escalaSi = 1 + (contadorNo * 0.22);
+            let escalaSi = 1 + (contadorNo * 0.2);
             botonSi.style.transform = `scale(${escalaSi})`;
 
             let escalaNo = Math.max(0, 1 - (contadorNo * 0.16));
@@ -646,7 +645,6 @@
                 botonNo.style.opacity = '0';
                 setTimeout(() => {
                     botonNo.style.display = 'none';
-                    contenedorBotones.classList.add('single-button');
                     botonSi.style.margin = '0 auto';
                 }, 300);
             }
@@ -660,6 +658,17 @@
             youtubeContainer.innerHTML = '';
         }
 
+        function actualizarDestacadoRegalos() {
+            document.getElementById('gift-1').classList.remove('active-gift');
+            document.getElementById('gift-2').classList.remove('active-gift');
+            document.getElementById('gift-3').classList.remove('active-gift');
+
+            // Si ya se completó el ciclo único, ningún regalo se agranda automáticamente
+            if (!secuenciaCompletada && regaloActualIndex <= 3) {
+                document.getElementById(`gift-${regaloActualIndex}`).classList.add('active-gift');
+            }
+        }
+
         function mostrarRegalos() {
             detenerAudioYouTube();
 
@@ -669,23 +678,30 @@
             document.getElementById('gift-2-content').classList.add('hidden');
             document.getElementById('gift-3-content').classList.add('hidden');
 
-            // Secuencia de un único uso para las cajas de regalo al entrar por primera vez
-            if (!yaSeMostroSecuencia) {
-                yaSeMostroSecuencia = true;
-                const g1 = document.getElementById('gift-1');
-                const g2 = document.getElementById('gift-2');
-                const g3 = document.getElementById('gift-3');
-
-                setTimeout(() => { g1.classList.add('pulse-once'); }, 300);
-                setTimeout(() => { g1.classList.remove('pulse-once'); g2.classList.add('pulse-once'); }, 1050);
-                setTimeout(() => { g2.classList.remove('pulse-once'); g3.classList.add('pulse-once'); }, 1800);
-                setTimeout(() => { g3.classList.remove('pulse-once'); }, 2550);
-            }
+            actualizarDestacadoRegalos();
         }
 
         function abrirRegalo(numeroRegalo) {
             document.getElementById('gifts-screen').classList.add('hidden');
             document.getElementById(`gift-${numeroRegalo}-content`).classList.remove('hidden');
+        }
+
+        function cerrarRegalo(numeroRegalo) {
+            detenerAudioYouTube();
+            
+            // Avanza en orden estricto de ciclo único
+            if (!secuenciaCompletada) {
+                if (regaloActualIndex === numeroRegalo) {
+                    if (regaloActualIndex < 3) {
+                        regaloActualIndex++;
+                    } else {
+                        // Al volver de la carta (regalo 3), termina el ciclo único definitivamente
+                        secuenciaCompletada = true;
+                    }
+                }
+            }
+
+            mostrarRegalos();
         }
 
         function actualizarBarraProgreso() {
