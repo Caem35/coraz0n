@@ -3,62 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para ti ❤️</title>
+    <title>Para ti, mi amor ❤️</title>
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #fce4ec;
-            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Corazones flotantes de fondo */
+        .floating-heart {
+            position: absolute;
+            color: rgba(216, 27, 96, 0.25);
+            font-size: 24px;
+            animation: floatUp 7s linear infinite;
+            z-index: 0;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) scale(0.6) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.9; }
+            100% { transform: translateY(-10vh) scale(1.3) rotate(360deg); opacity: 0; }
         }
 
         .container {
             text-align: center;
-            background: white;
-            padding: 25px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 450px;
-            width: 95%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 20px 45px rgba(216, 27, 96, 0.2);
+            max-width: 480px;
+            width: 92%;
             position: relative;
-            max-height: 95vh;
+            z-index: 10;
+            max-height: 96vh;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Contador de Toques con Corazón en Pantalla */
+        .heart-counter-badge {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #d81b60;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 20;
+            user-select: none;
+        }
+        .heart-counter-badge:hover {
+            transform: scale(1.05);
+        }
+        .heart-counter-badge span {
+            font-size: 15px;
+        }
+
+        /* Contador de Tiempo juntos */
+        .time-counter-box {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffebee 100%);
+            border: 1px solid #f8bbd0;
+            border-radius: 16px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            width: 100%;
+            box-shadow: inset 0 2px 5px rgba(216, 27, 96, 0.05);
+        }
+        .time-counter-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #c2185b;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .time-digits {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: #880e4f;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .time-digit-item span {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            color: #d81b60;
         }
 
         /* Pantalla 1: Pregunta */
         .sticker-img {
-            width: 170px;
-            height: 170px;
+            width: 150px;
+            height: 150px;
             object-fit: contain;
             margin-bottom: 10px;
+            animation: bounce 2s infinite ease-in-out;
+            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.08));
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         h1 {
-            color: #d81b60;
-            font-size: 24px;
-            margin: 15px 0 20px 0;
-            transition: all 0.2s ease;
+            color: #ad1457;
+            font-size: 22px;
+            margin: 10px 0 20px 0;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            line-height: 1.3;
         }
 
         .buttons {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 35px; /* <--- Aumentado un poquito más para separar los botones */
-            min-height: 140px;
+            gap: 25px;
+            min-height: 130px;
             width: 100%;
             position: relative;
             flex-wrap: wrap;
@@ -66,23 +156,26 @@
 
         .btn {
             padding: 12px 28px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             border: none;
-            border-radius: 12px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            transform-origin: center center;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, box-shadow 0.2s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
         }
 
         #yes-btn {
-            background-color: #81c784;
+            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
             color: white;
             z-index: 2;
         }
+        #yes-btn:hover {
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
 
         #no-btn {
-            background-color: #e57373;
+            background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
             color: white;
             z-index: 1;
         }
@@ -100,73 +193,71 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
-            margin-top: 20px;
-            min-height: 150px;
+            gap: 14px;
+            margin-top: 10px;
+            min-height: 130px;
         }
 
         .gift-card {
-            background: transparent;
+            background: white;
             padding: 0;
-            border-radius: 16px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 85px;
-            height: 85px;
+            width: 90px;
+            height: 90px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.12);
+            border: 2px solid transparent;
         }
 
         .gift-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
-            border-radius: 16px;
-            display: block;
-            transform: scale(1.22);
+            border-radius: 18px;
+            transform: scale(1.15);
+            transition: transform 0.3s;
         }
 
         .gift-card.featured {
-            width: 105px;
-            height: 105px;
-            box-shadow: 0 8px 20px rgba(216, 27, 96, 0.35);
+            width: 110px;
+            height: 110px;
+            box-shadow: 0 10px 25px rgba(216, 27, 96, 0.3);
+            border: 3px solid #d81b60;
         }
 
         .gift-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px) scale(1.05);
         }
 
         /* REGALO 1 (FOTO COLLAGE GRANDE) */
         #gift-1-content {
             width: 100%;
-            height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
         }
 
         .gift-img-single {
             width: 100%;
-            max-width: none;
             height: auto;
-            max-height: 75vh;
+            max-height: 65vh;
             object-fit: contain;
-            border-radius: 15px;
-            border: 15px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-top: 10px;
+            border-radius: 18px;
+            border: 8px solid white;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            margin-top: 5px;
         }
 
         /* REGALO 2 (REPRODUCTOR Y DISCO) */
         .player-wrapper {
             position: relative;
             width: 240px;
-            margin: 20px auto 35px auto;
+            margin: 10px auto 25px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -175,24 +266,25 @@
         .player-card {
             position: relative;
             z-index: 2;
-            background: #5c4b56;
-            border-radius: 22px;
-            padding: 18px;
-            width: 210px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            background: linear-gradient(145deg, #4a3b46, #332731);
+            border-radius: 25px;
+            padding: 20px;
+            width: 215px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
             color: white;
             text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .vinyl-record {
             position: absolute;
             bottom: -20px;
-            width: 150px;
-            height: 150px;
+            width: 155px;
+            height: 155px;
             border-radius: 50%;
             background: radial-gradient(circle, #222 20%, #111 21%, #111 30%, #222 31%, #111 60%, #333 61%, #111 62%);
             border: 2px solid #000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
             z-index: 1;
             transition: bottom 0.5s ease;
             display: flex;
@@ -202,15 +294,15 @@
 
         .vinyl-record::after {
             content: '';
-            width: 32px;
-            height: 32px;
-            background: #e0e0e0;
+            width: 35px;
+            height: 35px;
+            background: #fce4ec;
             border-radius: 50%;
             border: 4px solid #d81b60;
         }
 
         .vinyl-record.playing {
-            bottom: -45px;
+            bottom: -50px;
             animation: spin 3s linear infinite;
         }
 
@@ -219,20 +311,22 @@
         }
 
         .player-cover {
-            width: 170px;
-            height: 170px;
-            border-radius: 12px;
+            width: 175px;
+            height: 175px;
+            border-radius: 14px;
             object-fit: cover;
             margin-bottom: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
         .progress-container {
             width: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            height: 5px;
+            background: rgba(255, 255, 255, 0.25);
+            height: 6px;
             border-radius: 5px;
-            margin: 12px 0 5px 0;
+            margin: 14px 0 6px 0;
             cursor: pointer;
+            overflow: hidden;
         }
 
         .progress-bar {
@@ -245,15 +339,15 @@
         .time-stamps {
             display: flex;
             justify-content: space-between;
-            font-size: 10px;
-            color: #e0e0e0;
+            font-size: 11px;
+            color: #fce4ec;
         }
 
         .player-controls {
             display: flex;
             justify-content: space-around;
             align-items: center;
-            margin-top: 12px;
+            margin-top: 14px;
         }
 
         .control-btn {
@@ -262,64 +356,71 @@
             color: white;
             font-size: 18px;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .control-btn:hover {
+            transform: scale(1.15);
         }
 
         .play-pause-btn {
-            background: white;
-            color: #5c4b56;
-            width: 40px;
-            height: 40px;
+            background: #ffffff;
+            color: #4a3b46;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         /* REGALO 3 (CARTA) */
         .letter-card {
-            background: #fff0f5;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
             padding: 18px;
-            border-radius: 15px;
+            border-radius: 18px;
             border: 1px solid #f8bbd0;
             text-align: left;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-            margin-top: 10px;
+            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.06);
+            margin-top: 5px;
+            max-height: 52vh;
+            overflow-y: auto;
         }
 
         .letter-card p {
             color: #4a4a4a;
-            font-size: 14px;
+            font-size: 13.5px;
             line-height: 1.6;
             margin-bottom: 12px;
         }
 
-        /* BOTÓN VOLVER ROSADO */
+        /* BOTÓN VOLVER */
         .volver-box-btn {
-            background-color: #f8bbd0;
-            color: #000000;
-            font-weight: 900;
-            font-size: 20px;
-            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
+            color: #ad1457;
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 0.8px;
             text-align: center;
-            padding: 10px 25px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 14px;
             cursor: pointer;
             border: none;
             display: inline-block;
-            margin-top: 20px;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-top: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.15);
             user-select: none;
         }
 
         .volver-box-btn:hover {
-            background-color: #f48fb1;
-            transform: scale(1.03);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(216, 27, 96, 0.25);
         }
 
         .content-box {
-            margin-top: 5px;
             text-align: center;
             width: 100%;
         }
@@ -327,24 +428,38 @@
 </head>
 <body>
 
+    <!-- Contenedor del fondo animado de corazones -->
+    <div id="hearts-bg"></div>
+
+    <!-- Contador de Toques con Corazón (Fijo en pantalla) -->
+    <div class="heart-counter-badge" onclick="agregarToque(event)">
+        <span>❤️</span> <span id="contador-toques">0</span> clics de amor
+    </div>
+
     <div class="container">
         <!-- PANTALLA 1: LA PREGUNTA -->
         <div id="question-screen">
             <img class="sticker-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHYyNHp3MGh3cmtrMXh5aGVvOHYxYzA2YW8zNmhsdndzdzJvbzQyeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/KZTfX2Z5dnpMnh48QW/giphy.gif" alt="Gatito Tierno">
             
-            <h1 id="question-text">¿Me amas? 🥺</h1>
+            <h1 id="question-text">¿Sabías que eres lo mejor que me ha pasado? 💖</h1>
             
             <div id="buttons-container" class="buttons">
-                <button id="yes-btn" class="btn" onclick="mostrarRegalos()">SÍ</button>
-                <button id="no-btn" class="btn" onclick="manejarClickNo()">NO</button>
+                <button id="yes-btn" class="btn" onclick="mostrarRegalos()">¡SÍ, MUCHO! 🥰</button>
+                <button id="no-btn" class="btn" onclick="manejarClickNo()">Mmm... 🧐</button>
             </div>
         </div>
 
         <!-- PANTALLA 2: SECCIÓN DE REGALOS -->
         <div id="gifts-screen" class="hidden">
-            <img class="sticker-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZpdXAwNWZ2NGc5NWc0aGVhdTFxeG0xa2o0azlkaWgwdmZ0YWtrcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9Ibxa0lGSzp0hE5/giphy.gif" alt="Gatito Feliz">
+            <!-- Contador de tiempo juntos -->
+            <div class="time-counter-box">
+                <div class="time-counter-title">⏳ Nuestro Tiempo Juntos ⏳</div>
+                <div class="time-digits" id="time-counter-display"></div>
+            </div>
+
+            <img class="sticker-img" style="width: 120px; height: 120px; margin-bottom: 5px;" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZpdXAwNWZ2NGc5NWc0aGVhdTFxeG0xa2o0azlkaWgwdmZ0YWtrcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9Ibxa0lGSzp0hE5/giphy.gif" alt="Gatito Feliz">
             
-            <h1>Sabía que dirías que sí 💕</h1>
+            <h1>¡Sabía que dirías que sí, mi vida! 💕</h1>
             
             <div class="gifts-grid">
                 <div id="gift-1" class="gift-card" onclick="abrirRegalo(1)">
@@ -362,17 +477,14 @@
         <!-- CONTENIDO REGALO 1 (COLLAGE GRANDE) -->
         <div id="gift-1-content" class="hidden content-box">
             <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos">
-
-            <div class="volver-box-btn" onclick="mostrarRegalos()">
-                VOLVER
-            </div>
+            <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
         </div>
 
         <!-- CONTENIDO REGALO 2 (REPRODUCTOR) -->
         <div id="gift-2-content" class="hidden content-box">
             <div class="player-wrapper">
                 <div class="player-card">
-                    <img src="https://lh3.googleusercontent.com/d/1HUpnDSGg0umO8_lW16UW412cRYmECIVl" class="player-cover" alt="Portada">
+                    <img src="https://lh3.googleusercontent.com/d/1hSRmoAaC76mE6DmeZ4I5tqL5DNa7oH_m" class="player-cover" alt="Portada Personalizada">
 
                     <div class="progress-container" onclick="seekAudio(event)">
                         <div id="progress-bar" class="progress-bar"></div>
@@ -383,25 +495,24 @@
                     </div>
 
                     <div class="player-controls">
-                        <button class="control-btn">⏮</button>
+                        <button class="control-btn" onclick="reiniciarAudio()">⏮</button>
                         <button id="play-btn" class="control-btn play-pause-btn" onclick="togglePlay()">▶</button>
-                        <button class="control-btn">⏭</button>
+                        <button class="control-btn" onclick="adelantarAudio()">⏭</button>
                     </div>
                 </div>
 
                 <div id="vinyl-record" class="vinyl-record"></div>
             </div>
 
-            <audio id="audio-player" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+            <!-- Enlace de audio (puedes cambiarlo por el enlace directo de tu canción favorita) -->
+            <audio id="audio-player" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata"></audio>
 
-            <div class="volver-box-btn" onclick="mostrarRegalos()">
-                VOLVER
-            </div>
+            <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
         </div>
 
         <!-- CONTENIDO REGALO 3 (CARTA) -->
         <div id="gift-3-content" class="hidden content-box">
-            <h2 style="color: #d81b60; margin-bottom: 10px; font-size: 22px;">Para ti, mi amor ✉️❤️</h2>
+            <h2 style="color: #ad1457; margin-bottom: 8px; font-size: 19px;">Para ti, mi amor ✉️❤️</h2>
             
             <div class="letter-card">
                 <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo.</p>
@@ -411,22 +522,22 @@
                 <p>No eres solo una parte de mi vida... eres la mejor parte de ella.</p>
             </div>
             
-            <div class="volver-box-btn" onclick="mostrarRegalos()">
-                VOLVER
-            </div>
+            <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
         </div>
     </div>
 
     <script>
         let contadorNo = 0;
         let regaloActivo = 1;
+        let toquesCount = 0;
 
         const mensajesNo = [
-            "¿Segura/o? 🥺",
-            "Piénsalo bien... 💔",
-            "¡Me vas a romper el corazón! 😭",
-            "¡Anda, di que sí! 🌹",
-            "¡No te queda otra opción! 😈"
+            "¿Estás completamente segura? 🥺",
+            "Piénsalo otra vez, mi vida... 💖",
+            "Me vas a romper el corazón en mil pedazos 😭",
+            "¡Ay no se vale, di que sí! 🌹",
+            "Mi corazón no acepta un no por respuesta 💘",
+            "¡Ya rendítete y ámame! 🥰"
         ];
 
         const botonSi = document.getElementById('yes-btn');
@@ -441,6 +552,76 @@
         const currentTimeEl = document.getElementById('current-time');
         const durationTimeEl = document.getElementById('duration-time');
 
+        // Fondo de corazones flotantes
+        function crearCorazones() {
+            const bg = document.getElementById('hearts-bg');
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                bg.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 8000);
+            }, 450);
+        }
+        crearCorazones();
+
+        // Contador de clics con animación de corazoncito flotante temporal
+        function agregarToque(e) {
+            toquesCount++;
+            document.getElementById('contador-toques').innerText = toquesCount;
+
+            const clickHeart = document.createElement('div');
+            clickHeart.innerHTML = '💖';
+            clickHeart.style.position = 'fixed';
+            clickHeart.style.left = (e.clientX - 10) + 'px';
+            clickHeart.style.top = (e.clientY - 10) + 'px';
+            clickHeart.style.fontSize = '20px';
+            clickHeart.style.pointerEvents = 'none';
+            clickHeart.style.zIndex = '9999';
+            clickHeart.style.transition = 'all 0.8s ease-out';
+            document.body.appendChild(clickHeart);
+
+            setTimeout(() => {
+                clickHeart.style.transform = 'translateY(-60px) scale(1.4)';
+                clickHeart.style.opacity = '0';
+            }, 20);
+
+            setTimeout(() => { clickHeart.remove(); }, 800);
+        }
+
+        // Contador de Tiempo Juntos exacto desde el 7 de Julio de 2025 a las 21:52 hs
+        function actualizarTiempoJuntos() {
+            const fechaInicio = new Date(2025, 6, 7, 21, 52, 0); // Mes 6 = Julio (enero es 0)
+            const ahora = new Date();
+
+            let diferencia = ahora - fechaInicio;
+            if (diferencia < 0) diferencia = 0;
+
+            const segundosTotales = Math.floor(diferencia / 1000);
+            const minutosTotales = Math.floor(segundosTotales / 60);
+            const horasTotales = Math.floor(minutosTotales / 60);
+            const diasTotales = Math.floor(horasTotales / 24);
+
+            const dias = diasTotales;
+            const horas = horasTotales % 24;
+            const minutos = minutosTotales % 60;
+            const segundos = segundosTotales % 60;
+
+            const display = document.getElementById('time-counter-display');
+            if (display) {
+                display.innerHTML = `
+                    <div class="time-digit-item"><span>${dias}</span>Días</div>
+                    <div class="time-digit-item"><span>${horas}</span>Horas</div>
+                    <div class="time-digit-item"><span>${minutos}</span>Min</div>
+                    <div class="time-digit-item"><span>${segundos}</span>Seg</div>
+                `;
+            }
+        }
+        setInterval(actualizarTiempoJuntos, 1000);
+        actualizarTiempoJuntos();
+
         function manejarClickNo() {
             contadorNo++;
 
@@ -448,13 +629,13 @@
                 textoPregunta.innerText = mensajesNo[contadorNo - 1];
             }
             
-            let escalaSi = 1 + (contadorNo * 0.3); // Crecimiento un pelín más controlado para cuidar el espacio
+            let escalaSi = 1 + (contadorNo * 0.22);
             botonSi.style.transform = `scale(${escalaSi})`;
 
-            let escalaNo = Math.max(0, 1 - (contadorNo * 0.2));
+            let escalaNo = Math.max(0, 1 - (contadorNo * 0.16));
             botonNo.style.transform = `scale(${escalaNo})`;
             
-            if (contadorNo >= 5) {
+            if (contadorNo >= mensajesNo.length) {
                 botonNo.style.opacity = '0';
                 setTimeout(() => {
                     botonNo.style.display = 'none';
@@ -480,7 +661,9 @@
 
         function mostrarRegalos() {
             if (!audio.paused) {
-                togglePlay();
+                audio.pause();
+                playBtn.innerText = '▶';
+                vinyl.classList.remove('playing');
             }
 
             document.getElementById('question-screen').classList.add('hidden');
@@ -507,7 +690,7 @@
 
         function togglePlay() {
             if (audio.paused) {
-                audio.play();
+                audio.play().catch(e => console.log("Esperando interacción de usuario"));
                 playBtn.innerText = '❚❚';
                 vinyl.classList.add('playing');
             } else {
@@ -517,16 +700,24 @@
             }
         }
 
+        function reiniciarAudio() {
+            audio.currentTime = 0;
+        }
+
+        function adelantarAudio() {
+            audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
+        }
+
         audio.addEventListener('timeupdate', () => {
-            const progressPercent = (audio.currentTime / audio.duration) * 100;
-            progressBar.style.width = `${progressPercent}%`;
-
-            let currentMin = Math.floor(audio.currentTime / 60);
-            let currentSec = Math.floor(audio.currentTime % 60);
-            if (currentSec < 10) currentSec = `0${currentSec}`;
-            currentTimeEl.innerText = `${currentMin}:${currentSec}`;
-
             if (audio.duration) {
+                const progressPercent = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+
+                let currentMin = Math.floor(audio.currentTime / 60);
+                let currentSec = Math.floor(audio.currentTime % 60);
+                if (currentSec < 10) currentSec = `0${currentSec}`;
+                currentTimeEl.innerText = `${currentMin}:${currentSec}`;
+
                 let durationMin = Math.floor(audio.duration / 60);
                 let durationSec = Math.floor(audio.duration % 60);
                 if (durationSec < 10) durationSec = `0${durationSec}`;
@@ -534,11 +725,19 @@
             }
         });
 
+        audio.addEventListener('ended', () => {
+            playBtn.innerText = '▶';
+            vinyl.classList.remove('playing');
+            audio.currentTime = 0;
+        });
+
         function seekAudio(e) {
             const width = e.target.clientWidth;
             const clickX = e.offsetX;
             const duration = audio.duration;
-            audio.currentTime = (clickX / width) * duration;
+            if (duration) {
+                audio.currentTime = (clickX / width) * duration;
+            }
         }
     </script>
 </body>
