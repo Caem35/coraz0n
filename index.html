@@ -203,31 +203,41 @@
         }
 
         .gift-card {
-            background: #fff0f3;
+            background: transparent;
             padding: 0;
             border-radius: 16px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             justify-content: center;
             align-items: center;
             width: 85px;
             height: 85px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(216, 27, 96, 0.08);
+            overflow: visible;
             border: none;
         }
 
         .gift-card img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 16px;
+            object-fit: contain;
             display: block;
+            filter: drop-shadow(0 4px 8px rgba(216, 27, 96, 0.15));
         }
 
         .gift-card:hover {
             transform: translateY(-4px) scale(1.05);
+        }
+
+        /* Animación de pulso único para indicar el orden (sin taparse) */
+        @keyframes pulseOnce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse-once {
+            animation: pulseOnce 0.8s ease-in-out;
         }
 
         /* REGALO 1 (FOTO COLLAGE GRANDE) */
@@ -373,14 +383,14 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.2);
         }
 
-        /* REGALO 3 (CARTA) */
+        /* REGALO 3 (CARTA ORIGINAL) */
         .letter-card {
-            background: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
-            padding: 14px;
-            border-radius: 14px;
-            border: 1px solid #f8bbd0;
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #ffccd5;
             text-align: left;
-            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.05);
+            box-shadow: 0 4px 15px rgba(216, 27, 96, 0.08);
             margin-top: 5px;
             max-height: 44vh;
             overflow-y: auto;
@@ -388,10 +398,10 @@
         }
 
         .letter-card p {
-            color: #4a4a4a;
-            font-size: 12.5px;
-            line-height: 1.5;
-            margin-bottom: 10px;
+            color: #555;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
 
         /* BOTÓN VOLVER */
@@ -517,7 +527,7 @@
             <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA) -->
+        <!-- CONTENIDO REGALO 3 (CARTA ORIGINAL) -->
         <div id="gift-3-content" class="hidden content-box">
             <h2 style="color: #ad1457; margin-bottom: 4px; font-size: 17px;">Para ti, mi amor ✉️❤️</h2>
             
@@ -539,6 +549,7 @@
         let reproduciendo = false;
         let tiempoActualSeg = 0;
         let timerInterval = null;
+        let yaSeMostroSecuencia = false; // Control de uso único para la secuencia de regalos
 
         const mensajesNo = [
             "¿Estás completamente segura???🥺",
@@ -559,7 +570,7 @@
         const currentTimeEl = document.getElementById('current-time');
         const youtubeContainer = document.getElementById('youtube-audio-container');
 
-        const duracionShort = 56; // 56 segundos exactos del short de YouTube
+        const duracionShort = 56; 
 
         // Fondo de corazones flotantes
         function crearCorazones() {
@@ -669,6 +680,19 @@
             document.getElementById('gift-1-content').classList.add('hidden');
             document.getElementById('gift-2-content').classList.add('hidden');
             document.getElementById('gift-3-content').classList.add('hidden');
+
+            // Secuencia de un único uso: pulsa los regalos uno por uno al entrar por primera vez
+            if (!yaSeMostroSecuencia) {
+                yaSeMostroSecuencia = true;
+                const g1 = document.getElementById('gift-1');
+                const g2 = document.getElementById('gift-2');
+                const g3 = document.getElementById('gift-3');
+
+                setTimeout(() => { g1.classList.add('pulse-once'); }, 300);
+                setTimeout(() => { g1.classList.remove('pulse-once'); g2.classList.add('pulse-once'); }, 1100);
+                setTimeout(() => { g2.classList.remove('pulse-once'); g3.classList.add('pulse-once'); }, 1900);
+                setTimeout(() => { g3.classList.remove('pulse-once'); }, 2700);
+            }
         }
 
         function abrirRegalo(numeroRegalo) {
