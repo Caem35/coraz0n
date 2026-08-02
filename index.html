@@ -59,7 +59,7 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* Contador de Toques con Corazón en Pantalla */
+        /* Contador de Toques con Corazón Rojo */
         .heart-counter-badge {
             position: absolute;
             top: 15px;
@@ -73,7 +73,7 @@
             gap: 6px;
             font-size: 13px;
             font-weight: bold;
-            color: #d81b60;
+            color: #ff1744;
             cursor: pointer;
             transition: transform 0.2s;
             z-index: 20;
@@ -86,7 +86,7 @@
             font-size: 15px;
         }
 
-        /* Contador de Tiempo juntos */
+        /* Contador de Tiempo juntos en Negro */
         .time-counter-box {
             background: linear-gradient(135deg, #fff0f5 0%, #ffebee 100%);
             border: 1px solid #f8bbd0;
@@ -100,7 +100,7 @@
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: #c2185b;
+            color: #000000;
             font-weight: 700;
             margin-bottom: 6px;
         }
@@ -108,7 +108,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            color: #880e4f;
+            color: #000000;
             font-size: 12px;
             font-weight: 600;
         }
@@ -116,7 +116,7 @@
             display: block;
             font-size: 16px;
             font-weight: bold;
-            color: #d81b60;
+            color: #000000;
         }
 
         /* Pantalla 1: Pregunta */
@@ -207,8 +207,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 90px;
-            height: 90px;
+            width: 95px;
+            height: 95px;
             overflow: hidden;
             box-shadow: 0 6px 15px rgba(216, 27, 96, 0.12);
             border: 2px solid transparent;
@@ -219,15 +219,7 @@
             height: 100%;
             object-fit: cover;
             border-radius: 18px;
-            transform: scale(1.15);
-            transition: transform 0.3s;
-        }
-
-        .gift-card.featured {
-            width: 110px;
-            height: 110px;
-            box-shadow: 0 10px 25px rgba(216, 27, 96, 0.3);
-            border: 3px solid #d81b60;
+            display: block;
         }
 
         .gift-card:hover {
@@ -431,15 +423,15 @@
     <!-- Contenedor del fondo animado de corazones -->
     <div id="hearts-bg"></div>
 
-    <!-- Contador de Toques con Corazón (Fijo en pantalla) -->
+    <!-- Contador de Toques con Corazón Rojo -->
     <div class="heart-counter-badge" onclick="agregarToque(event)">
-        <span>❤️</span> <span id="contador-toques">0</span> clics de amor
+        <span style="color: #ff1744;">❤️</span> <span id="contador-toques">0</span> clics de amor
     </div>
 
     <div class="container">
         <!-- PANTALLA 1: LA PREGUNTA -->
         <div id="question-screen">
-            <img class="sticker-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHYyNHp3MGh3cmtrMXh5aGVvOHYxYzA2YW8zNmhsdndzdzJvbzQyeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/KZTfX2Z5dnpMnh48QW/giphy.gif" alt="Gatito Tierno">
+            <img class="sticker-img" src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Sticker Tierno">
             
             <h1 id="question-text">¿Sabías que eres lo mejor que me ha pasado? 💖</h1>
             
@@ -451,13 +443,13 @@
 
         <!-- PANTALLA 2: SECCIÓN DE REGALOS -->
         <div id="gifts-screen" class="hidden">
-            <!-- Contador de tiempo juntos -->
+            <!-- Contador de tiempo juntos en Negro -->
             <div class="time-counter-box">
                 <div class="time-counter-title">⏳ Nuestro Tiempo Juntos ⏳</div>
                 <div class="time-digits" id="time-counter-display"></div>
             </div>
 
-            <img class="sticker-img" style="width: 120px; height: 120px; margin-bottom: 5px;" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZpdXAwNWZ2NGc5NWc0aGVhdTFxeG0xa2o0azlkaWgwdmZ0YWtrcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9Ibxa0lGSzp0hE5/giphy.gif" alt="Gatito Feliz">
+            <img class="sticker-img" style="width: 120px; height: 120px; margin-bottom: 5px;" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Sticker Feliz">
             
             <h1>¡Sabía que dirías que sí, mi vida! 💕</h1>
             
@@ -504,7 +496,7 @@
                 <div id="vinyl-record" class="vinyl-record"></div>
             </div>
 
-            <!-- Enlace de audio (puedes cambiarlo por el enlace directo de tu canción favorita) -->
+            <!-- Audio de respaldo seguro -->
             <audio id="audio-player" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata"></audio>
 
             <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
@@ -528,7 +520,6 @@
 
     <script>
         let contadorNo = 0;
-        let regaloActivo = 1;
         let toquesCount = 0;
 
         const mensajesNo = [
@@ -567,7 +558,7 @@
         }
         crearCorazones();
 
-        // Contador de clics con animación de corazoncito flotante temporal
+        // Contador de clics con animación
         function agregarToque(e) {
             toquesCount++;
             document.getElementById('contador-toques').innerText = toquesCount;
@@ -593,7 +584,7 @@
 
         // Contador de Tiempo Juntos exacto desde el 7 de Julio de 2025 a las 21:52 hs
         function actualizarTiempoJuntos() {
-            const fechaInicio = new Date(2025, 6, 7, 21, 52, 0); // Mes 6 = Julio (enero es 0)
+            const fechaInicio = new Date(2025, 6, 7, 21, 52, 0); 
             const ahora = new Date();
 
             let diferencia = ahora - fechaInicio;
@@ -645,20 +636,6 @@
             }
         }
 
-        function actualizarDestacadoRegalos() {
-            document.getElementById('gift-1').classList.remove('featured');
-            document.getElementById('gift-2').classList.remove('featured');
-            document.getElementById('gift-3').classList.remove('featured');
-
-            if (regaloActivo === 1) {
-                document.getElementById('gift-1').classList.add('featured');
-            } else if (regaloActivo === 2) {
-                document.getElementById('gift-2').classList.add('featured');
-            } else if (regaloActivo === 3) {
-                document.getElementById('gift-3').classList.add('featured');
-            }
-        }
-
         function mostrarRegalos() {
             if (!audio.paused) {
                 audio.pause();
@@ -671,21 +648,11 @@
             document.getElementById('gift-1-content').classList.add('hidden');
             document.getElementById('gift-2-content').classList.add('hidden');
             document.getElementById('gift-3-content').classList.add('hidden');
-
-            actualizarDestacadoRegalos();
         }
 
         function abrirRegalo(numeroRegalo) {
             document.getElementById('gifts-screen').classList.add('hidden');
             document.getElementById(`gift-${numeroRegalo}-content`).classList.remove('hidden');
-
-            if (numeroRegalo === 1 && regaloActivo === 1) {
-                regaloActivo = 2;
-            } else if (numeroRegalo === 2 && regaloActivo === 2) {
-                regaloActivo = 3;
-            } else if (numeroRegalo === 3 && regaloActivo === 3) {
-                regaloActivo = 1;
-            }
         }
 
         function togglePlay() {
