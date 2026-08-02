@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para ti, mi amor ❤️</title>
     <style>
         * {
@@ -11,18 +11,14 @@
             padding: 0;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
         body {
             background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -45,23 +41,22 @@
 
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.94);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
-            padding: 25px 20px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.2);
-            max-width: 440px;
-            width: 90%;
-            height: 88vh;
-            max-height: 650px;
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 20px 45px rgba(216, 27, 96, 0.2);
+            max-width: 480px;
+            width: 92%;
             position: relative;
             z-index: 10;
+            max-height: 96vh;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         /* Contador de Toques con Corazón Rojo */
@@ -70,13 +65,13 @@
             top: 15px;
             right: 20px;
             background: #fff;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             box-shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 12px;
+            gap: 6px;
+            font-size: 13px;
             font-weight: bold;
             color: #ff1744;
             cursor: pointer;
@@ -88,61 +83,61 @@
             transform: scale(1.05);
         }
         .heart-counter-badge span {
-            font-size: 14px;
+            font-size: 15px;
         }
 
         /* Contador de Tiempo juntos en Negro */
         .time-counter-box {
             background: linear-gradient(135deg, #fff0f5 0%, #ffebee 100%);
             border: 1px solid #f8bbd0;
-            border-radius: 14px;
-            padding: 10px;
-            margin-bottom: 10px;
+            border-radius: 16px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
             width: 100%;
             box-shadow: inset 0 2px 5px rgba(216, 27, 96, 0.05);
         }
         .time-counter-title {
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1.2px;
             color: #000000;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         .time-digits {
             display: flex;
             justify-content: space-around;
             align-items: center;
             color: #000000;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
         }
         .time-digit-item span {
             display: block;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
             color: #000000;
         }
 
         /* Pantalla 1: Pregunta */
         .sticker-img {
-            width: 130px;
-            height: 130px;
+            width: 150px;
+            height: 150px;
             object-fit: contain;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             animation: bounce 2s infinite ease-in-out;
-            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.06));
+            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.08));
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            50% { transform: translateY(-8px); }
         }
 
         h1 {
             color: #ad1457;
-            font-size: 20px;
-            margin: 5px 0 15px 0;
+            font-size: 22px;
+            margin: 10px 0 20px 0;
             transition: all 0.3s ease;
             font-weight: 700;
             line-height: 1.3;
@@ -150,26 +145,24 @@
 
         .buttons {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 25px;
             min-height: 130px;
             width: 100%;
             position: relative;
+            flex-wrap: wrap;
         }
 
         .btn {
             padding: 12px 28px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             border: none;
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 80%;
-            max-width: 240px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
         }
 
         #yes-btn {
@@ -178,13 +171,17 @@
             z-index: 2;
         }
         #yes-btn:hover {
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
         }
 
         #no-btn {
             background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
             color: white;
             z-index: 1;
+        }
+
+        .buttons.single-button {
+            justify-content: center;
         }
 
         /* Pantalla 2: Regalos */
@@ -196,47 +193,48 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
-            margin-top: 5px;
-            width: 100%;
+            gap: 14px;
+            margin-top: 10px;
+            min-height: 130px;
         }
 
         .gift-card {
-            background: transparent;
+            background: white;
             padding: 0;
-            border-radius: 16px;
+            border-radius: 20px;
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 85px;
-            height: 85px;
-            overflow: visible;
-            border: none;
+            width: 95px;
+            height: 95px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.12);
+            border: 2px solid transparent;
         }
 
         .gift-card img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
+            border-radius: 18px;
             display: block;
-            filter: drop-shadow(0 4px 8px rgba(216, 27, 96, 0.15));
         }
 
         .gift-card:hover {
-            transform: translateY(-4px) scale(1.05);
+            transform: translateY(-5px) scale(1.05);
         }
 
-        /* Animación de pulso único para indicar el orden de los regalos (sin taparse) */
-        @keyframes pulseOnce {
+        /* Animación de secuencia única para los regalos (se hacen grandes uno por uno) */
+        @keyframes pulseSequence {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.18); box-shadow: 0 10px 25px rgba(216, 27, 96, 0.3); }
             100% { transform: scale(1); }
         }
 
         .pulse-once {
-            animation: pulseOnce 0.8s ease-in-out;
+            animation: pulseSequence 0.7s ease-in-out;
         }
 
         /* REGALO 1 (FOTO COLLAGE GRANDE) */
@@ -245,25 +243,24 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100%;
         }
 
         .gift-img-single {
             width: 100%;
-            max-height: 50vh;
+            height: auto;
+            max-height: 65vh;
             object-fit: contain;
-            border-radius: 14px;
-            border: 4px solid white;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            margin-bottom: 10px;
+            border-radius: 18px;
+            border: 8px solid white;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            margin-top: 5px;
         }
 
         /* REGALO 2 (REPRODUCTOR Y DISCO) */
         .player-wrapper {
             position: relative;
-            width: 220px;
-            margin: 5px auto 15px auto;
+            width: 240px;
+            margin: 10px auto 25px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -273,10 +270,10 @@
             position: relative;
             z-index: 2;
             background: linear-gradient(145deg, #4a3b46, #332731);
-            border-radius: 20px;
-            padding: 15px;
-            width: 200px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            border-radius: 25px;
+            padding: 20px;
+            width: 215px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
             color: white;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.1);
@@ -284,15 +281,15 @@
 
         .vinyl-record {
             position: absolute;
-            bottom: -15px;
-            width: 130px;
-            height: 130px;
+            bottom: -20px;
+            width: 155px;
+            height: 155px;
             border-radius: 50%;
             background: radial-gradient(circle, #222 20%, #111 21%, #111 30%, #222 31%, #111 60%, #333 61%, #111 62%);
             border: 2px solid #000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
             z-index: 1;
-            transition: bottom 0.4s ease;
+            transition: bottom 0.5s ease;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -300,15 +297,15 @@
 
         .vinyl-record::after {
             content: '';
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             background: #fce4ec;
             border-radius: 50%;
-            border: 3px solid #d81b60;
+            border: 4px solid #d81b60;
         }
 
         .vinyl-record.playing {
-            bottom: -40px;
+            bottom: -50px;
             animation: spin 3s linear infinite;
         }
 
@@ -317,20 +314,20 @@
         }
 
         .player-cover {
-            width: 150px;
-            height: 150px;
-            border-radius: 12px;
+            width: 175px;
+            height: 175px;
+            border-radius: 14px;
             object-fit: cover;
-            margin-bottom: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
         .progress-container {
             width: 100%;
             background: rgba(255, 255, 255, 0.25);
-            height: 5px;
+            height: 6px;
             border-radius: 5px;
-            margin: 10px 0 4px 0;
+            margin: 14px 0 6px 0;
             cursor: pointer;
             overflow: hidden;
         }
@@ -345,7 +342,7 @@
         .time-stamps {
             display: flex;
             justify-content: space-between;
-            font-size: 10px;
+            font-size: 11px;
             color: #fce4ec;
         }
 
@@ -353,14 +350,14 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 14px;
         }
 
         .control-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             transition: transform 0.2s;
         }
@@ -371,18 +368,18 @@
         .play-pause-btn {
             background: #ffffff;
             color: #4a3b46;
-            width: 36px;
-            height: 36px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* REGALO 3 (CARTA CON INTERFAZ ANTIGUA Y SEGURA) */
+        /* REGALO 3 (CARTA CON TU INTERFAZ ANTIGUA EXACTA) */
         .letter-card {
             background: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
             padding: 18px;
@@ -391,14 +388,13 @@
             text-align: left;
             box-shadow: 0 6px 15px rgba(216, 27, 96, 0.06);
             margin-top: 5px;
-            max-height: 44vh;
+            max-height: 52vh;
             overflow-y: auto;
-            width: 100%;
         }
 
         .letter-card p {
             color: #4a4a4a;
-            font-size: 13px;
+            font-size: 13.5px;
             line-height: 1.6;
             margin-bottom: 12px;
         }
@@ -408,33 +404,28 @@
             background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
             color: #ad1457;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 15px;
             letter-spacing: 0.8px;
             text-align: center;
-            padding: 10px 20px;
-            border-radius: 12px;
+            padding: 12px 24px;
+            border-radius: 14px;
             cursor: pointer;
             border: none;
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 15px;
             transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
+            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.15);
             user-select: none;
         }
 
         .volver-box-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(216, 27, 96, 0.25);
+            box-shadow: 0 8px 20px rgba(216, 27, 96, 0.25);
         }
 
         .content-box {
             text-align: center;
             width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
         }
     </style>
 </head>
@@ -450,7 +441,7 @@
 
     <div class="container">
         <!-- PANTALLA 1: LA PREGUNTA -->
-        <div id="question-screen" class="content-box" style="justify-content: center;">
+        <div id="question-screen">
             <img class="sticker-img" src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Sticker Tierno">
             
             <h1 id="question-text">¿Sabías que eres lo mejor que me ha pasado? 💖</h1>
@@ -462,14 +453,14 @@
         </div>
 
         <!-- PANTALLA 2: SECCIÓN DE REGALOS -->
-        <div id="gifts-screen" class="hidden content-box" style="justify-content: center;">
+        <div id="gifts-screen" class="hidden">
             <!-- Contador de tiempo juntos en Negro -->
             <div class="time-counter-box">
                 <div class="time-counter-title">⏳ Nuestro Tiempo Juntos ⏳</div>
                 <div class="time-digits" id="time-counter-display"></div>
             </div>
 
-            <img class="sticker-img" style="width: 100px; height: 100px; margin-bottom: 2px;" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Sticker Feliz">
+            <img class="sticker-img" style="width: 120px; height: 120px; margin-bottom: 5px;" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Sticker Feliz">
             
             <h1>¡Sabía que dirías que sí, mi vida! 💕</h1>
             
@@ -488,14 +479,12 @@
 
         <!-- CONTENIDO REGALO 1 (COLLAGE GRANDE) -->
         <div id="gift-1-content" class="hidden content-box">
-            <div style="width: 100%;"></div>
             <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos">
             <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 2 (REPRODUCTOR Y SHORT DE YOUTUBE) -->
+        <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON YOUTUBE SHORT) -->
         <div id="gift-2-content" class="hidden content-box">
-            <div style="width: 100%;"></div>
             <div class="player-wrapper">
                 <div class="player-card">
                     <img src="https://lh3.googleusercontent.com/d/1hSRmoAaC76mE6DmeZ4I5tqL5DNa7oH_m" class="player-cover" alt="Portada Personalizada">
@@ -518,22 +507,20 @@
                 <div id="vinyl-record" class="vinyl-record"></div>
             </div>
 
-            <!-- Iframe de YouTube Short -->
-            <div style="display:none;" id="youtube-audio-container">
-                <iframe id="youtube-short-iframe" width="0" height="0" src="" title="Café Tacvba - Eres Short" frameborder="0" allow="autoplay"></iframe>
-            </div>
+            <!-- Contenedor dinámico para el audio de YouTube Short -->
+            <div style="display:none;" id="youtube-audio-container"></div>
 
             <button class="volver-box-btn" onclick="mostrarRegalos()">VOLVER A LOS REGALOS</button>
         </div>
 
         <!-- CONTENIDO REGALO 3 (CARTA CON INTERFAZ ANTIGUA) -->
         <div id="gift-3-content" class="hidden content-box">
-            <h2 style="color: #ad1457; margin-bottom: 4px; font-size: 17px;">Para ti, mi amor ✉️❤️</h2>
+            <h2 style="color: #ad1457; margin-bottom: 8px; font-size: 19px;">Para ti, mi amor ✉️❤️</h2>
             
             <div class="letter-card">
                 <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo.</p>
                 <p>Haces que los momentos ordinarios se sientan especiales solo por ser tú. No importa a dónde nos lleve la vida, siempre serás mi lugar favorito. Amarte es lo más fácil y hermoso que conozco. Estar contigo se siente como estar en casa.</p>
-                <p>En los momentos tranquilos y en los ruidosos, en la risa y en los silencios, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y profundamente amado, y eso es algo que nunca daré por sentado.</p>
+                <p>En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y profundamente amado, y eso es algo que nunca daré por sentado.</p>
                 <p>Y no importa lo que la vida nos depare, sé que una cosa siempre permanecerá igual: la forma en que mi corazón se siente cuando estoy contigo. Es en los pequeños momentos, en los tranquilos, en los que nadie más ve, donde me doy cuenta de la suerte que tengo de amarte.</p>
                 <p>No eres solo una parte de mi vida... eres la mejor parte de ella.</p>
             </div>
@@ -548,19 +535,20 @@
         let reproduciendo = false;
         let tiempoActualSeg = 0;
         let timerInterval = null;
-        let yaSeMostroSecuencia = false; // Control de uso único para la secuencia de los regalos
+        let yaSeMostroSecuencia = false; // Control para que la animación de las cajas pase solo una vez
 
         const mensajesNo = [
-            "¿Estás completamente segura???🥺",
-            "Piénsalo otra vez, mi vida... 💖🙏",
-            "Me vas a romper el corazón xio 😭",
-            "¡ño se vale, di que siii",
-            "Mi corazón no acepta un no por respuesta 😼",
+            "¿Estás completamente segura? 🥺",
+            "Piénsalo otra vez, mi vida... 💖",
+            "Me vas a romper el corazón en mil pedazos 😭",
+            "¡Ay no se vale, di que sí! 🌹",
+            "Mi corazón no acepta un no por respuesta 💘",
             "¡Ya rendítete y ámame! 🥰"
         ];
 
         const botonSi = document.getElementById('yes-btn');
         const botonNo = document.getElementById('no-btn');
+        const contenedorBotones = document.getElementById('buttons-container');
         const textoPregunta = document.getElementById('question-text');
 
         const playBtn = document.getElementById('play-btn');
@@ -582,7 +570,7 @@
                 heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
                 bg.appendChild(heart);
                 setTimeout(() => { heart.remove(); }, 8000);
-            }, 500);
+            }, 450);
         }
         crearCorazones();
 
@@ -648,7 +636,7 @@
                 textoPregunta.innerText = mensajesNo[contadorNo - 1];
             }
             
-            let escalaSi = 1 + (contadorNo * 0.15);
+            let escalaSi = 1 + (contadorNo * 0.22);
             botonSi.style.transform = `scale(${escalaSi})`;
 
             let escalaNo = Math.max(0, 1 - (contadorNo * 0.16));
@@ -658,6 +646,7 @@
                 botonNo.style.opacity = '0';
                 setTimeout(() => {
                     botonNo.style.display = 'none';
+                    contenedorBotones.classList.add('single-button');
                     botonSi.style.margin = '0 auto';
                 }, 300);
             }
@@ -680,7 +669,7 @@
             document.getElementById('gift-2-content').classList.add('hidden');
             document.getElementById('gift-3-content').classList.add('hidden');
 
-            // Secuencia de un único uso: pulsa los regalos uno por uno al entrar por primera vez
+            // Secuencia de un único uso para las cajas de regalo al entrar por primera vez
             if (!yaSeMostroSecuencia) {
                 yaSeMostroSecuencia = true;
                 const g1 = document.getElementById('gift-1');
@@ -688,9 +677,9 @@
                 const g3 = document.getElementById('gift-3');
 
                 setTimeout(() => { g1.classList.add('pulse-once'); }, 300);
-                setTimeout(() => { g1.classList.remove('pulse-once'); g2.classList.add('pulse-once'); }, 1100);
-                setTimeout(() => { g2.classList.remove('pulse-once'); g3.classList.add('pulse-once'); }, 1900);
-                setTimeout(() => { g3.classList.remove('pulse-once'); }, 2700);
+                setTimeout(() => { g1.classList.remove('pulse-once'); g2.classList.add('pulse-once'); }, 1050);
+                setTimeout(() => { g2.classList.remove('pulse-once'); g3.classList.add('pulse-once'); }, 1800);
+                setTimeout(() => { g3.classList.remove('pulse-once'); }, 2550);
             }
         }
 
@@ -726,7 +715,7 @@
                 playBtn.innerText = '❚❚';
                 vinyl.classList.add('playing');
                 
-                youtubeContainer.innerHTML = `<iframe id="youtube-short-iframe" width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="Café Tacvba - Eres Short" frameborder="0" allow="autoplay"></iframe>`;
+                youtubeContainer.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="YouTube audio" frameborder="0" allow="autoplay"></iframe>`;
                 
                 clearInterval(timerInterval);
                 timerInterval = setInterval(actualizarBarraProgreso, 1000);
@@ -746,7 +735,7 @@
             tiempoActualSeg = Math.min(duracionShort, tiempoActualSeg + 5);
             actualizarUIProgreso();
             if (reproduciendo) {
-                youtubeContainer.innerHTML = `<iframe id="youtube-short-iframe" width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="Café Tacvba - Eres Short" frameborder="0" allow="autoplay"></iframe>`;
+                youtubeContainer.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="YouTube audio" frameborder="0" allow="autoplay"></iframe>`;
             }
         }
 
@@ -756,7 +745,7 @@
             tiempoActualSeg = Math.floor((clickX / width) * duracionShort);
             actualizarUIProgreso();
             if (reproduciendo) {
-                youtubeContainer.innerHTML = `<iframe id="youtube-short-iframe" width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="Café Tacvba - Eres Short" frameborder="0" allow="autoplay"></iframe>`;
+                youtubeContainer.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="YouTube audio" frameborder="0" allow="autoplay"></iframe>`;
             }
         }
     </script>
