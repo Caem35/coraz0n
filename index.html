@@ -254,6 +254,118 @@
             border: 3px solid white;
             box-shadow: 0 8px 25px rgba(0,0,0,0.12);
             margin-top: 4px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gift-img-single:hover {
+            transform: scale(1.02);
+        }
+
+        /* Lightbox Visor de Fotos Pantalla Completa */
+        #lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #lightbox-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #lightbox-img {
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            object-fit: contain;
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: white;
+            color: #ad1457;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Easter Egg Modal de los 50 corazones */
+        #easter-egg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #easter-egg-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .easter-egg-card {
+            background: #fff;
+            padding: 25px 20px;
+            border-radius: 20px;
+            max-width: 340px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.3);
+            border: 2px solid #f8bbd0;
+            position: relative;
+        }
+        .easter-egg-text {
+            color: #ad1457;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .easter-egg-next-btn {
+            background: linear-gradient(135deg, #ff1744 0%, #d81b60 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.4);
+            transition: transform 0.2s;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .easter-egg-next-btn:hover {
+            transform: scale(1.1);
         }
 
         .player-wrapper {
@@ -453,6 +565,21 @@
         <span style="color: #ff1744;">❤️</span> <span id="contador-toques">0</span> clics de amor
     </div>
 
+    <!-- Visor de Fotos (Lightbox) Pantalla Completa para Regalo 1 -->
+    <div id="lightbox-overlay" onclick="cerrarLightbox()">
+        <button id="lightbox-close" onclick="cerrarLightbox()">×</button>
+        <img id="lightbox-img" src="" alt="Foto Ampliada">
+    </div>
+
+    <!-- Easter Egg Modal (Se activa a los 50 clics) -->
+    <div id="easter-egg-overlay">
+        <div class="easter-egg-card">
+            <h3 style="color: #ad1457; margin-bottom: 10px; font-size: 16px;">✨ Mensaje Secreto ✨</h3>
+            <div id="easter-egg-text" class="easter-egg-text"></div>
+            <button class="easter-egg-next-btn" onclick="siguienteMensajeEgg()">❤️</button>
+        </div>
+    </div>
+
     <div class="container">
         <!-- PANTALLA 1: LA PREGUNTA -->
         <div id="question-screen">
@@ -491,13 +618,13 @@
             </div>
         </div>
 
-        <!-- CONTENIDO REGALO 1 (COLLAGE GRANDE) -->
+        <!-- CONTENIDO REGALO 1 (COLLAGE GRANDE CON LIGHTBOX) -->
         <div id="gift-1-content" class="hidden content-box">
-            <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos">
+            <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos" onclick="abrirLightbox(this.src)">
             <button class="volver-box-btn" onclick="cerrarRegalo(1)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON YOUTUBE SHORT) -->
+        <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON AUDIO DE GOOGLE DRIVE) -->
         <div id="gift-2-content" class="hidden content-box">
             <div class="player-wrapper">
                 <div class="player-card">
@@ -521,8 +648,11 @@
                 <div id="vinyl-record" class="vinyl-record"></div>
             </div>
 
-            <!-- Contenedor dinámico para el audio de YouTube Short -->
-            <div style="display:none;" id="youtube-audio-container"></div>
+            <!-- Etiqueta de audio nativa con el enlace de Google Drive adaptado para reproducción directa -->
+            <audio id="audio-player" preload="metadata">
+                <source src="https://docs.google.com/uc?export=download&id=1qjol4EZ8KjsPt-D1hxmAD5HIciBYKcLy" type="audio/mp4">
+                Tu navegador no soporta audio.
+            </audio>
 
             <button class="volver-box-btn" onclick="cerrarRegalo(2)">VOLVER A LOS REGALOS</button>
         </div>
@@ -547,10 +677,16 @@
         let contadorNo = 0;
         let toquesCount = 0;
         let reproduciendo = false;
-        let tiempoActualSeg = 0;
-        let timerInterval = null;
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
+        let easterEggActivado = false;
+        let pasoEgg = 0;
+
+        const mensajesEgg = [
+            "1) ¿Tú cuerpo? me encanta",
+            "2) Pero...",
+            "3) Pero prefiero esos ojitos lindos, esa sonrisa hermosa, esa personalidad única y todas esas cosas que te hacen ver inigualable"
+        ];
 
         const mensajesNo = [
             "¿Estás completamente segura?🥺",
@@ -569,7 +705,7 @@
         const vinyl = document.getElementById('vinyl-record');
         const progressBar = document.getElementById('progress-bar');
         const currentTimeEl = document.getElementById('current-time');
-        const youtubeContainer = document.getElementById('youtube-audio-container');
+        const audioPlayer = document.getElementById('audio-player');
 
         const duracionShort = 56; 
 
@@ -588,10 +724,15 @@
         }
         crearCorazones();
 
-        // Contador de clics con animación
+        // Contador de clics con animación y activación del Easter Egg a los 50
         function agregarToque(e) {
             toquesCount++;
             document.getElementById('contador-toques').innerText = toquesCount;
+
+            if (toquesCount === 50 && !easterEggActivado) {
+                easterEggActivado = true;
+                abrirEasterEgg();
+            }
 
             const clickHeart = document.createElement('div');
             clickHeart.innerHTML = '💖';
@@ -610,6 +751,32 @@
             }, 20);
 
             setTimeout(() => { clickHeart.remove(); }, 800);
+        }
+
+        // Funciones del Easter Egg
+        function abrirEasterEgg() {
+            pasoEgg = 0;
+            document.getElementById('easter-egg-text').innerText = mensajesEgg[pasoEgg];
+            document.getElementById('easter-egg-overlay').classList.add('show');
+        }
+
+        function siguienteMensajeEgg() {
+            pasoEgg++;
+            if (pasoEgg < mensajesEgg.length) {
+                document.getElementById('easter-egg-text').innerText = mensajesEgg[pasoEgg];
+            } else {
+                document.getElementById('easter-egg-overlay').classList.remove('show');
+            }
+        }
+
+        // Funciones del Visor Lightbox para Regalo 1
+        function abrirLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-overlay').classList.add('show');
+        }
+
+        function cerrarLightbox() {
+            document.getElementById('lightbox-overlay').classList.remove('show');
         }
 
         // Contador de Tiempo Juntos exacto desde el 7 de Julio de 2025 a las 21:52 hs
@@ -662,8 +829,9 @@
             reproduciendo = false;
             playBtn.innerText = '▶';
             vinyl.classList.remove('playing');
-            clearInterval(timerInterval);
-            youtubeContainer.innerHTML = '';
+            if (audioPlayer) {
+                audioPlayer.pause();
+            }
         }
 
         function actualizarDestacadoRegalos() {
@@ -709,64 +877,59 @@
             mostrarRegalos();
         }
 
-        function actualizarBarraProgreso() {
-            if (tiempoActualSeg >= duracionShort) {
-                detenerAudioYouTube();
-                tiempoActualSeg = 0;
-                actualizarUIProgreso();
-                return;
-            }
-            tiempoActualSeg++;
-            actualizarUIProgreso();
-        }
+        // Control del reproductor con audio nativo de Drive
+        if (audioPlayer) {
+            audioPlayer.addEventListener('timeupdate', () => {
+                const current = audioPlayer.currentTime;
+                const progressPercent = (current / duracionShort) * 100;
+                progressBar.style.width = `${progressPercent}%`;
 
-        function actualizarUIProgreso() {
-            const progressPercent = (tiempoActualSeg / duracionShort) * 100;
-            progressBar.style.width = `${progressPercent}%`;
+                let currentMin = Math.floor(current / 60);
+                let currentSec = Math.floor(current % 60);
+                if (currentSec < 10) currentSec = `0${currentSec}`;
+                currentTimeEl.innerText = `${currentMin}:${currentSec}`;
 
-            let currentMin = Math.floor(tiempoActualSeg / 60);
-            let currentSec = Math.floor(tiempoActualSeg % 60);
-            if (currentSec < 10) currentSec = `0${currentSec}`;
-            currentTimeEl.innerText = `${currentMin}:${currentSec}`;
+                if (current >= duracionShort) {
+                    detenerAudioYouTube();
+                    audioPlayer.currentTime = 0;
+                }
+            });
         }
 
         function togglePlay() {
             if (!reproduciendo) {
-                reproduciendo = true;
-                playBtn.innerText = '❚❚';
-                vinyl.classList.add('playing');
-                
-                youtubeContainer.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="YouTube audio" frameborder="0" allow="autoplay"></iframe>`;
-                
-                clearInterval(timerInterval);
-                timerInterval = setInterval(actualizarBarraProgreso, 1000);
+                audioPlayer.play().then(() => {
+                    reproduciendo = true;
+                    playBtn.innerText = '❚❚';
+                    vinyl.classList.add('playing');
+                }).catch(error => {
+                    console.log("Error al reproducir audio:", error);
+                    alert("Por favor toca nuevamente el botón de play para iniciar la música.");
+                });
             } else {
                 detenerAudioYouTube();
             }
         }
 
         function reiniciarAudio() {
-            detenerAudioYouTube();
-            tiempoActualSeg = 0;
-            actualizarUIProgreso();
-            togglePlay();
+            if (audioPlayer) {
+                audioPlayer.currentTime = 0;
+                if (!reproduciendo) togglePlay();
+            }
         }
 
         function adelantarAudio() {
-            tiempoActualSeg = Math.min(duracionShort, tiempoActualSeg + 5);
-            actualizarUIProgreso();
-            if (reproduciendo) {
-                youtubeContainer.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="YouTube audio" frameborder="0" allow="autoplay"></iframe>`;
+            if (audioPlayer) {
+                audioPlayer.currentTime = Math.min(duracionShort, audioPlayer.currentTime + 5);
             }
         }
 
         function seekAudio(e) {
             const width = e.target.clientWidth;
             const clickX = e.offsetX;
-            tiempoActualSeg = Math.floor((clickX / width) * duracionShort);
-            actualizarUIProgreso();
-            if (reproduciendo) {
-                youtubeContainer.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/HSOTmFPLjd8?autoplay=1&start=${tiempoActualSeg}" title="YouTube audio" frameborder="0" allow="autoplay"></iframe>`;
+            const nuevaTiempo = (clickX / width) * duracionShort;
+            if (audioPlayer) {
+                audioPlayer.currentTime = nuevaTiempo;
             }
         }
     </script>
