@@ -123,7 +123,6 @@
             object-fit: contain;
             margin-bottom: 8px;
             animation: bounce 2s infinite ease-in-out;
-            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.06));
         }
 
         @keyframes bounce {
@@ -139,17 +138,21 @@
             line-height: 1.3;
         }
 
+        /* Botones uno arriba del otro (como pediste) */
         .buttons {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            min-height: 120px;
+            gap: 14px;
+            min-height: 130px;
             width: 100%;
         }
 
         .btn {
             padding: 12px 26px;
+            width: 80%;
+            max-width: 240px;
             font-size: 15px;
             font-weight: bold;
             border: none;
@@ -185,11 +188,11 @@
             min-height: 120px;
         }
 
-        /* Tarjetas de regalo sin marcos blancos extraños */
+        /* Tarjetas de regalo sin ningún marco o fondo cuadrado */
         .gift-card {
-            background: transparent;
+            background: transparent !important;
             padding: 0;
-            border-radius: 20px;
+            border-radius: 0;
             cursor: pointer;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
             display: flex;
@@ -198,6 +201,7 @@
             width: 85px;
             height: 85px;
             border: none;
+            box-shadow: none;
         }
 
         .gift-card img {
@@ -205,11 +209,14 @@
             height: 100%;
             object-fit: contain;
             display: block;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
             filter: drop-shadow(0 4px 8px rgba(216, 27, 96, 0.15));
             transition: transform 0.4s ease;
         }
 
-        /* Estado activo/resaltado secuencial (el que toca abrir se hace grande) */
+        /* Estado activo/resaltado secuencial */
         .gift-card.active-gift {
             transform: scale(1.25);
             z-index: 5;
@@ -367,7 +374,7 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.2);
         }
 
-        /* REGALO 3 (CARTA REDISEÑADA CON LETRAS MÁS GRANDES) */
+        /* REGALO 3 (CARTA CON LETRAS MÁS GRANDES) */
         .letter-card {
             background: linear-gradient(135deg, #fffafc 0%, #ffffff 100%);
             padding: 24px;
@@ -391,7 +398,7 @@
 
         .letter-card p {
             color: #3b3b3b;
-            font-size: 15px; /* Letra más grande y cómoda de leer */
+            font-size: 15.5px;
             line-height: 1.8;
             margin-bottom: 16px;
         }
@@ -401,7 +408,7 @@
             color: #ad1457;
             text-align: center;
             margin-top: 10px;
-            font-size: 16px;
+            font-size: 16.5px;
         }
 
         /* BOTÓN VOLVER */
@@ -518,14 +525,14 @@
             <button class="volver-box-btn" onclick="cerrarRegalo(2)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA REDISEÑADA Y LETRA MÁS GRANDE) -->
+        <!-- CONTENIDO REGALO 3 (CARTA REDISEÑADA Y LETRA GRANDE) -->
         <div id="gift-3-content" class="hidden content-box">
             <h2 style="color: #ad1457; margin-bottom: 6px; font-size: 19px;">Para ti, mi amor ✉️❤️</h2>
             
             <div class="letter-card">
-                <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo.</p>
+                <p>Hoy todo gira en torno a ti, y solo quiero que sepas lo agradecido/a que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo.</p>
                 <p>Haces que los momentos ordinarios se sientan especiales solo por ser tú. No importa a dónde nos lleve la vida, siempre serás mi lugar favorito. Amarte es lo más fácil y hermoso que conozco. Estar contigo se siente como estar en casa.</p>
-                <p>En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y profundamente amado, y eso es algo que nunca daré por sentado.</p>
+                <p>En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido/a, apoyado/a y profundamente amado/a, y eso es algo que nunca daré por sentado.</p>
                 <p>Y no importa lo que la vida nos depare, sé que una cosa siempre permanecerá igual: la forma en que mi corazón se siente cuando estoy contigo. Es en los pequeños momentos, en los tranquilos, en los que nadie más ve, donde me doy cuenta de la suerte que tengo de amarte.</p>
                 <p>No eres solo una parte de mi vida... eres la mejor parte de ella. ❤️</p>
             </div>
@@ -540,8 +547,8 @@
         let reproduciendo = false;
         let tiempoActualSeg = 0;
         let timerInterval = null;
-        let regaloActualIndex = 1; // 1, 2, 3 en orden
-        let secuenciaCompletada = false; // Controla si ya terminó el ciclo único
+        let regaloActualIndex = 1; 
+        let secuenciaCompletada = false;
 
         const mensajesNo = [
             "¿Estás completamente segura? 🥺",
@@ -635,7 +642,7 @@
                 textoPregunta.innerText = mensajesNo[contadorNo - 1];
             }
             
-            let escalaSi = 1 + (contadorNo * 0.2);
+            let escalaSi = 1 + (contadorNo * 0.15);
             botonSi.style.transform = `scale(${escalaSi})`;
 
             let escalaNo = Math.max(0, 1 - (contadorNo * 0.16));
@@ -645,7 +652,6 @@
                 botonNo.style.opacity = '0';
                 setTimeout(() => {
                     botonNo.style.display = 'none';
-                    botonSi.style.margin = '0 auto';
                 }, 300);
             }
         }
@@ -663,7 +669,6 @@
             document.getElementById('gift-2').classList.remove('active-gift');
             document.getElementById('gift-3').classList.remove('active-gift');
 
-            // Si ya se completó el ciclo único, ningún regalo se agranda automáticamente
             if (!secuenciaCompletada && regaloActualIndex <= 3) {
                 document.getElementById(`gift-${regaloActualIndex}`).classList.add('active-gift');
             }
@@ -689,14 +694,12 @@
         function cerrarRegalo(numeroRegalo) {
             detenerAudioYouTube();
             
-            // Avanza en orden estricto de ciclo único
             if (!secuenciaCompletada) {
                 if (regaloActualIndex === numeroRegalo) {
                     if (regaloActualIndex < 3) {
                         regaloActualIndex++;
                     } else {
-                        // Al volver de la carta (regalo 3), termina el ciclo único definitivamente
-                        secuenciaCompletada = true;
+                        secuenciaCompletada = true; 
                     }
                 }
             }
