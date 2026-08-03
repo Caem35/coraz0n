@@ -17,9 +17,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 100vw;
             height: 100vh;
             overflow: hidden;
-            position: relative;
+            position: fixed;
         }
 
         /* Corazones flotantes de fondo */
@@ -48,8 +49,8 @@
             box-shadow: 0 20px 45px rgba(216, 27, 96, 0.2);
             max-width: 420px;
             width: 92%;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-height: 88vh; 
+            overflow-y: auto;  
             position: relative;
             z-index: 10;
             display: flex;
@@ -197,7 +198,7 @@
             min-height: 100px;
         }
 
-        /* Tarjetas de regalo COMPLETAMENTE TRANSPARENTES */
+        /* Tarjetas de regalo limpias */
         .gift-card {
             background: transparent !important;
             background-color: transparent !important;
@@ -223,16 +224,12 @@
             background-color: transparent !important;
             border: none !important;
             box-shadow: none !important;
-            filter: drop-shadow(0 4px 8px rgba(216, 27, 96, 0.2));
             transition: transform 0.4s ease;
         }
 
         .gift-card.active-gift {
             transform: scale(1.2);
             z-index: 5;
-        }
-        .gift-card.active-gift img {
-            filter: drop-shadow(0 6px 12px rgba(216, 27, 96, 0.35));
         }
 
         .gift-card:hover {
@@ -483,13 +480,13 @@
             
             <div class="gifts-grid">
                 <div id="gift-1" class="gift-card" onclick="abrirRegalo(1)">
-                    <img src="https://drive.google.com/uc?export=view&id=11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 1">
+                    <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 1">
                 </div>
                 <div id="gift-2" class="gift-card" onclick="abrirRegalo(2)">
-                    <img src="https://drive.google.com/uc?export=view&id=11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 2">
+                    <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 2">
                 </div>
                 <div id="gift-3" class="gift-card" onclick="abrirRegalo(3)">
-                    <img src="https://drive.google.com/uc?export=view&id=11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 3">
+                    <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 3">
                 </div>
             </div>
         </div>
@@ -556,12 +553,12 @@
         let secuenciaCompletada = false;
 
         const mensajesNo = [
-            "¿Estás completamente segura? 🥺",
-            "Piénsalo otra vez, mi vida... 💖",
-            "Me vas a romper el corazón en mil pedazos 😭",
-            "¡Ay no se vale, di que sí! 🌹",
-            "Mi corazón no acepta un no por respuesta 💘",
-            "¡Ya rendítete y ámame! 🥰"
+            "¿Estás completamente segura?🥺",
+            "Piénsalo otra vez, mi vida...",
+            "Me rompe el cora xio😭",
+            "Daleee deci que si🙏🏻🙏🏻🙏🏻",
+            "No aceptó un no por respuesta 😼",
+            "Ya rindete y ámame 😝"
         ];
 
         const botonSi = document.getElementById('yes-btn');
