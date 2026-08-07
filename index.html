@@ -354,8 +354,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            padding-right: 30px;
         }
 
         .player-card {
@@ -371,14 +369,14 @@
             border: 1.5px solid rgba(255,255,255,0.1);
         }
 
-        /* VINILO CORREGIDO: Sin temblores y contenido en su espacio */
+        /* VINILO RESTAURADO Y PERFECTO: Tamaño original y se asoma exactamente la mitad */
         .vinyl-record {
             position: absolute;
-            right: 5px; 
+            right: 15px; /* Oculto detrás de la tarjeta al estar pausado */
             top: 50%;
             transform: translateY(-50%);
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             background: radial-gradient(circle, #222 20%, #111 21%, #111 30%, #222 31%, #111 60%, #333 61%, #111 62%);
             border: 2px solid #000;
@@ -392,15 +390,15 @@
 
         .vinyl-record::after {
             content: '';
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             background: #fce4ec;
             border-radius: 50%;
             border: 2px solid #d81b60;
         }
 
         .vinyl-record.playing {
-            right: -35px; 
+            right: -42px; /* Se asoma exactamente la mitad al reproducir, sin cortes ni excesos */
             animation: spin 3s linear infinite;
         }
 
