@@ -305,7 +305,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Easter Egg Matrix con vista de Escritorio Forzada */
+        /* Easter Egg Matrix Corregido y Legible */
         #easter-egg-overlay {
             position: fixed;
             top: 0;
@@ -317,7 +317,7 @@
             display: none;
             justify-content: center;
             align-items: center;
-            overflow: auto;
+            overflow: hidden;
         }
         #easter-egg-overlay.show {
             display: flex;
@@ -552,7 +552,7 @@
         <img id="lightbox-img" src="" alt="Foto Ampliada">
     </div>
 
-    <!-- Easter Egg Matrix con vista de Escritorio Forzada -->
+    <!-- Easter Egg Matrix Corregido -->
     <div id="easter-egg-overlay">
         <button class="matrix-close-btn" onclick="cerrarEasterEgg()">×</button>
         <canvas id="matrix"></canvas>
@@ -660,8 +660,8 @@
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
-        const fontSize = 24; // Aumentado el tamaño de la letra para que se vean más grandes
-        const cols = 10;     // Reducido exactamente a 10 columnas
+        const fontSize = 22; // Tamaño ideal para leer con claridad
+        const cols = 10;     // Exactamente 10 columnas limpias
         let spacing = 0;
         let drops = [];
         let heartbeat = 0;
@@ -762,7 +762,7 @@
         }
 
         function abrirEasterEgg() {
-            document.getElementById('viewport-meta').setAttribute('content', 'width=1280');
+            // Usar tamaño real de la pantalla actual sin forzar resoluciones extrañas
             document.getElementById('easter-egg-overlay').classList.add('show');
             
             setTimeout(() => {
@@ -781,32 +781,30 @@
         function cerrarEasterEgg() {
             document.getElementById('easter-egg-overlay').classList.remove('show');
             if (matrixInterval) clearInterval(matrixInterval);
-            document.getElementById('viewport-meta').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
 
         function drawMatrix() {
-            // Desvanecimiento suave estilo matrix
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.fillStyle = "#ff69b4";
-            ctx.font = fontSize + "px monospace";
+            ctx.font = "bold " + fontSize + "px monospace";
             ctx.textAlign = "left";
 
             for (let i = 0; i < cols; i++) {
-                const x = i * spacing + spacing / 4;
+                const x = i * spacing + (spacing / 2) - 30; // Centrado exacto por columna
                 const y = drops[i] * fontSize;
 
-                for (let j = 0; j < 20; j++) {
-                    const yy = y - j * fontSize;
-                    if (yy > 0 && yy < canvas.height) {
+                for (let j = 0; j < 15; j++) {
+                    const yy = y - (j * (fontSize * 1.5));
+                    if (yy > -50 && yy < canvas.height + 50) {
                         ctx.fillText("Te Amo", x, yy);
                     }
                 }
 
-                drops[i] += 0.8;
+                drops[i] += 0.6;
 
-                if (y > canvas.height + fontSize * 20) {
+                if (y > canvas.height + fontSize * 15) {
                     drops[i] = 0;
                 }
             }
@@ -817,7 +815,7 @@
             ctx.shadowColor = "#ff69b4";
             ctx.shadowBlur = 15;
             ctx.fillStyle = "#ff1493";
-            ctx.font = `${60 * scale}px monospace`;
+            ctx.font = `bold ${50 * scale}px monospace`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText("Te Amo", canvas.width / 2, canvas.height / 2);
@@ -826,7 +824,7 @@
             hearts.forEach((heart, i) => {
                 ctx.save();
                 ctx.globalAlpha = 1 - heart.life / 30;
-                ctx.font = "160px serif";
+                ctx.font = "120px serif";
                 ctx.fillStyle = "#ff69b4";
                 ctx.shadowColor = "#ff1493";
                 ctx.shadowBlur = 10;
