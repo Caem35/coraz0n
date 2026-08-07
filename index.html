@@ -654,12 +654,12 @@
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
 
-        // Variables para la Lluvia Matrix
+        // Variables para la Lluvia Matrix responsiva
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
-        const fontSize = 25;
-        const cols = 10;
+        let fontSize = 25;
+        let cols = 10;
         let spacing = 0;
         let drops = [];
         let heartbeat = 0;
@@ -764,8 +764,19 @@
 
         function abrirEasterEgg() {
             document.getElementById('easter-egg-overlay').classList.add('show');
+            
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
+            // Detectar automáticamente si es un celu normal o pantalla grande
+            if (canvas.width < 500) {
+                fontSize = 16;  
+                cols = 18;      
+            } else {
+                fontSize = 25;  
+                cols = 10;
+            }
+
             spacing = canvas.width / cols;
             drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
             
@@ -990,7 +1001,15 @@
         window.addEventListener("resize", () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            if (canvas.width < 500) {
+                fontSize = 16;
+                cols = 18;
+            } else {
+                fontSize = 25;
+                cols = 10;
+            }
             spacing = canvas.width / cols;
+            drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
         });
     </script>
 </body>
