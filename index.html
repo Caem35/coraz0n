@@ -199,7 +199,6 @@
             min-height: 100px;
         }
 
-        /* Tarjetas de regalo limpias */
         .gift-card {
             background: transparent !important;
             background-color: transparent !important;
@@ -306,7 +305,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Easter Egg Matrix Lluvia de Te Amo (Cada 30 clics) */
+        /* Easter Egg Matrix Forzado a Escritorio */
         #easter-egg-overlay {
             position: fixed;
             top: 0;
@@ -318,17 +317,19 @@
             display: none;
             justify-content: center;
             align-items: center;
+            overflow: auto; /* Permite deslizar si en el celu se ve más ancho */
         }
         #easter-egg-overlay.show {
             display: flex;
         }
         #matrix {
             display: block;
-            width: 100vw;
+            /* Forzamos un ancho de PC fijo para que se vea idéntico al modo escritorio */
+            width: 1200px;
             height: 100vh;
         }
         .matrix-close-btn {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 25px;
             background: #fff;
@@ -654,12 +655,12 @@
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
 
-        // Variables para la Lluvia Matrix responsiva
+        // Variables para la Lluvia Matrix forzada a PC original
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
-        let fontSize = 25;
-        let cols = 10;
+        const fontSize = 25; // Tamaño original de PC
+        const cols = 10;     // Columnas originales de PC
         let spacing = 0;
         let drops = [];
         let heartbeat = 0;
@@ -765,17 +766,9 @@
         function abrirEasterEgg() {
             document.getElementById('easter-egg-overlay').classList.add('show');
             
-            canvas.width = window.innerWidth;
+            // Forzamos el ancho y alto del canvas simulando una PC para que se vea idéntico
+            canvas.width = 1200;
             canvas.height = window.innerHeight;
-
-            // Detectar automáticamente si es un celu normal o pantalla grande
-            if (canvas.width < 500) {
-                fontSize = 16;  
-                cols = 18;      
-            } else {
-                fontSize = 25;  
-                cols = 10;
-            }
 
             spacing = canvas.width / cols;
             drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
@@ -845,9 +838,15 @@
         }
 
         canvas.addEventListener("click", e => {
+            // Ajustar coordenadas del toque respecto al canvas fijo de 1200px
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = e.clientY - rect.top;
+
             hearts.push({
-                x: e.clientX,
-                y: e.clientY,
+                x: x,
+                y: y,
                 vx: (Math.random() - 0.5) * 4,
                 vy: (Math.random() - 0.5) * 4,
                 life: 0
@@ -997,20 +996,6 @@
                 audioPlayer.currentTime = nuevaTiempo;
             }
         }
-
-        window.addEventListener("resize", () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            if (canvas.width < 500) {
-                fontSize = 16;
-                cols = 18;
-            } else {
-                fontSize = 25;
-                cols = 10;
-            }
-            spacing = canvas.width / cols;
-            drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
-        });
     </script>
 </body>
 </html>
