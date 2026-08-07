@@ -624,18 +624,19 @@
             <button class="volver-box-btn" onclick="cerrarRegalo(1)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON AUDIO DE GOOGLE DRIVE) -->
+        <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON NUEVA PORTADA DE DRIVE) -->
         <div id="gift-2-content" class="hidden content-box">
             <div class="player-wrapper">
                 <div class="player-card">
-                    <img src="https://lh3.googleusercontent.com/d/1hSRmoAaC76mE6DmeZ4I5tqL5DNa7oH_m" class="player-cover" alt="Portada Personalizada">
+                    <!-- Portada actualizada con tu enlace de Google Drive -->
+                    <img src="https://lh3.googleusercontent.com/d/1nfwWwZ9rUrCy1INdlQbHhPx_x4L3Dmo8" class="player-cover" alt="Portada Personalizada">
 
                     <div class="progress-container" onclick="seekAudio(event)">
                         <div id="progress-bar" class="progress-bar"></div>
                     </div>
                     <div class="time-stamps">
                         <span id="current-time">0:00</span>
-                        <span id="duration-time">0:56</span>
+                        <span id="duration-time">0:00</span>
                     </div>
 
                     <div class="player-controls">
@@ -648,9 +649,9 @@
                 <div id="vinyl-record" class="vinyl-record"></div>
             </div>
 
-            <!-- Etiqueta de audio nativa con el enlace de Google Drive adaptado para reproducción directa -->
+            <!-- Etiqueta de audio con enlace directo de GitHub -->
             <audio id="audio-player" preload="metadata">
-                <source src="https://docs.google.com/uc?export=download&id=1qjol4EZ8KjsPt-D1hxmAD5HIciBYKcLy" type="audio/mp4">
+                <source src="https://github.com/Caem35/coraz0n/raw/refs/heads/main/MILO%20J%20-%20M.A.I%20(Video%20Oficial)(MP3_160K).mp3" type="audio/mpeg">
                 Tu navegador no soporta audio.
             </audio>
 
@@ -704,9 +705,8 @@
         const vinyl = document.getElementById('vinyl-record');
         const progressBar = document.getElementById('progress-bar');
         const currentTimeEl = document.getElementById('current-time');
+        const durationTimeEl = document.getElementById('duration-time');
         const audioPlayer = document.getElementById('audio-player');
-
-        const duracionShort = 56; 
 
         // Fondo de corazones flotantes
         function crearCorazones() {
@@ -723,7 +723,34 @@
         }
         crearCorazones();
 
-        // Contador de clics con animación y activación del Easter Egg cada 50 clics
+        // Mostrar duración real apenas carguen los metadatos del audio
+        if (audioPlayer) {
+            audioPlayer.addEventListener('loadedmetadata', () => {
+                let durMin = Math.floor(audioPlayer.duration / 60);
+                let durSec = Math.floor(audioPlayer.duration % 60);
+                if (durSec < 10) durSec = `0${durSec}`;
+                durationTimeEl.innerText = `${durMin}:${durSec}`;
+            });
+
+            audioPlayer.addEventListener('timeupdate', () => {
+                const current = audioPlayer.currentTime;
+                const duracionTotal = audioPlayer.duration || 1;
+                const progressPercent = (current / duracionTotal) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+
+                let currentMin = Math.floor(current / 60);
+                let currentSec = Math.floor(current % 60);
+                if (currentSec < 10) currentSec = `0${currentSec}`;
+                currentTimeEl.innerText = `${currentMin}:${currentSec}`;
+
+                if (current >= audioPlayer.duration && !audioPlayer.paused) {
+                    detenerAudioYouTube();
+                    audioPlayer.currentTime = 0;
+                }
+            });
+        }
+
+        // Clics de amor y Easter Egg
         function agregarToque(e) {
             toquesCount++;
             document.getElementById('contador-toques').innerText = toquesCount;
@@ -758,7 +785,6 @@
             setTimeout(() => { clickHeart.remove(); }, 800);
         }
 
-        // Funciones del Easter Egg
         function abrirEasterEgg() {
             pasoEgg = 0;
             document.getElementById('easter-egg-text').innerText = mensajesEgg[pasoEgg];
@@ -774,7 +800,6 @@
             }
         }
 
-        // Funciones del Visor Lightbox para Regalo 1
         function abrirLightbox(src) {
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox-overlay').classList.add('show');
@@ -784,7 +809,6 @@
             document.getElementById('lightbox-overlay').classList.remove('show');
         }
 
-        // Contador de Tiempo Juntos exacto desde el 7 de Julio de 2025 a las 21:52 hs
         function actualizarTiempoJuntos() {
             const fechaInicio = new Date(2025, 6, 7, 21, 52, 0); 
             const ahora = new Date();
@@ -882,25 +906,6 @@
             mostrarRegalos();
         }
 
-        // Control del reproductor con audio nativo de Drive
-        if (audioPlayer) {
-            audioPlayer.addEventListener('timeupdate', () => {
-                const current = audioPlayer.currentTime;
-                const progressPercent = (current / duracionShort) * 100;
-                progressBar.style.width = `${progressPercent}%`;
-
-                let currentMin = Math.floor(current / 60);
-                let currentSec = Math.floor(current % 60);
-                if (currentSec < 10) currentSec = `0${currentSec}`;
-                currentTimeEl.innerText = `${currentMin}:${currentSec}`;
-
-                if (current >= duracionShort) {
-                    detenerAudioYouTube();
-                    audioPlayer.currentTime = 0;
-                }
-            });
-        }
-
         function togglePlay() {
             if (!reproduciendo) {
                 audioPlayer.play().then(() => {
@@ -908,7 +913,8 @@
                     playBtn.innerText = '❚❚';
                     vinyl.classList.add('playing');
                 }).catch(error => {
-                    console.log("Reproducción pausada por políticas del navegador:", error);
+                    console.log("Reproducción pausada o bloqueada:", error);
+                    detenerAudioYouTube();
                 });
             } else {
                 detenerAudioYouTube();
@@ -923,16 +929,17 @@
         }
 
         function adelantarAudio() {
-            if (audioPlayer) {
-                audioPlayer.currentTime = Math.min(duracionShort, audioPlayer.currentTime + 5);
+            if (audioPlayer && !isNaN(audioPlayer.duration)) {
+                audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 5);
             }
         }
 
         function seekAudio(e) {
-            const width = e.target.clientWidth;
-            const clickX = e.offsetX;
-            const nuevaTiempo = (clickX / width) * duracionShort;
-            if (audioPlayer) {
+            const rect = e.target.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            if (audioPlayer && !isNaN(audioPlayer.duration)) {
+                const nuevaTiempo = (clickX / width) * audioPlayer.duration;
                 audioPlayer.currentTime = nuevaTiempo;
             }
         }
