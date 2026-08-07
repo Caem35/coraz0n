@@ -305,7 +305,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Easter Egg Matrix Corregido y Legible */
+        /* Easter Egg Matrix Corregido */
         #easter-egg-overlay {
             position: fixed;
             top: 0;
@@ -660,8 +660,8 @@
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
-        const fontSize = 22; // Tamaño ideal para leer con claridad
-        const cols = 10;     // Exactamente 10 columnas limpias
+        const fontSize = 22; // Tamaño grande y legible
+        const cols = 10;     // Exactamente 10 columnas
         let spacing = 0;
         let drops = [];
         let heartbeat = 0;
@@ -762,7 +762,6 @@
         }
 
         function abrirEasterEgg() {
-            // Usar tamaño real de la pantalla actual sin forzar resoluciones extrañas
             document.getElementById('easter-egg-overlay').classList.add('show');
             
             setTimeout(() => {
@@ -792,11 +791,12 @@
             ctx.textAlign = "left";
 
             for (let i = 0; i < cols; i++) {
-                const x = i * spacing + (spacing / 2) - 30; // Centrado exacto por columna
+                const x = i * spacing + (spacing / 2) - 30; 
                 const y = drops[i] * fontSize;
 
                 for (let j = 0; j < 15; j++) {
-                    const yy = y - (j * (fontSize * 1.5));
+                    // Espacio vertical corregido para que respiren bien los "Te Amo"
+                    const yy = y - (j * (fontSize * 1.8));
                     if (yy > -50 && yy < canvas.height + 50) {
                         ctx.fillText("Te Amo", x, yy);
                     }
