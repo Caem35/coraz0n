@@ -70,7 +70,7 @@
             border-radius: 10px;
         }
 
-        /* Botón de Contador más pequeño y en la esquina con el tema rosa */
+        /* Botón de Contador pequeño en la esquina superior con color rosa del tema */
         .heart-counter-badge {
             position: absolute;
             top: 12px;
@@ -94,7 +94,7 @@
             transform: scale(1.05);
         }
 
-        /* Pantalla de Sorpresa Matrix (Oculta por defecto) */
+        /* Pantalla de Sorpresa Matrix */
         #matrix-screen {
             position: fixed;
             top: 0;
@@ -108,7 +108,7 @@
         #matrix-screen.show {
             display: block;
         }
-        #matrix-canvas {
+        #matrix {
             display: block;
             width: 100vw;
             height: 100vh;
@@ -118,8 +118,8 @@
             bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #ff1744 0%, #d81b60 100%);
-            color: white;
+            background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
+            color: #ad1457;
             font-weight: 800;
             font-size: 13px;
             letter-spacing: 0.8px;
@@ -127,7 +127,7 @@
             border-radius: 20px;
             cursor: pointer;
             border: 2px solid #fff;
-            box-shadow: 0 5px 20px rgba(255, 23, 68, 0.5);
+            box-shadow: 0 5px 20px rgba(248, 187, 208, 0.4);
             z-index: 100000;
             transition: transform 0.2s;
         }
@@ -546,7 +546,7 @@
 
     <!-- Pantalla Sorpresa Matrix (Se activa exactamente a los 30 clics) -->
     <div id="matrix-screen">
-        <canvas id="matrix-canvas"></canvas>
+        <canvas id="matrix"></canvas>
         <button class="matrix-back-btn" onclick="cerrarMatrixScreen()">VOLVER AL INICIO</button>
     </div>
 
@@ -690,30 +690,28 @@
         }
         crearCorazones();
 
-        // Configuración de la Lluvia Matrix de Te Amo (Sorpresa a los 30 clics)
-        const canvas = document.getElementById("matrix-canvas");
+        // Lógica de la Lluvia Matrix optimizada con tu código
+        const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
+
         let fontSize = 25;
-        let cols, spacing;
+        let cols = 10;
+        let spacing = 0;
         let drops = [];
         let heartbeat = 0;
         let hearts = [];
-        let matrixAnimationId = null;
+        let matrixInterval = null;
         let matrixRunning = false;
 
-        function resizeMatrixCanvas() {
+        function initMatrix() {
             canvas.width = innerWidth;
             canvas.height = innerHeight;
-            cols = Math.max(1, Math.floor(canvas.width / 150));
             spacing = canvas.width / cols;
             drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
         }
 
-        let lastTime = performance.now();
-        function drawMatrix(currentTime) {
+        function drawMatrix() {
             if (!matrixRunning) return;
-            const deltaTime = currentTime - lastTime;
-            lastTime = currentTime;
 
             ctx.fillStyle = "rgba(0, 0, 0, 0.03)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -723,7 +721,7 @@
             ctx.textAlign = "left";
 
             for (let i = 0; i < cols; i++) {
-                const x = i * spacing + spacing / 40;
+                const x = i * spacing + spacing / 40;  
                 const y = drops[i] * fontSize;
 
                 for (let j = 0; j < 30; j++) {
@@ -733,15 +731,15 @@
                     }
                 }
 
-                drops[i] += deltaTime / 50;
+                drops[i] += 1;
+
                 if (y > canvas.height + fontSize * 30) {
                     drops[i] = 0;
                 }
             }
 
-            heartbeat += deltaTime / 10;
+            heartbeat += 0.1;
             let scale = 1 + 0.05 * Math.sin(heartbeat);
-
             ctx.save();
             ctx.shadowColor = "#ff69b4";
             ctx.shadowBlur = 15;
@@ -762,17 +760,11 @@
                 ctx.textAlign = "center";
                 ctx.fillText("❤", heart.x, heart.y);
                 ctx.restore();
-
-                heart.x += heart.vx * (deltaTime / 50);
-                heart.y += heart.vy * (deltaTime / 50);
-                heart.life += deltaTime / 50;
-
-                if (heart.life > 30) {
-                    hearts.splice(i, 1);
-                }
+                heart.x += heart.vx;
+                heart.y += heart.vy;
+                heart.life++;
+                if (heart.life > 30) hearts.splice(i, 1);
             });
-
-            matrixAnimationId = requestAnimationFrame(drawMatrix);
         }
 
         canvas.addEventListener("click", e => {
@@ -787,23 +779,27 @@
 
         function abrirMatrixScreen() {
             matrixRunning = true;
-            resizeMatrixCanvas();
+            initMatrix();
             document.getElementById('matrix-screen').classList.add('show');
-            lastTime = performance.now();
-            matrixAnimationId = requestAnimationFrame(drawMatrix);
+            if (matrixInterval) clearInterval(matrixInterval);
+            matrixInterval = setInterval(drawMatrix, 50);
         }
 
         function cerrarMatrixScreen() {
             matrixRunning = false;
-            cancelAnimationFrame(matrixAnimationId);
+            if (matrixInterval) clearInterval(matrixInterval);
             document.getElementById('matrix-screen').classList.remove('show');
         }
 
         window.addEventListener("resize", () => {
-            if (matrixRunning) resizeMatrixCanvas();
+            if (matrixRunning) {
+                canvas.width = innerWidth;
+                canvas.height = innerHeight;
+                spacing = canvas.width / cols;
+            }
         });
 
-        // Clics de amor y Activación a los 30 clics
+        // Clics de amor y Activación a los 30 clics exactos
         function agregarToque(e) {
             toquesCount++;
             document.getElementById('contador-toques').innerText = toquesCount;
