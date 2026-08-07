@@ -660,8 +660,8 @@
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
-        const fontSize = 16; 
-        const cols = 28;     // Incrementadas ligeramente para que las columnas tengan un espacio mínimo entre sí
+        const fontSize = 24; // Aumentado el tamaño de la letra para que se vean más grandes
+        const cols = 10;     // Reducido exactamente a 10 columnas
         let spacing = 0;
         let drops = [];
         let heartbeat = 0;
@@ -785,7 +785,7 @@
         }
 
         function drawMatrix() {
-            // Desvanecimiento suave de las columnas hacia abajo
+            // Desvanecimiento suave estilo matrix
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -794,10 +794,10 @@
             ctx.textAlign = "left";
 
             for (let i = 0; i < cols; i++) {
-                const x = i * spacing + spacing / 2;
+                const x = i * spacing + spacing / 4;
                 const y = drops[i] * fontSize;
 
-                for (let j = 0; j < 25; j++) {
+                for (let j = 0; j < 20; j++) {
                     const yy = y - j * fontSize;
                     if (yy > 0 && yy < canvas.height) {
                         ctx.fillText("Te Amo", x, yy);
@@ -806,7 +806,7 @@
 
                 drops[i] += 0.8;
 
-                if (y > canvas.height + fontSize * 25) {
+                if (y > canvas.height + fontSize * 20) {
                     drops[i] = 0;
                 }
             }
