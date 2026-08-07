@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Usamos un id para poder cambiar el viewport dinámicamente -->
     <meta id="viewport-meta" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para ti, mi amor ❤️</title>
     <style>
@@ -306,7 +305,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Easter Egg Matrix con dimensiones reales de escritorio */
+        /* Easter Egg Matrix con vista de Escritorio Forzada */
         #easter-egg-overlay {
             position: fixed;
             top: 0;
@@ -350,10 +349,10 @@
 
         .player-wrapper {
             position: relative;
-            width: 210px;
-            margin: 6px auto 14px auto;
+            width: 220px;
+            margin: 10px auto 14px auto;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
         }
 
@@ -370,17 +369,20 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
+        /* VINILO MODIFICADO: Sale por el costado derecho al reproducir */
         .vinyl-record {
             position: absolute;
-            bottom: -14px;
-            width: 120px;
-            height: 120px;
+            right: -10px; /* Oculto casi por completo detrás de la tarjeta inicialmente */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             background: radial-gradient(circle, #222 20%, #111 21%, #111 30%, #222 31%, #111 60%, #333 61%, #111 62%);
             border: 2px solid #000;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
             z-index: 1;
-            transition: bottom 0.4s ease;
+            transition: right 0.4s ease;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -388,20 +390,20 @@
 
         .vinyl-record::after {
             content: '';
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             background: #fce4ec;
             border-radius: 50%;
             border: 2px solid #d81b60;
         }
 
         .vinyl-record.playing {
-            bottom: -38px;
+            right: -45px; /* Se desplaza hacia la derecha al reproducir */
             animation: spin 3s linear infinite;
         }
 
         @keyframes spin {
-            100% { transform: rotate(360deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
         }
 
         .player-cover {
@@ -600,7 +602,7 @@
             <button class="volver-box-btn" onclick="cerrarRegalo(1)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON NUEVA PORTADA DE DRIVE) -->
+        <!-- CONTENIDO REGALO 2 (REPRODUCTOR CON VINILO AL COSTADO) -->
         <div id="gift-2-content" class="hidden content-box">
             <div class="player-wrapper">
                 <div class="player-card">
@@ -655,7 +657,6 @@
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
 
-        // Variables para la Lluvia Matrix
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
@@ -686,7 +687,6 @@
         const durationTimeEl = document.getElementById('duration-time');
         const audioPlayer = document.getElementById('audio-player');
 
-        // Fondo de corazones flotantes
         function crearCorazones() {
             const bg = document.getElementById('hearts-bg');
             setInterval(() => {
@@ -701,7 +701,6 @@
         }
         crearCorazones();
 
-        // Mostrar duración real apenas carguen los metadatos del audio
         if (audioPlayer) {
             audioPlayer.addEventListener('loadedmetadata', () => {
                 let durMin = Math.floor(audioPlayer.duration / 60);
@@ -728,7 +727,6 @@
             });
         }
 
-        // Clics de amor y Easter Egg (Cada 30 clics)
         function agregarToque(e) {
             toquesCount++;
             document.getElementById('contador-toques').innerText = toquesCount;
@@ -764,12 +762,9 @@
         }
 
         function abrirEasterEgg() {
-            // FORZAMOS EL MODO ESCRITORIO CAMBIANDO EL VIEWPORT A 1280px DE ANCHO REAL
             document.getElementById('viewport-meta').setAttribute('content', 'width=1280');
-
             document.getElementById('easter-egg-overlay').classList.add('show');
             
-            // Damos un pequeño respiro para que el navegador recalcule el ancho de escritorio
             setTimeout(() => {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
@@ -785,8 +780,6 @@
         function cerrarEasterEgg() {
             document.getElementById('easter-egg-overlay').classList.remove('show');
             if (matrixInterval) clearInterval(matrixInterval);
-
-            // Devolvemos el viewport a la normalidad del celular
             document.getElementById('viewport-meta').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
 
