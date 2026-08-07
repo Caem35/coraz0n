@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Usamos un id para poder cambiar el viewport dinámicamente -->
+    <meta id="viewport-meta" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para ti, mi amor ❤️</title>
     <style>
         * {
@@ -305,7 +306,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Easter Egg Matrix Ampliado a Escritorio Extendido */
+        /* Easter Egg Matrix con dimensiones reales de escritorio */
         #easter-egg-overlay {
             position: fixed;
             top: 0;
@@ -324,9 +325,8 @@
         }
         #matrix {
             display: block;
-            /* Ancho ultra amplio simulando una pantalla de PC de escritorio grande */
-            width: 1800px;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
         }
         .matrix-close-btn {
             position: fixed;
@@ -550,7 +550,7 @@
         <img id="lightbox-img" src="" alt="Foto Ampliada">
     </div>
 
-    <!-- Easter Egg Matrix Lluvia de Te Amo -->
+    <!-- Easter Egg Matrix con vista de Escritorio Forzada -->
     <div id="easter-egg-overlay">
         <button class="matrix-close-btn" onclick="cerrarEasterEgg()">×</button>
         <canvas id="matrix"></canvas>
@@ -655,12 +655,12 @@
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
 
-        // Variables para la Lluvia Matrix ampliada
+        // Variables para la Lluvia Matrix
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
-        const fontSize = 22; // Tamaño ligeramente más cómodo para ancho amplio
-        const cols = 28;     // Más columnas para abarcar los 1800px sin verse apretado
+        const fontSize = 18; 
+        const cols = 12;     
         let spacing = 0;
         let drops = [];
         let heartbeat = 0;
@@ -764,22 +764,30 @@
         }
 
         function abrirEasterEgg() {
+            // FORZAMOS EL MODO ESCRITORIO CAMBIANDO EL VIEWPORT A 1280px DE ANCHO REAL
+            document.getElementById('viewport-meta').setAttribute('content', 'width=1280');
+
             document.getElementById('easter-egg-overlay').classList.add('show');
             
-            // Forzamos el ancho a 1800px para simular una pantalla de PC amplia
-            canvas.width = 1800;
-            canvas.height = window.innerHeight;
+            // Damos un pequeño respiro para que el navegador recalcule el ancho de escritorio
+            setTimeout(() => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
 
-            spacing = canvas.width / cols;
-            drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
-            
-            if (matrixInterval) clearInterval(matrixInterval);
-            matrixInterval = setInterval(drawMatrix, 50);
+                spacing = canvas.width / cols;
+                drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
+                
+                if (matrixInterval) clearInterval(matrixInterval);
+                matrixInterval = setInterval(drawMatrix, 50);
+            }, 50);
         }
 
         function cerrarEasterEgg() {
             document.getElementById('easter-egg-overlay').classList.remove('show');
             if (matrixInterval) clearInterval(matrixInterval);
+
+            // Devolvemos el viewport a la normalidad del celular
+            document.getElementById('viewport-meta').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
 
         function drawMatrix() {
