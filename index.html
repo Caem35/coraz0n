@@ -70,69 +70,27 @@
             border-radius: 10px;
         }
 
-        /* Botón de Contador pequeño en la esquina superior con color rosa del tema */
+        /* Contador de Toques con Corazón Rojo */
         .heart-counter-badge {
             position: absolute;
-            top: 12px;
-            right: 15px;
-            background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
-            padding: 4px 10px;
-            border-radius: 15px;
-            box-shadow: 0 3px 10px rgba(216, 27, 96, 0.2);
+            top: 15px;
+            right: 20px;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 11px;
+            gap: 6px;
+            font-size: 12px;
             font-weight: bold;
-            color: #ad1457;
+            color: #ff1744;
             cursor: pointer;
             transition: transform 0.2s;
             z-index: 20;
-            border: 1px solid rgba(255, 255, 255, 0.8);
         }
         .heart-counter-badge:hover {
             transform: scale(1.05);
-        }
-
-        /* Pantalla de Sorpresa Matrix */
-        #matrix-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: black;
-            z-index: 99999;
-            display: none;
-        }
-        #matrix-screen.show {
-            display: block;
-        }
-        #matrix {
-            display: block;
-            width: 100vw;
-            height: 100vh;
-        }
-        .matrix-back-btn {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
-            color: #ad1457;
-            font-weight: 800;
-            font-size: 13px;
-            letter-spacing: 0.8px;
-            padding: 10px 22px;
-            border-radius: 20px;
-            cursor: pointer;
-            border: 2px solid #fff;
-            box-shadow: 0 5px 20px rgba(248, 187, 208, 0.4);
-            z-index: 100000;
-            transition: transform 0.2s;
-        }
-        .matrix-back-btn:hover {
-            transform: translateX(-50%) scale(1.08);
         }
 
         /* Contador de Tiempo juntos en Negro */
@@ -348,6 +306,47 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
+        /* Easter Egg Matrix Lluvia de Te Amo (Cada 30 clics) */
+        #easter-egg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 99999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        #easter-egg-overlay.show {
+            display: flex;
+        }
+        #matrix {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+        .matrix-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: #fff;
+            color: #ff1493;
+            font-size: 22px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.5);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .player-wrapper {
             position: relative;
             width: 210px;
@@ -539,21 +538,21 @@
     <!-- Contenedor del fondo animado de corazones -->
     <div id="hearts-bg"></div>
 
-    <!-- Botón de Contador pequeño en la esquina superior con color rosa del tema -->
+    <!-- Contador de Toques con Corazón Rojo -->
     <div class="heart-counter-badge" onclick="agregarToque(event)">
-        <span style="color: #ff1744; font-size: 13px;">❤️</span> <span id="contador-toques">0</span>
-    </div>
-
-    <!-- Pantalla Sorpresa Matrix (Se activa exactamente a los 30 clics) -->
-    <div id="matrix-screen">
-        <canvas id="matrix"></canvas>
-        <button class="matrix-back-btn" onclick="cerrarMatrixScreen()">VOLVER AL INICIO</button>
+        <span style="color: #ff1744;">❤️</span> <span id="contador-toques">0</span> clics de amor
     </div>
 
     <!-- Visor de Fotos (Lightbox) Pantalla Completa para Regalo 1 -->
     <div id="lightbox-overlay" onclick="cerrarLightbox()">
         <button id="lightbox-close" onclick="cerrarLightbox()">×</button>
         <img id="lightbox-img" src="" alt="Foto Ampliada">
+    </div>
+
+    <!-- Easter Egg Matrix Lluvia de Te Amo (Cada 30 clics) -->
+    <div id="easter-egg-overlay">
+        <button class="matrix-close-btn" onclick="cerrarEasterEgg()">×</button>
+        <canvas id="matrix"></canvas>
     </div>
 
     <div class="container">
@@ -655,6 +654,17 @@
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
 
+        // Variables para la Lluvia Matrix
+        let matrixInterval = null;
+        const canvas = document.getElementById("matrix");
+        const ctx = canvas.getContext("2d");
+        const fontSize = 25;
+        const cols = 10;
+        let spacing = 0;
+        let drops = [];
+        let heartbeat = 0;
+        let hearts = [];
+
         const mensajesNo = [
             "¿Estás completamente segura?🥺",
             "Piénsalo otra vez, mi vida...",
@@ -675,7 +685,7 @@
         const durationTimeEl = document.getElementById('duration-time');
         const audioPlayer = document.getElementById('audio-player');
 
-        // Fondo de corazones flotantes iniciales
+        // Fondo de corazones flotantes
         function crearCorazones() {
             const bg = document.getElementById('hearts-bg');
             setInterval(() => {
@@ -690,29 +700,85 @@
         }
         crearCorazones();
 
-        // Lógica de la Lluvia Matrix optimizada con tu código
-        const canvas = document.getElementById("matrix");
-        const ctx = canvas.getContext("2d");
+        // Mostrar duración real apenas carguen los metadatos del audio
+        if (audioPlayer) {
+            audioPlayer.addEventListener('loadedmetadata', () => {
+                let durMin = Math.floor(audioPlayer.duration / 60);
+                let durSec = Math.floor(audioPlayer.duration % 60);
+                if (durSec < 10) durSec = `0${durSec}`;
+                durationTimeEl.innerText = `${durMin}:${durSec}`;
+            });
 
-        let fontSize = 25;
-        let cols = 10;
-        let spacing = 0;
-        let drops = [];
-        let heartbeat = 0;
-        let hearts = [];
-        let matrixInterval = null;
-        let matrixRunning = false;
+            audioPlayer.addEventListener('timeupdate', () => {
+                const current = audioPlayer.currentTime;
+                const duracionTotal = audioPlayer.duration || 1;
+                const progressPercent = (current / duracionTotal) * 100;
+                progressBar.style.width = `${progressPercent}%`;
 
-        function initMatrix() {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
+                let currentMin = Math.floor(current / 60);
+                let currentSec = Math.floor(current % 60);
+                if (currentSec < 10) currentSec = `0${currentSec}`;
+                currentTimeEl.innerText = `${currentMin}:${currentSec}`;
+
+                if (current >= audioPlayer.duration && !audioPlayer.paused) {
+                    detenerAudioYouTube();
+                    audioPlayer.currentTime = 0;
+                }
+            });
+        }
+
+        // Clics de amor y Easter Egg (Cada 30 clics)
+        function agregarToque(e) {
+            toquesCount++;
+            document.getElementById('contador-toques').innerText = toquesCount;
+
+            if (toquesCount > 0 && toquesCount % 30 === 0) {
+                abrirEasterEgg();
+            }
+
+            const clickHeart = document.createElement('div');
+            clickHeart.innerHTML = '💖';
+            clickHeart.style.position = 'fixed';
+            let clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            let clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            if (clientX && clientY) {
+                clickHeart.style.left = (clientX - 10) + 'px';
+                clickHeart.style.top = (clientY - 10) + 'px';
+            } else {
+                clickHeart.style.left = '50vw';
+                clickHeart.style.top = '20vh';
+            }
+            clickHeart.style.fontSize = '20px';
+            clickHeart.style.pointerEvents = 'none';
+            clickHeart.style.zIndex = '9999';
+            clickHeart.style.transition = 'all 0.8s ease-out';
+            document.body.appendChild(clickHeart);
+
+            setTimeout(() => {
+                clickHeart.style.transform = 'translateY(-60px) scale(1.4)';
+                clickHeart.style.opacity = '0';
+            }, 20);
+
+            setTimeout(() => { clickHeart.remove(); }, 800);
+        }
+
+        function abrirEasterEgg() {
+            document.getElementById('easter-egg-overlay').classList.add('show');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
             spacing = canvas.width / cols;
             drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
+            
+            if (matrixInterval) clearInterval(matrixInterval);
+            matrixInterval = setInterval(drawMatrix, 50);
+        }
+
+        function cerrarEasterEgg() {
+            document.getElementById('easter-egg-overlay').classList.remove('show');
+            if (matrixInterval) clearInterval(matrixInterval);
         }
 
         function drawMatrix() {
-            if (!matrixRunning) return;
-
             ctx.fillStyle = "rgba(0, 0, 0, 0.03)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -721,7 +787,7 @@
             ctx.textAlign = "left";
 
             for (let i = 0; i < cols; i++) {
-                const x = i * spacing + spacing / 40;  
+                const x = i * spacing + spacing / 40;
                 const y = drops[i] * fontSize;
 
                 for (let j = 0; j < 30; j++) {
@@ -776,63 +842,6 @@
                 life: 0
             });
         });
-
-        function abrirMatrixScreen() {
-            matrixRunning = true;
-            initMatrix();
-            document.getElementById('matrix-screen').classList.add('show');
-            if (matrixInterval) clearInterval(matrixInterval);
-            matrixInterval = setInterval(drawMatrix, 50);
-        }
-
-        function cerrarMatrixScreen() {
-            matrixRunning = false;
-            if (matrixInterval) clearInterval(matrixInterval);
-            document.getElementById('matrix-screen').classList.remove('show');
-        }
-
-        window.addEventListener("resize", () => {
-            if (matrixRunning) {
-                canvas.width = innerWidth;
-                canvas.height = innerHeight;
-                spacing = canvas.width / cols;
-            }
-        });
-
-        // Clics de amor y Activación a los 30 clics exactos
-        function agregarToque(e) {
-            toquesCount++;
-            document.getElementById('contador-toques').innerText = toquesCount;
-
-            if (toquesCount === 30) {
-                abrirMatrixScreen();
-            }
-
-            const clickHeart = document.createElement('div');
-            clickHeart.innerHTML = '💖';
-            clickHeart.style.position = 'fixed';
-            let clientX = e.clientX || (e.touches && e.touches[0].clientX);
-            let clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            if (clientX && clientY) {
-                clickHeart.style.left = (clientX - 10) + 'px';
-                clickHeart.style.top = (clientY - 10) + 'px';
-            } else {
-                clickHeart.style.left = '50vw';
-                clickHeart.style.top = '20vh';
-            }
-            clickHeart.style.fontSize = '20px';
-            clickHeart.style.pointerEvents = 'none';
-            clickHeart.style.zIndex = '9999';
-            clickHeart.style.transition = 'all 0.8s ease-out';
-            document.body.appendChild(clickHeart);
-
-            setTimeout(() => {
-                clickHeart.style.transform = 'translateY(-60px) scale(1.4)';
-                clickHeart.style.opacity = '0';
-            }, 20);
-
-            setTimeout(() => { clickHeart.remove(); }, 800);
-        }
 
         function abrirLightbox(src) {
             document.getElementById('lightbox-img').src = src;
@@ -977,6 +986,12 @@
                 audioPlayer.currentTime = nuevaTiempo;
             }
         }
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            spacing = canvas.width / cols;
+        });
     </script>
 </body>
 </html>
