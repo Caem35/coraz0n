@@ -70,27 +70,69 @@
             border-radius: 10px;
         }
 
-        /* Contador de Toques con Corazón Rojo */
+        /* Botón de Contador más pequeño y en la esquina con el tema rosa */
         .heart-counter-badge {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            background: #fff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
+            top: 12px;
+            right: 15px;
+            background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
+            padding: 4px 10px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(216, 27, 96, 0.2);
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12px;
+            gap: 5px;
+            font-size: 11px;
             font-weight: bold;
-            color: #ff1744;
+            color: #ad1457;
             cursor: pointer;
             transition: transform 0.2s;
             z-index: 20;
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
         .heart-counter-badge:hover {
             transform: scale(1.05);
+        }
+
+        /* Pantalla de Sorpresa Matrix (Oculta por defecto) */
+        #matrix-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 99999;
+            display: none;
+        }
+        #matrix-screen.show {
+            display: block;
+        }
+        #matrix-canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+        .matrix-back-btn {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff1744 0%, #d81b60 100%);
+            color: white;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.8px;
+            padding: 10px 22px;
+            border-radius: 20px;
+            cursor: pointer;
+            border: 2px solid #fff;
+            box-shadow: 0 5px 20px rgba(255, 23, 68, 0.5);
+            z-index: 100000;
+            transition: transform 0.2s;
+        }
+        .matrix-back-btn:hover {
+            transform: translateX(-50%) scale(1.08);
         }
 
         /* Contador de Tiempo juntos en Negro */
@@ -306,69 +348,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Easter Egg Modal (Cada 50 clics) */
-        #easter-egg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 99999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        #easter-egg-overlay.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .easter-egg-card {
-            background: #fff;
-            padding: 25px 20px;
-            border-radius: 20px;
-            max-width: 340px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.3);
-            border: 2px solid #f8bbd0;
-            position: relative;
-        }
-        .easter-egg-text {
-            color: #ad1457;
-            font-size: 16px;
-            font-weight: 600;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .easter-egg-next-btn {
-            background: linear-gradient(135deg, #ff1744 0%, #d81b60 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 22px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.4);
-            transition: transform 0.2s;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .easter-egg-next-btn:hover {
-            transform: scale(1.1);
-        }
-
         .player-wrapper {
             position: relative;
             width: 210px;
@@ -560,24 +539,21 @@
     <!-- Contenedor del fondo animado de corazones -->
     <div id="hearts-bg"></div>
 
-    <!-- Contador de Toques con Corazón Rojo -->
+    <!-- Botón de Contador pequeño en la esquina superior con color rosa del tema -->
     <div class="heart-counter-badge" onclick="agregarToque(event)">
-        <span style="color: #ff1744;">❤️</span> <span id="contador-toques">0</span> clics de amor
+        <span style="color: #ff1744; font-size: 13px;">❤️</span> <span id="contador-toques">0</span>
+    </div>
+
+    <!-- Pantalla Sorpresa Matrix (Se activa exactamente a los 30 clics) -->
+    <div id="matrix-screen">
+        <canvas id="matrix-canvas"></canvas>
+        <button class="matrix-back-btn" onclick="cerrarMatrixScreen()">VOLVER AL INICIO</button>
     </div>
 
     <!-- Visor de Fotos (Lightbox) Pantalla Completa para Regalo 1 -->
     <div id="lightbox-overlay" onclick="cerrarLightbox()">
         <button id="lightbox-close" onclick="cerrarLightbox()">×</button>
         <img id="lightbox-img" src="" alt="Foto Ampliada">
-    </div>
-
-    <!-- Easter Egg Modal (Se activa cada 50 clics) -->
-    <div id="easter-egg-overlay">
-        <div class="easter-egg-card">
-            <h3 style="color: #ad1457; margin-bottom: 10px; font-size: 16px;">✨ Mensaje Secreto ✨</h3>
-            <div id="easter-egg-text" class="easter-egg-text"></div>
-            <button class="easter-egg-next-btn" onclick="siguienteMensajeEgg()">❤️</button>
-        </div>
     </div>
 
     <div class="container">
@@ -628,7 +604,6 @@
         <div id="gift-2-content" class="hidden content-box">
             <div class="player-wrapper">
                 <div class="player-card">
-                    <!-- Portada actualizada con tu enlace de Google Drive -->
                     <img src="https://lh3.googleusercontent.com/d/1nfwWwZ9rUrCy1INdlQbHhPx_x4L3Dmo8" class="player-cover" alt="Portada Personalizada">
 
                     <div class="progress-container" onclick="seekAudio(event)">
@@ -649,7 +624,6 @@
                 <div id="vinyl-record" class="vinyl-record"></div>
             </div>
 
-            <!-- Etiqueta de audio con enlace directo de GitHub -->
             <audio id="audio-player" preload="metadata">
                 <source src="https://github.com/Caem35/coraz0n/raw/refs/heads/main/MILO%20J%20-%20M.A.I%20(Video%20Oficial)(MP3_160K).mp3" type="audio/mpeg">
                 Tu navegador no soporta audio.
@@ -680,13 +654,6 @@
         let reproduciendo = false;
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
-        let pasoEgg = 0;
-
-        const mensajesEgg = [
-            "Tú cuerpo? me encanta",
-            "Pero...",
-            "Pero prefiero esos ojitos lindos, esa sonrisa hermosa, esa personalidad única y todas esas cosas que te hacen ver inigualable"
-        ];
 
         const mensajesNo = [
             "¿Estás completamente segura?🥺",
@@ -708,7 +675,7 @@
         const durationTimeEl = document.getElementById('duration-time');
         const audioPlayer = document.getElementById('audio-player');
 
-        // Fondo de corazones flotantes
+        // Fondo de corazones flotantes iniciales
         function crearCorazones() {
             const bg = document.getElementById('hearts-bg');
             setInterval(() => {
@@ -723,40 +690,126 @@
         }
         crearCorazones();
 
-        // Mostrar duración real apenas carguen los metadatos del audio
-        if (audioPlayer) {
-            audioPlayer.addEventListener('loadedmetadata', () => {
-                let durMin = Math.floor(audioPlayer.duration / 60);
-                let durSec = Math.floor(audioPlayer.duration % 60);
-                if (durSec < 10) durSec = `0${durSec}`;
-                durationTimeEl.innerText = `${durMin}:${durSec}`;
-            });
+        // Configuración de la Lluvia Matrix de Te Amo (Sorpresa a los 30 clics)
+        const canvas = document.getElementById("matrix-canvas");
+        const ctx = canvas.getContext("2d");
+        let fontSize = 25;
+        let cols, spacing;
+        let drops = [];
+        let heartbeat = 0;
+        let hearts = [];
+        let matrixAnimationId = null;
+        let matrixRunning = false;
 
-            audioPlayer.addEventListener('timeupdate', () => {
-                const current = audioPlayer.currentTime;
-                const duracionTotal = audioPlayer.duration || 1;
-                const progressPercent = (current / duracionTotal) * 100;
-                progressBar.style.width = `${progressPercent}%`;
-
-                let currentMin = Math.floor(current / 60);
-                let currentSec = Math.floor(current % 60);
-                if (currentSec < 10) currentSec = `0${currentSec}`;
-                currentTimeEl.innerText = `${currentMin}:${currentSec}`;
-
-                if (current >= audioPlayer.duration && !audioPlayer.paused) {
-                    detenerAudioYouTube();
-                    audioPlayer.currentTime = 0;
-                }
-            });
+        function resizeMatrixCanvas() {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            cols = Math.max(1, Math.floor(canvas.width / 150));
+            spacing = canvas.width / cols;
+            drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
         }
 
-        // Clics de amor y Easter Egg
+        let lastTime = performance.now();
+        function drawMatrix(currentTime) {
+            if (!matrixRunning) return;
+            const deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+
+            ctx.fillStyle = "rgba(0, 0, 0, 0.03)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#ff69b4";
+            ctx.font = fontSize + "px monospace";
+            ctx.textAlign = "left";
+
+            for (let i = 0; i < cols; i++) {
+                const x = i * spacing + spacing / 40;
+                const y = drops[i] * fontSize;
+
+                for (let j = 0; j < 30; j++) {
+                    const yy = y - j * fontSize;
+                    if (yy > 0 && yy < canvas.height) {
+                        ctx.fillText("Te Amo", x, yy);
+                    }
+                }
+
+                drops[i] += deltaTime / 50;
+                if (y > canvas.height + fontSize * 30) {
+                    drops[i] = 0;
+                }
+            }
+
+            heartbeat += deltaTime / 10;
+            let scale = 1 + 0.05 * Math.sin(heartbeat);
+
+            ctx.save();
+            ctx.shadowColor = "#ff69b4";
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = "#ff1493";
+            ctx.font = `${60 * scale}px monospace`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("Te Amo", canvas.width / 2, canvas.height / 2);
+            ctx.restore();
+
+            hearts.forEach((heart, i) => {
+                ctx.save();
+                ctx.globalAlpha = 1 - heart.life / 30;
+                ctx.font = "160px serif";
+                ctx.fillStyle = "#ff69b4";
+                ctx.shadowColor = "#ff1493";
+                ctx.shadowBlur = 10;
+                ctx.textAlign = "center";
+                ctx.fillText("❤", heart.x, heart.y);
+                ctx.restore();
+
+                heart.x += heart.vx * (deltaTime / 50);
+                heart.y += heart.vy * (deltaTime / 50);
+                heart.life += deltaTime / 50;
+
+                if (heart.life > 30) {
+                    hearts.splice(i, 1);
+                }
+            });
+
+            matrixAnimationId = requestAnimationFrame(drawMatrix);
+        }
+
+        canvas.addEventListener("click", e => {
+            hearts.push({
+                x: e.clientX,
+                y: e.clientY,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
+                life: 0
+            });
+        });
+
+        function abrirMatrixScreen() {
+            matrixRunning = true;
+            resizeMatrixCanvas();
+            document.getElementById('matrix-screen').classList.add('show');
+            lastTime = performance.now();
+            matrixAnimationId = requestAnimationFrame(drawMatrix);
+        }
+
+        function cerrarMatrixScreen() {
+            matrixRunning = false;
+            cancelAnimationFrame(matrixAnimationId);
+            document.getElementById('matrix-screen').classList.remove('show');
+        }
+
+        window.addEventListener("resize", () => {
+            if (matrixRunning) resizeMatrixCanvas();
+        });
+
+        // Clics de amor y Activación a los 30 clics
         function agregarToque(e) {
             toquesCount++;
             document.getElementById('contador-toques').innerText = toquesCount;
 
-            if (toquesCount > 0 && toquesCount % 50 === 0) {
-                abrirEasterEgg();
+            if (toquesCount === 30) {
+                abrirMatrixScreen();
             }
 
             const clickHeart = document.createElement('div');
@@ -783,21 +836,6 @@
             }, 20);
 
             setTimeout(() => { clickHeart.remove(); }, 800);
-        }
-
-        function abrirEasterEgg() {
-            pasoEgg = 0;
-            document.getElementById('easter-egg-text').innerText = mensajesEgg[pasoEgg];
-            document.getElementById('easter-egg-overlay').classList.add('show');
-        }
-
-        function siguienteMensajeEgg() {
-            pasoEgg++;
-            if (pasoEgg < mensajesEgg.length) {
-                document.getElementById('easter-egg-text').innerText = mensajesEgg[pasoEgg];
-            } else {
-                document.getElementById('easter-egg-overlay').classList.remove('show');
-            }
         }
 
         function abrirLightbox(src) {
