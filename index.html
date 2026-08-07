@@ -369,10 +369,10 @@
             border: 1.5px solid rgba(255,255,255,0.1);
         }
 
-        /* VINILO RESTAURADO Y PERFECTO */
+        /* VINILO RESTAURADO Y PERFECTO: Tamaño original y se asoma exactamente la mitad */
         .vinyl-record {
             position: absolute;
-            right: 15px; 
+            right: 15px; /* Oculto detrás de la tarjeta al estar pausado */
             top: 50%;
             transform: translateY(-50%);
             width: 110px;
@@ -398,7 +398,7 @@
         }
 
         .vinyl-record.playing {
-            right: -42px; 
+            right: -42px; /* Se asoma exactamente la mitad al reproducir, sin cortes ni excesos */
             animation: spin 3s linear infinite;
         }
 
@@ -772,7 +772,7 @@
 
                 spacing = canvas.width / cols;
                 drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
-                hearts = []; // Limpiar corazones anteriores al abrir
+                hearts = []; 
                 
                 if (matrixInterval) clearInterval(matrixInterval);
                 matrixInterval = setInterval(drawMatrix, 50);
@@ -786,8 +786,8 @@
         }
 
         function drawMatrix() {
-            // Fondo negro semi-opaco para desvanecer el texto de matrix suavemente
-            ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+            // Restaurado el desvanecimiento suave original de las columnas
+            ctx.fillStyle = "rgba(0, 0, 0, 0.03)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.fillStyle = "#ff69b4";
@@ -824,40 +824,34 @@
             ctx.fillText("Te Amo", canvas.width / 2, canvas.height / 2);
             ctx.restore();
 
-            // Dibujar y actualizar los corazones del toque en el canvas sin dejar manchas blancas
             hearts.forEach((heart, i) => {
                 ctx.save();
-                ctx.globalAlpha = Math.max(0, 1 - heart.life / 25);
-                ctx.font = "120px serif";
+                ctx.globalAlpha = 1 - heart.life / 30;
+                ctx.font = "160px serif";
                 ctx.fillStyle = "#ff69b4";
                 ctx.shadowColor = "#ff1493";
-                ctx.shadowBlur = 15;
+                ctx.shadowBlur = 10;
                 ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
                 ctx.fillText("❤", heart.x, heart.y);
                 ctx.restore();
-                
                 heart.x += heart.vx;
                 heart.y += heart.vy;
                 heart.life++;
+                if (heart.life > 30) hearts.splice(i, 1);
             });
-
-            // Remover corazones expirados para limpiar memoria y evitar rastro
-            hearts = hearts.filter(heart => heart.life <= 25);
         }
 
         canvas.addEventListener("click", e => {
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
             const x = (e.clientX - rect.left) * scaleX;
-            const y = (e.clientY - rect.top) * scaleY;
+            const y = e.clientY - rect.top;
 
             hearts.push({
                 x: x,
                 y: y,
-                vx: (Math.random() - 0.5) * 3,
-                vy: (Math.random() - 0.5) * 3,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
                 life: 0
             });
         });
