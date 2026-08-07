@@ -305,7 +305,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Easter Egg Matrix Corregido */
+        /* Easter Egg Matrix con vista de Escritorio Forzada */
         #easter-egg-overlay {
             position: fixed;
             top: 0;
@@ -317,7 +317,7 @@
             display: none;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: auto;
         }
         #easter-egg-overlay.show {
             display: flex;
@@ -369,9 +369,10 @@
             border: 1.5px solid rgba(255,255,255,0.1);
         }
 
+        /* VINILO RESTAURADO Y PERFECTO: Tamaño original y se asoma exactamente la mitad */
         .vinyl-record {
             position: absolute;
-            right: 15px;
+            right: 15px; /* Oculto detrás de la tarjeta al estar pausado */
             top: 50%;
             transform: translateY(-50%);
             width: 110px;
@@ -397,7 +398,7 @@
         }
 
         .vinyl-record.playing {
-            right: -42px;
+            right: -42px; /* Se asoma exactamente la mitad al reproducir, sin cortes ni excesos */
             animation: spin 3s linear infinite;
         }
 
@@ -552,7 +553,7 @@
         <img id="lightbox-img" src="" alt="Foto Ampliada">
     </div>
 
-    <!-- Easter Egg Matrix Corregido -->
+    <!-- Easter Egg Matrix con vista de Escritorio Forzada -->
     <div id="easter-egg-overlay">
         <button class="matrix-close-btn" onclick="cerrarEasterEgg()">×</button>
         <canvas id="matrix"></canvas>
@@ -660,8 +661,8 @@
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
-        const fontSize = 22; // Tamaño grande y legible
-        const cols = 10;     // Exactamente 10 columnas
+        const fontSize = 18; 
+        const cols = 12;     
         let spacing = 0;
         let drops = [];
         let heartbeat = 0;
@@ -762,6 +763,7 @@
         }
 
         function abrirEasterEgg() {
+            document.getElementById('viewport-meta').setAttribute('content', 'width=1280');
             document.getElementById('easter-egg-overlay').classList.add('show');
             
             setTimeout(() => {
@@ -770,7 +772,6 @@
 
                 spacing = canvas.width / cols;
                 drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
-                hearts = []; 
                 
                 if (matrixInterval) clearInterval(matrixInterval);
                 matrixInterval = setInterval(drawMatrix, 50);
@@ -780,31 +781,31 @@
         function cerrarEasterEgg() {
             document.getElementById('easter-egg-overlay').classList.remove('show');
             if (matrixInterval) clearInterval(matrixInterval);
+            document.getElementById('viewport-meta').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
 
         function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.03)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.fillStyle = "#ff69b4";
-            ctx.font = "bold " + fontSize + "px monospace";
+            ctx.font = fontSize + "px monospace";
             ctx.textAlign = "left";
 
             for (let i = 0; i < cols; i++) {
-                const x = i * spacing + (spacing / 2) - 30; 
+                const x = i * spacing + spacing / 40;
                 const y = drops[i] * fontSize;
 
-                for (let j = 0; j < 15; j++) {
-                    // Espacio vertical corregido para que respiren bien los "Te Amo"
-                    const yy = y - (j * (fontSize * 1.8));
-                    if (yy > -50 && yy < canvas.height + 50) {
+                for (let j = 0; j < 30; j++) {
+                    const yy = y - j * fontSize;
+                    if (yy > 0 && yy < canvas.height) {
                         ctx.fillText("Te Amo", x, yy);
                     }
                 }
 
-                drops[i] += 0.6;
+                drops[i] += 1;
 
-                if (y > canvas.height + fontSize * 15) {
+                if (y > canvas.height + fontSize * 30) {
                     drops[i] = 0;
                 }
             }
@@ -815,7 +816,7 @@
             ctx.shadowColor = "#ff69b4";
             ctx.shadowBlur = 15;
             ctx.fillStyle = "#ff1493";
-            ctx.font = `bold ${50 * scale}px monospace`;
+            ctx.font = `${60 * scale}px monospace`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText("Te Amo", canvas.width / 2, canvas.height / 2);
@@ -824,7 +825,7 @@
             hearts.forEach((heart, i) => {
                 ctx.save();
                 ctx.globalAlpha = 1 - heart.life / 30;
-                ctx.font = "120px serif";
+                ctx.font = "160px serif";
                 ctx.fillStyle = "#ff69b4";
                 ctx.shadowColor = "#ff1493";
                 ctx.shadowBlur = 10;
