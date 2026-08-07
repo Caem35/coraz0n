@@ -305,7 +305,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Easter Egg Matrix Forzado a Escritorio */
+        /* Easter Egg Matrix Ampliado a Escritorio Extendido */
         #easter-egg-overlay {
             position: fixed;
             top: 0;
@@ -317,15 +317,15 @@
             display: none;
             justify-content: center;
             align-items: center;
-            overflow: auto; /* Permite deslizar si en el celu se ve más ancho */
+            overflow: auto;
         }
         #easter-egg-overlay.show {
             display: flex;
         }
         #matrix {
             display: block;
-            /* Forzamos un ancho de PC fijo para que se vea idéntico al modo escritorio */
-            width: 1200px;
+            /* Ancho ultra amplio simulando una pantalla de PC de escritorio grande */
+            width: 1800px;
             height: 100vh;
         }
         .matrix-close-btn {
@@ -550,7 +550,7 @@
         <img id="lightbox-img" src="" alt="Foto Ampliada">
     </div>
 
-    <!-- Easter Egg Matrix Lluvia de Te Amo (Cada 30 clics) -->
+    <!-- Easter Egg Matrix Lluvia de Te Amo -->
     <div id="easter-egg-overlay">
         <button class="matrix-close-btn" onclick="cerrarEasterEgg()">×</button>
         <canvas id="matrix"></canvas>
@@ -655,12 +655,12 @@
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
 
-        // Variables para la Lluvia Matrix forzada a PC original
+        // Variables para la Lluvia Matrix ampliada
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
         const ctx = canvas.getContext("2d");
-        const fontSize = 25; // Tamaño original de PC
-        const cols = 10;     // Columnas originales de PC
+        const fontSize = 22; // Tamaño ligeramente más cómodo para ancho amplio
+        const cols = 28;     // Más columnas para abarcar los 1800px sin verse apretado
         let spacing = 0;
         let drops = [];
         let heartbeat = 0;
@@ -766,8 +766,8 @@
         function abrirEasterEgg() {
             document.getElementById('easter-egg-overlay').classList.add('show');
             
-            // Forzamos el ancho y alto del canvas simulando una PC para que se vea idéntico
-            canvas.width = 1200;
+            // Forzamos el ancho a 1800px para simular una pantalla de PC amplia
+            canvas.width = 1800;
             canvas.height = window.innerHeight;
 
             spacing = canvas.width / cols;
@@ -838,7 +838,6 @@
         }
 
         canvas.addEventListener("click", e => {
-            // Ajustar coordenadas del toque respecto al canvas fijo de 1200px
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
             const x = (e.clientX - rect.left) * scaleX;
