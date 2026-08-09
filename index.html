@@ -536,7 +536,7 @@
             width: 100%;
         }
 
-        /* Estilos de la Torta de Cumpleaños (Regalo 3 Extra) */
+        /* Estilos actualizados para la Torta de Cumpleaños */
         .cake-section-wrapper {
             display: flex;
             flex-direction: column;
@@ -545,11 +545,11 @@
             padding: 10px 0;
         }
 
-        .cake-message {
+        .message {
             font-family: "Cookie", cursive;
-            font-size: 2.2rem;
-            color: #ad1457;
-            margin-bottom: 15px;
+            font-size: 2.5rem; 
+            color: #777;
+            margin-bottom: 5px;
         }
 
         .cake {
@@ -558,43 +558,42 @@
             height: 130px;
             background: #f8e1eb;
             border-radius: 10px 10px 0 0;
-            margin-top: 30px;
+            margin-top: 35px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
         .cake-topping .topping-top {
-            background: #d491bc;
+            background: #b381ae; 
             position: absolute;
-            width: 100%;
-            height: 35px;
-            top: 0;
-            border-radius: 50%;
+            width: 100%; 
+            height: 65px;
+            top: 0; 
+            transform: translateY(-50%);
+            border-radius: 50%; 
+            z-index: 9;
         }
 
         .candle-container {
             position: absolute;
-            top: -45px;
+            top: -55px;
             left: 50%;
             transform: translateX(-50%);
             width: 14px;
-            height: 45px;
+            height: 50px;
             background: #e8d7f1;
             border-radius: 4px;
         }
 
         .candle-container .flame-wrap {
-            position: absolute;
-            top: -22px;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative; 
             z-index: 99;
-            width: 18px;
-            height: 26px;
+            width: 100%; 
             background: #fcc56c;
-            border-radius: 50% 50% 20% 20%;
+            height: 30px; 
             transform-origin: bottom center;
-            transform: scale(0);
+            transform: scale(0); 
             transition: transform 0.3s ease-in-out;
+            border-radius: 50% 50% 20% 20%;
             box-shadow: 0 0 10px #fcc56c;
         }
 
@@ -721,7 +720,7 @@
             <!-- Sub-pantalla 3.2: La Torta Interactiva -->
             <div id="cake-subscreen" class="hidden">
                 <div class="cake-section-wrapper">
-                    <div class="cake-message">Happy Birthday To You</div>
+                    <div class="message">Happy Birthday To You</div>
 
                     <div class="cake">
                         <div class="cake-topping">
@@ -1030,7 +1029,6 @@
             document.getElementById('gifts-screen').classList.add('hidden');
             document.getElementById(`gift-${numeroRegalo}-content`).classList.remove('hidden');
 
-            // Si abren el regalo 3, asegurarnos de mostrar primero la carta y reiniciar la vela
             if (numeroRegalo === 3) {
                 document.getElementById('letter-subscreen').classList.remove('hidden');
                 document.getElementById('cake-subscreen').classList.add('hidden');
@@ -1042,7 +1040,6 @@
             document.getElementById('letter-subscreen').classList.add('hidden');
             document.getElementById('cake-subscreen').classList.remove('hidden');
 
-            // Encender la vela automáticamente después de 1 segundo de entrar a la torta
             setTimeout(() => {
                 const candle = document.getElementById('candle');
                 if (candle) {
