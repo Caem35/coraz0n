@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta id="viewport-meta" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para ti, mi amor ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -369,10 +370,9 @@
             border: 1.5px solid rgba(255,255,255,0.1);
         }
 
-        /* VINILO RESTAURADO Y PERFECTO: Tamaño original y se asoma exactamente la mitad */
         .vinyl-record {
             position: absolute;
-            right: 15px; /* Oculto detrás de la tarjeta al estar pausado */
+            right: 15px; 
             top: 50%;
             transform: translateY(-50%);
             width: 110px;
@@ -398,7 +398,7 @@
         }
 
         .vinyl-record.playing {
-            right: -42px; /* Se asoma exactamente la mitad al reproducir, sin cortes ni excesos */
+            right: -42px; 
             animation: spin 3s linear infinite;
         }
 
@@ -535,6 +535,72 @@
             text-align: center;
             width: 100%;
         }
+
+        /* Estilos de la Torta de Cumpleaños (Regalo 3 Extra) */
+        .cake-section-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .cake-message {
+            font-family: "Cookie", cursive;
+            font-size: 2.2rem;
+            color: #ad1457;
+            margin-bottom: 15px;
+        }
+
+        .cake {
+            position: relative;
+            width: 180px;
+            height: 130px;
+            background: #f8e1eb;
+            border-radius: 10px 10px 0 0;
+            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .cake-topping .topping-top {
+            background: #d491bc;
+            position: absolute;
+            width: 100%;
+            height: 35px;
+            top: 0;
+            border-radius: 50%;
+        }
+
+        .candle-container {
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 45px;
+            background: #e8d7f1;
+            border-radius: 4px;
+        }
+
+        .candle-container .flame-wrap {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99;
+            width: 18px;
+            height: 26px;
+            background: #fcc56c;
+            border-radius: 50% 50% 20% 20%;
+            transform-origin: bottom center;
+            transform: scale(0);
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 0 10px #fcc56c;
+        }
+
+        .candle-container.lit .flame-wrap {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body>
@@ -635,19 +701,40 @@
             <button class="volver-box-btn" onclick="cerrarRegalo(2)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA REDISEÑADA Y LETRA GRANDE) -->
+        <!-- CONTENIDO REGALO 3 (CARTA + TORTA DE CUMPLEAÑOS INTEGRADA) -->
         <div id="gift-3-content" class="hidden content-box">
-            <h2 style="color: #ad1457; margin-bottom: 4px; font-size: 18px;">Para ti, mi amor ✉️❤️</h2>
-            
-            <div class="letter-card">
-                <p>Hoy todo gira en torno a ti xio, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo.</p>
-                <p>Haces que los momentos ordinarios se sientan especiales solo por ser tú. No importa a dónde nos lleve la vida, siempre serás mi lugar favorito. Amarte es lo más fácil y hermoso que conozco. Estar contigo se siente como estar en casa.</p>
-                <p>En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y profundamente amado, y eso es algo que nunca daré por sentado.</p>
-                <p>Y no importa lo que la vida nos depare, sé que una cosa siempre permanecerá igual: la forma en que mi corazón se siente cuando estoy contigo. Es en los pequeños momentos, en los tranquilos, en los que nadie más ve, donde me doy cuenta de la suerte que tengo de amarte.</p>
-                <p>No eres solo una parte de mi vida... eres la mejor parte de ella. ❤️</p>
+            <!-- Sub-pantalla 3.1: La Carta -->
+            <div id="letter-subscreen">
+                <h2 style="color: #ad1457; margin-bottom: 4px; font-size: 18px;">Para ti, mi amor ✉️❤️</h2>
+                
+                <div class="letter-card">
+                    <p>Hoy todo gira en torno a ti xio, y solo quiero que sepas lo agradecido que estoy de tenerte en mi vida. Desde el momento en que llegaste a mi mundo, todo se sintió más cálido, más amable y más significativo.</p>
+                    <p>Haces que los momentos ordinarios se sientan especiales solo por ser tú. No importa a dónde nos lleve la vida, siempre serás mi lugar favorito. Amarte es lo más fácil y hermoso que conozco. Estar contigo se siente como estar en casa.</p>
+                    <p>En los momentos tranquilos y en los ruidosos, en la risa y en el silencio, encuentro consuelo en ti. Me haces sentir comprendido, apoyado y profundamente amado, y eso es algo que nunca daré por sentado.</p>
+                    <p>Y no importa lo que la vida nos depare, sé que una cosa siempre permanecerá igual: la forma en que mi corazón se siente cuando estoy contigo. Es en los pequeños momentos, en los tranquilos, en los que nadie más ve, donde me doy cuenta de la suerte que tengo de amarte.</p>
+                    <p>No eres solo una parte de mi vida... eres la mejor parte de ella. ❤️</p>
+                </div>
+                
+                <button class="volver-box-btn" onclick="pasarATorta()">SIGUIENTE REGALO 🎂</button>
             </div>
-            
-            <button class="volver-box-btn" onclick="cerrarRegalo(3)">VOLVER A LOS REGALOS</button>
+
+            <!-- Sub-pantalla 3.2: La Torta Interactiva -->
+            <div id="cake-subscreen" class="hidden">
+                <div class="cake-section-wrapper">
+                    <div class="cake-message">Happy Birthday To You</div>
+
+                    <div class="cake">
+                        <div class="cake-topping">
+                            <div class="topping-top"></div>
+                        </div>
+                        <div class="candle-container" id="candle">
+                            <div class="flame-wrap"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="volver-box-btn" onclick="cerrarRegalo(3)">VOLVER A LOS REGALOS</button>
+            </div>
         </div>
     </div>
 
@@ -942,6 +1029,26 @@
         function abrirRegalo(numeroRegalo) {
             document.getElementById('gifts-screen').classList.add('hidden');
             document.getElementById(`gift-${numeroRegalo}-content`).classList.remove('hidden');
+
+            // Si abren el regalo 3, asegurarnos de mostrar primero la carta y reiniciar la vela
+            if (numeroRegalo === 3) {
+                document.getElementById('letter-subscreen').classList.remove('hidden');
+                document.getElementById('cake-subscreen').classList.add('hidden');
+                document.getElementById('candle').classList.remove('lit');
+            }
+        }
+
+        function pasarATorta() {
+            document.getElementById('letter-subscreen').classList.add('hidden');
+            document.getElementById('cake-subscreen').classList.remove('hidden');
+
+            // Encender la vela automáticamente después de 1 segundo de entrar a la torta
+            setTimeout(() => {
+                const candle = document.getElementById('candle');
+                if (candle) {
+                    candle.classList.add('lit');
+                }
+            }, 1000);
         }
 
         function cerrarRegalo(numeroRegalo) {
