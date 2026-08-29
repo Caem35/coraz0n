@@ -536,24 +536,25 @@
             width: 100%;
         }
 
-        /* Estilos exactos corregidos para videos horizontales originales sin fondos negros ni recortes */
+        /* Estilos ajustados para los videos del pastel */
         .cake-video-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 4px 0;
             width: 100%;
+            margin: 4px 0;
         }
 
         .cake-video {
             width: 100%;
+            max-width: 100%;
             height: auto;
-            max-height: none;
+            max-height: 42vh;
             border-radius: 14px;
             border: 3px solid white;
             box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            object-fit: unset;
+            object-fit: contain;
             background: transparent;
             display: block;
             margin: 0 auto;
@@ -658,7 +659,7 @@
             <button class="volver-box-btn" onclick="cerrarRegalo(2)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA + VIDEOS HORIZONTALES DEL PASTEL) -->
+        <!-- CONTENIDO REGALO 3 (CARTA + VIDEOS DEL PASTEL) -->
         <div id="gift-3-content" class="hidden content-box">
             <!-- Sub-pantalla 3.1: La Carta -->
             <div id="letter-subscreen">
@@ -679,13 +680,13 @@
             <div id="cake-subscreen" class="hidden">
                 <div class="cake-video-wrapper">
                     <!-- Video 1: Pastel armándose (Se reproduce 1 vez) -->
-                    <video id="cake-video-1" class="cake-video" playsinline autoplay muted>
+                    <video id="cake-video-1" class="cake-video" playsinline muted>
                         <source src="https://drive.google.com/uc?export=view&id=1qIdLOwuVBjAUd3JtcUdrqdz3e3CTj7pL" type="video/mp4">
                         Tu navegador no soporta videos.
                     </video>
 
                     <!-- Video 2: Bucle del final (Oculto hasta que termine el primero) -->
-                    <video id="cake-video-2" class="cake-video hidden" playsinline autoplay muted loop>
+                    <video id="cake-video-2" class="cake-video hidden" playsinline muted loop>
                         <source src="https://drive.google.com/uc?export=view&id=16ofYoxWXcsO8tyKLbcLckZm-Nk4N-9bR" type="video/mp4">
                         Tu navegador no soporta videos.
                     </video>
@@ -743,6 +744,7 @@
                 cakeVideo1.classList.add('hidden');
                 cakeVideo2.classList.remove('hidden');
                 cakeVideo2.currentTime = 0;
+                cakeVideo2.muted = true;
                 cakeVideo2.play().catch(e => console.log("Autoplay bloqueado en video 2:", e));
             });
         }
@@ -989,7 +991,6 @@
         function mostrarRegalos() {
             detenerAudioYouTube();
 
-            // Pausar y resetear videos al volver al menú de regalos
             if (cakeVideo1 && cakeVideo2) {
                 cakeVideo1.pause();
                 cakeVideo1.currentTime = 0;
@@ -1022,14 +1023,23 @@
             document.getElementById('letter-subscreen').classList.add('hidden');
             document.getElementById('cake-subscreen').classList.remove('hidden');
 
-            // Reproducir el primer video horizontal automáticamente al entrar
             if (cakeVideo1 && cakeVideo2) {
                 cakeVideo1.classList.remove('hidden');
                 cakeVideo2.classList.add('hidden');
                 cakeVideo1.currentTime = 0;
                 cakeVideo2.pause();
-                cakeVideo1.play().catch(error => {
-                    console.log("Autoplay bloqueado en video 1:", error);
+                
+                cakeVideo1.muted = true;
+                cakeVideo1.play().then(() => {
+                    console.log("Video 1 reproduciéndose correctamente");
+                }).catch(error => {
+                    console.log("Autoplay bloqueado:", error);
+                    let playPromise = cakeVideo1.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(e => {
+                            cakeVideo1.controls = true;
+                        });
+                    }
                 });
             }
         }
