@@ -536,69 +536,25 @@
             width: 100%;
         }
 
-        /* Estilos actualizados para la Torta de Cumpleaños */
-        .cake-section-wrapper {
+        /* Estilos para la sección de videos del pastel */
+        .cake-video-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 10px 0;
+            padding: 6px 0;
+            width: 100%;
         }
 
-        .message {
-            font-family: "Cookie", cursive;
-            font-size: 2.5rem; 
-            color: #777;
-            margin-bottom: 5px;
-        }
-
-        .cake {
-            position: relative;
-            width: 180px;
-            height: 130px;
-            background: #f8e1eb;
-            border-radius: 10px 10px 0 0;
-            margin-top: 35px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-
-        .cake-topping .topping-top {
-            background: #b381ae; 
-            position: absolute;
-            width: 100%; 
-            height: 65px;
-            top: 0; 
-            transform: translateY(-50%);
-            border-radius: 50%; 
-            z-index: 9;
-        }
-
-        .candle-container {
-            position: absolute;
-            top: -55px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 50px;
-            background: #e8d7f1;
-            border-radius: 4px;
-        }
-
-        .candle-container .flame-wrap {
-            position: relative; 
-            z-index: 99;
-            width: 100%; 
-            background: #fcc56c;
-            height: 30px; 
-            transform-origin: bottom center;
-            transform: scale(0); 
-            transition: transform 0.3s ease-in-out;
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 10px #fcc56c;
-        }
-
-        .candle-container.lit .flame-wrap {
-            transform: scale(1);
+        .cake-video {
+            width: 100%;
+            max-height: 44vh;
+            border-radius: 14px;
+            border: 3px solid white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            object-fit: contain;
+            background: #000;
+            margin-bottom: 4px;
         }
     </style>
 </head>
@@ -700,7 +656,7 @@
             <button class="volver-box-btn" onclick="cerrarRegalo(2)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA + TORTA DE CUMPLEAÑOS INTEGRADA) -->
+        <!-- CONTENIDO REGALO 3 (CARTA + VIDEOS DEL PASTEL INTEGRADOS) -->
         <div id="gift-3-content" class="hidden content-box">
             <!-- Sub-pantalla 3.1: La Carta -->
             <div id="letter-subscreen">
@@ -714,22 +670,23 @@
                     <p>No eres solo una parte de mi vida... eres la mejor parte de ella. ❤️</p>
                 </div>
                 
-                <button class="volver-box-btn" onclick="pasarATorta()">SIGUIENTE REGALO 🎂</button>
+                <button class="volver-box-btn" onclick="pasarAVideosPastel()">SIGUIENTE REGALO 🎂</button>
             </div>
 
-            <!-- Sub-pantalla 3.2: La Torta Interactiva -->
+            <!-- Sub-pantalla 3.2: Los Videos del Pastel (Armado + Bucle) -->
             <div id="cake-subscreen" class="hidden">
-                <div class="cake-section-wrapper">
-                    <div class="message">Happy Birthday To You</div>
+                <div class="cake-video-wrapper">
+                    <!-- Video 1: Pastel armándose (Se reproduce 1 vez) -->
+                    <video id="cake-video-1" class="cake-video" playsinline muted>
+                        <source src="https://drive.google.com/uc?export=view&id=1qIdLOwuVBjAUd3JtcUdrqdz3e3CTj7pL" type="video/mp4">
+                        Tu navegador không soporta videos.
+                    </video>
 
-                    <div class="cake">
-                        <div class="cake-topping">
-                            <div class="topping-top"></div>
-                        </div>
-                        <div class="candle-container" id="candle">
-                            <div class="flame-wrap"></div>
-                        </div>
-                    </div>
+                    <!-- Video 2: Bucle del final (Oculto hasta que termine el primero) -->
+                    <video id="cake-video-2" class="cake-video hidden" playsinline muted loop>
+                        <source src="https://drive.google.com/uc?export=view&id=16ofYoxWXcsO8tyKLbcLckZm-Nk4N-9bR" type="video/mp4">
+                        Tu navegador không soporta videos.
+                    </video>
                 </div>
 
                 <button class="volver-box-btn" onclick="cerrarRegalo(3)">VOLVER A LOS REGALOS</button>
@@ -773,6 +730,20 @@
         const currentTimeEl = document.getElementById('current-time');
         const durationTimeEl = document.getElementById('duration-time');
         const audioPlayer = document.getElementById('audio-player');
+
+        // Control de los videos del pastel
+        const cakeVideo1 = document.getElementById('cake-video-1');
+        const cakeVideo2 = document.getElementById('cake-video-2');
+
+        // Cuando termina el video 1, se oculta y arranca el video 2 en bucle
+        if (cakeVideo1 && cakeVideo2) {
+            cakeVideo1.addEventListener('ended', () => {
+                cakeVideo1.classList.add('hidden');
+                cakeVideo2.classList.remove('hidden');
+                cakeVideo2.currentTime = 0;
+                cakeVideo2.play().catch(e => console.log("Autoplay bloqueado en video 2:", e));
+            });
+        }
 
         function crearCorazones() {
             const bg = document.getElementById('hearts-bg');
@@ -1016,6 +987,16 @@
         function mostrarRegalos() {
             detenerAudioYouTube();
 
+            // Pausar y resetear videos al volver al menú de regalos
+            if (cakeVideo1 && cakeVideo2) {
+                cakeVideo1.pause();
+                cakeVideo1.currentTime = 0;
+                cakeVideo2.pause();
+                cakeVideo2.currentTime = 0;
+                cakeVideo1.classList.remove('hidden');
+                cakeVideo2.classList.add('hidden');
+            }
+
             document.getElementById('question-screen').classList.add('hidden');
             document.getElementById('gifts-screen').classList.remove('hidden');
             document.getElementById('gift-1-content').classList.add('hidden');
@@ -1032,20 +1013,23 @@
             if (numeroRegalo === 3) {
                 document.getElementById('letter-subscreen').classList.remove('hidden');
                 document.getElementById('cake-subscreen').classList.add('hidden');
-                document.getElementById('candle').classList.remove('lit');
             }
         }
 
-        function pasarATorta() {
+        function pasarAVideosPastel() {
             document.getElementById('letter-subscreen').classList.add('hidden');
             document.getElementById('cake-subscreen').classList.remove('hidden');
 
-            setTimeout(() => {
-                const candle = document.getElementById('candle');
-                if (candle) {
-                    candle.classList.add('lit');
-                }
-            }, 1000);
+            // Reproducir el primer video automáticamente al entrar
+            if (cakeVideo1 && cakeVideo2) {
+                cakeVideo1.classList.remove('hidden');
+                cakeVideo2.classList.add('hidden');
+                cakeVideo1.currentTime = 0;
+                cakeVideo2.pause();
+                cakeVideo1.play().catch(error => {
+                    console.log("Autoplay bloqueado en video 1:", error);
+                });
+            }
         }
 
         function cerrarRegalo(numeroRegalo) {
