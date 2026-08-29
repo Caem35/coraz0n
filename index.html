@@ -536,24 +536,25 @@
             width: 100%;
         }
 
-        /* Estilos para la sección de videos del pastel */
+        /* Estilos ajustados para videos horizontales adaptados a la tarjeta */
         .cake-video-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 6px 0;
+            padding: 4px 0;
             width: 100%;
         }
 
         .cake-video {
             width: 100%;
-            max-height: 44vh;
+            height: auto;
+            max-height: 38vh;
             border-radius: 14px;
             border: 3px solid white;
             box-shadow: 0 8px 25px rgba(0,0,0,0.12);
             object-fit: contain;
-            background: #000;
+            background: transparent;
             margin-bottom: 4px;
         }
     </style>
@@ -656,7 +657,7 @@
             <button class="volver-box-btn" onclick="cerrarRegalo(2)">VOLVER A LOS REGALOS</button>
         </div>
 
-        <!-- CONTENIDO REGALO 3 (CARTA + VIDEOS DEL PASTEL INTEGRADOS) -->
+        <!-- CONTENIDO REGALO 3 (CARTA + VIDEOS HORIZONTALES DEL PASTEL) -->
         <div id="gift-3-content" class="hidden content-box">
             <!-- Sub-pantalla 3.1: La Carta -->
             <div id="letter-subscreen">
@@ -677,15 +678,15 @@
             <div id="cake-subscreen" class="hidden">
                 <div class="cake-video-wrapper">
                     <!-- Video 1: Pastel armándose (Se reproduce 1 vez) -->
-                    <video id="cake-video-1" class="cake-video" playsinline muted>
+                    <video id="cake-video-1" class="cake-video" playsinline autoplay muted>
                         <source src="https://drive.google.com/uc?export=view&id=1qIdLOwuVBjAUd3JtcUdrqdz3e3CTj7pL" type="video/mp4">
-                        Tu navegador không soporta videos.
+                        Tu navegador no soporta videos.
                     </video>
 
                     <!-- Video 2: Bucle del final (Oculto hasta que termine el primero) -->
-                    <video id="cake-video-2" class="cake-video hidden" playsinline muted loop>
+                    <video id="cake-video-2" class="cake-video hidden" playsinline autoplay muted loop>
                         <source src="https://drive.google.com/uc?export=view&id=16ofYoxWXcsO8tyKLbcLckZm-Nk4N-9bR" type="video/mp4">
-                        Tu navegador không soporta videos.
+                        Tu navegador no soporta videos.
                     </video>
                 </div>
 
@@ -1020,7 +1021,7 @@
             document.getElementById('letter-subscreen').classList.add('hidden');
             document.getElementById('cake-subscreen').classList.remove('hidden');
 
-            // Reproducir el primer video automáticamente al entrar
+            // Reproducir el primer video horizontal automáticamente al entrar
             if (cakeVideo1 && cakeVideo2) {
                 cakeVideo1.classList.remove('hidden');
                 cakeVideo2.classList.add('hidden');
