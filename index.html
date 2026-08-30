@@ -536,7 +536,7 @@
             width: 100%;
         }
 
-        /* Estilos ajustados para los videos del pastel */
+        /* Estilos de los videos del pastel */
         .cake-video-wrapper {
             display: flex;
             flex-direction: column;
@@ -738,7 +738,23 @@
         const cakeVideo1 = document.getElementById('cake-video-1');
         const cakeVideo2 = document.getElementById('cake-video-2');
 
-        // Cuando termina el video 1, se oculta y arranca el video 2 en bucle
+        // TRUCO CLAVE: Desbloquear el motor de multimedia en el primer toque de la pantalla
+        document.addEventListener('click', function desbloquearMultimedia() {
+            if (cakeVideo1) {
+                cakeVideo1.play().then(() => {
+                    cakeVideo1.pause();
+                    cakeVideo1.currentTime = 0;
+                }).catch(() => {});
+            }
+            if (cakeVideo2) {
+                cakeVideo2.play().then(() => {
+                    cakeVideo2.pause();
+                    cakeVideo2.currentTime = 0;
+                }).catch(() => {});
+            }
+            document.removeEventListener('click', desbloquearMultimedia);
+        }, { once: true });
+
         if (cakeVideo1 && cakeVideo2) {
             cakeVideo1.addEventListener('ended', () => {
                 cakeVideo1.classList.add('hidden');
@@ -955,7 +971,8 @@
                 textoPregunta.innerText = mensajesNo[contadorNo - 1];
             }
             
-            let escalaSi = 1 + (contadorNo * 0.15);
+            // CORRECCIÓN: Limitamos el crecimiento máximo de la escala para que no desborde la tarjeta
+            let escalaSi = Math.min(1 + (contadorNo * 0.1), 1.35);
             botonSi.style.transform = `scale(${escalaSi})`;
 
             let escalaNo = Math.max(0, 1 - (contadorNo * 0.16));
@@ -1030,16 +1047,8 @@
                 cakeVideo2.pause();
                 
                 cakeVideo1.muted = true;
-                cakeVideo1.play().then(() => {
-                    console.log("Video 1 reproduciéndose correctamente");
-                }).catch(error => {
-                    console.log("Autoplay bloqueado:", error);
-                    let playPromise = cakeVideo1.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(e => {
-                            cakeVideo1.controls = true;
-                        });
-                    }
+                cakeVideo1.play().catch(error => {
+                    console.log("Error al reproducir video 1:", error);
                 });
             }
         }
