@@ -71,7 +71,7 @@
             border-radius: 10px;
         }
 
-        /* Contador de Toques con Corazón Rojo (Esquina Superior Derecha) */
+        /* Contador de Toques con Corazón Rojo (Esquina Superior Derecha - Siempre Visible) */
         .heart-counter-badge {
             position: absolute;
             top: 15px;
@@ -94,7 +94,7 @@
             transform: scale(1.05);
         }
 
-        /* Botón de Vales Flotante (Esquina Superior Izquierda - Opuesto al contador) */
+        /* Botón de Vales Flotante (Esquina Superior Izquierda - Solo Pantalla de Regalos) */
         .coupons-badge {
             position: absolute;
             top: 15px;
@@ -796,12 +796,12 @@
     <!-- Contenedor del fondo animado de corazones -->
     <div id="hearts-bg"></div>
 
-    <!-- Botón de Vales Flotante (Esquina Superior Izquierda) -->
-    <div class="coupons-badge" onclick="abrirRegalo(4)">
+    <!-- Botón de Vales Flotante (Esquina Superior Izquierda - Inicialmente oculto, solo aparece en pantalla de regalos) -->
+    <div id="coupons-badge" class="coupons-badge hidden" onclick="abrirRegalo(4)">
         <span>🎟️</span> Vales
     </div>
 
-    <!-- Contador de Toques con Corazón Rojo (Esquina Superior Derecha) -->
+    <!-- Contador de Toques con Corazón Rojo (Esquina Superior Derecha - Siempre Visible) -->
     <div class="heart-counter-badge" onclick="agregarToque(event)">
         <span style="color: #ff1744;">❤️</span> <span id="contador-toques">0</span> clics de amor
     </div>
@@ -1078,6 +1078,7 @@
         const botonSi = document.getElementById('yes-btn');
         const botonNo = document.getElementById('no-btn');
         const textoPregunta = document.getElementById('question-text');
+        const couponsBadge = document.getElementById('coupons-badge');
 
         const playBtn = document.getElementById('play-btn');
         const vinyl = document.getElementById('vinyl-record');
@@ -1378,12 +1379,18 @@
             document.getElementById('gift-3-content').classList.add('hidden');
             document.getElementById('gift-4-content').classList.add('hidden');
 
+            // Mostrar el botón de vales solo en esta pantalla de regalos
+            couponsBadge.classList.remove('hidden');
+
             actualizarDestacadoRegalos();
         }
 
         function abrirRegalo(numeroRegalo) {
             document.getElementById('gifts-screen').classList.add('hidden');
             document.getElementById(`gift-${numeroRegalo}-content`).classList.remove('hidden');
+
+            // Ocultar el botón de vales en cualquier otro apartado/regalo
+            couponsBadge.classList.add('hidden');
 
             if (numeroRegalo === 3) {
                 document.getElementById('letter-subscreen').classList.remove('hidden');
