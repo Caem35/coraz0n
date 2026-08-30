@@ -813,7 +813,7 @@
             </div>
         </div>
 
-        <!-- PANTALLA 2: SECCIÓN DE REGALOS (4 CAJAS: 3 ORIGINALES + 1 LOGO NUEVO DEL MINI-EVENTO) -->
+        <!-- PANTALLA 2: SECCIÓN DE REGALOS (3 CAJITAS ORIGINALES) -->
         <div id="gifts-screen" class="hidden">
             <!-- Contador de tiempo juntos en Negro -->
             <div class="time-counter-box">
@@ -825,19 +825,18 @@
             
             <h1>¡Sabía que dirías que sí, mi vida! 💕</h1>
             
-            <div class="gifts-grid" style="flex-wrap: wrap; gap: 8px;">
+            <div class="gifts-grid">
+                <!-- CAJA 1 -->
                 <div id="gift-1" class="gift-card" onclick="abrirRegalo(1)">
                     <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 1">
                 </div>
-                <div id="gift-2" class="gift-card" onclick="abrirRegalo(2)">
-                    <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 2">
+                <!-- CAJA 2 (AQUÍ ESTÁ UBICADO EL LOGO DE LOS VALES AHORA) -->
+                <div id="gift-2" class="gift-card" onclick="abrirRegalo(4)">
+                    <img src="https://lh3.googleusercontent.com/d/1RHmwJL4nq8_a_S7n-epgEoxjAKehv_Nq" alt="Vales Especiales">
                 </div>
+                <!-- CAJA 3 -->
                 <div id="gift-3" class="gift-card" onclick="abrirRegalo(3)">
                     <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 3">
-                </div>
-                <!-- NUEVA CAJA 4: Logo del Mini-Evento de Vales -->
-                <div id="gift-4" class="gift-card" onclick="abrirRegalo(4)">
-                    <img src="https://lh3.googleusercontent.com/d/1RHmwJL4nq8_a_S7n-epgEoxjAKehv_Nq" alt="Vales Especiales">
                 </div>
             </div>
         </div>
@@ -917,7 +916,7 @@
             </div>
         </div>
 
-        <!-- NUEVO CONTENIDO REGALO 4 (MINI-EVENTO DE VALES DESLIZABLES CON LOCALSTORAGE) -->
+        <!-- CONTENIDO REGALO 4: MINI-EVENTO DE VALES DESLIZABLES CON LOCALSTORAGE -->
         <div id="gift-4-content" class="hidden content-box">
             <h2 style="color: #ad1457; margin-bottom: 2px; font-size: 17px;">Vales Especiales 🎟️✨</h2>
             <p style="font-size: 11.5px; color: #666; margin-bottom: 6px;">Desliza para ver tus vales y canjéalos cuando quieras</p>
@@ -1322,10 +1321,14 @@
             document.getElementById('gift-1').classList.remove('active-gift');
             document.getElementById('gift-2').classList.remove('active-gift');
             document.getElementById('gift-3').classList.remove('active-gift');
-            document.getElementById('gift-4').classList.remove('active-gift');
 
-            if (!secuenciaCompletada && regaloActualIndex <= 4) {
-                document.getElementById(`gift-${regaloActualIndex}`).classList.add('active-gift');
+            if (!secuenciaCompletada && regaloActualIndex <= 3) {
+                // Mapeo para que el orden secuencial lógico funcione correctamente con las 3 cajas visuales
+                let cajaIdMap = { 1: 1, 2: 2, 3: 3 };
+                let targetId = cajaIdMap[regaloActualIndex];
+                if (targetId) {
+                    document.getElementById(`gift-${targetId}`).classList.add('active-gift');
+                }
             }
         }
 
@@ -1385,7 +1388,7 @@
             
             if (!secuenciaCompletada) {
                 if (regaloActualIndex === numeroRegalo) {
-                    if (regaloActualIndex < 4) {
+                    if (regaloActualIndex < 3) {
                         regaloActualIndex++;
                     } else {
                         secuenciaCompletada = true; 
