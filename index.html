@@ -536,28 +536,28 @@
             width: 100%;
         }
 
-        /* Estilos de los videos del pastel */
+        /* Estilos de los videos del pastel amplios y sin bordes */
         .cake-video-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin: 4px 0;
+            height: 100%;
+            position: relative;
         }
 
         .cake-video {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            max-height: 42vh;
-            border-radius: 14px;
-            border: 3px solid white;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            object-fit: contain;
+            width: 105%;
+            max-width: none;
+            height: 52vh;
+            border-radius: 10px;
+            border: none;
+            box-shadow: none;
+            object-fit: cover;
             background: transparent;
             display: block;
-            margin: 0 auto;
+            margin: -10px auto;
         }
     </style>
 </head>
