@@ -559,6 +559,212 @@
             display: block;
             margin: -10px auto;
         }
+
+        /* Estilos para el Mini-Evento de Vales (Carrusel y Canje) */
+        .vales-carousel-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        .vales-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            width: 100%;
+            gap: 12px;
+            padding: 10px 4px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .vales-slider::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+        .vale-item {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .vale-img-wrapper {
+            position: relative;
+            width: 100%;
+            max-height: 38vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .vale-img {
+            width: 100%;
+            max-height: 36vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            transition: filter 0.3s ease;
+        }
+
+        /* Sello de Canjeado / Usado */
+        .vale-used-stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            background: rgba(220, 20, 60, 0.88);
+            color: white;
+            font-weight: 900;
+            font-size: 20px;
+            padding: 8px 18px;
+            border-radius: 10px;
+            border: 3px dashed white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+            pointer-events: none;
+            display: none;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+
+        .vale-item.used .vale-img {
+            filter: grayscale(80%) brightness(0.85);
+        }
+        .vale-item.used .vale-used-stamp {
+            display: block;
+        }
+
+        .vale-controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            margin-top: 8px;
+            padding: 0 10px;
+        }
+
+        .vale-nav-btn {
+            background: #f8bbd0;
+            color: #ad1457;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        .vale-nav-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .canjear-btn {
+            background: linear-gradient(135deg, #ff4081 0%, #c51162 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.25);
+            transition: transform 0.2s;
+        }
+        .canjear-btn:hover {
+            transform: scale(1.05);
+        }
+        .vale-item.used .canjear-btn {
+            background: #b0bec5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .vale-indicators {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-top: 6px;
+        }
+        .indicator-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #f8bbd0;
+            transition: background 0.3s;
+        }
+        .indicator-dot.active {
+            background: #ad1457;
+            width: 16px;
+            border-radius: 4px;
+        }
+
+        /* Modal de confirmación personalizado para canje */
+        #confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #confirm-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .confirm-box {
+            background: white;
+            padding: 22px 20px;
+            border-radius: 20px;
+            width: 82%;
+            max-width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 2px solid #f8bbd0;
+        }
+        .confirm-box p {
+            color: #ad1457;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        .confirm-buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+        .conf-btn {
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            width: 50%;
+        }
+        #conf-yes {
+            background: #43a047;
+            color: white;
+        }
+        #conf-no {
+            background: #e53935;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -571,10 +777,21 @@
         <span style="color: #ff1744;">❤️</span> <span id="contador-toques">0</span> clics de amor
     </div>
 
-    <!-- Visor de Fotos (Lightbox) Pantalla Completa para Regalo 1 -->
+    <!-- Visor de Fotos (Lightbox) Pantalla Completa -->
     <div id="lightbox-overlay" onclick="cerrarLightbox()">
         <button id="lightbox-close" onclick="cerrarLightbox()">×</button>
         <img id="lightbox-img" src="" alt="Foto Ampliada">
+    </div>
+
+    <!-- Modal de confirmación para canjear ticket -->
+    <div id="confirm-modal">
+        <div class="confirm-box">
+            <p>¿Seguro que quieres usar tu vale ahora? 🎟️✨</p>
+            <div class="confirm-buttons">
+                <button id="conf-yes" class="conf-btn" onclick="ejecutarCanje()">¡Sí, usar!</button>
+                <button id="conf-no" class="conf-btn" onclick="cerrarModalConfirmacion()">Cancelar</button>
+            </div>
+        </div>
     </div>
 
     <!-- Easter Egg Matrix con vista de Escritorio Forzada -->
@@ -596,7 +813,7 @@
             </div>
         </div>
 
-        <!-- PANTALLA 2: SECCIÓN DE REGALOS -->
+        <!-- PANTALLA 2: SECCIÓN DE REGALOS (4 CAJAS: 3 ORIGINALES + 1 LOGO NUEVO DEL MINI-EVENTO) -->
         <div id="gifts-screen" class="hidden">
             <!-- Contador de tiempo juntos en Negro -->
             <div class="time-counter-box">
@@ -608,7 +825,7 @@
             
             <h1>¡Sabía que dirías que sí, mi vida! 💕</h1>
             
-            <div class="gifts-grid">
+            <div class="gifts-grid" style="flex-wrap: wrap; gap: 8px;">
                 <div id="gift-1" class="gift-card" onclick="abrirRegalo(1)">
                     <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 1">
                 </div>
@@ -617,6 +834,10 @@
                 </div>
                 <div id="gift-3" class="gift-card" onclick="abrirRegalo(3)">
                     <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 3">
+                </div>
+                <!-- NUEVA CAJA 4: Logo del Mini-Evento de Vales -->
+                <div id="gift-4" class="gift-card" onclick="abrirRegalo(4)">
+                    <img src="https://lh3.googleusercontent.com/d/1RHmwJL4nq8_a_S7n-epgEoxjAKehv_Nq" alt="Vales Especiales">
                 </div>
             </div>
         </div>
@@ -695,6 +916,108 @@
                 <button class="volver-box-btn" onclick="cerrarRegalo(3)">VOLVER A LOS REGALOS</button>
             </div>
         </div>
+
+        <!-- NUEVO CONTENIDO REGALO 4 (MINI-EVENTO DE VALES DESLIZABLES CON LOCALSTORAGE) -->
+        <div id="gift-4-content" class="hidden content-box">
+            <h2 style="color: #ad1457; margin-bottom: 2px; font-size: 17px;">Vales Especiales 🎟️✨</h2>
+            <p style="font-size: 11.5px; color: #666; margin-bottom: 6px;">Desliza para ver tus vales y canjéalos cuando quieras</p>
+
+            <div class="vales-carousel-container">
+                <div class="vales-slider" id="valesSlider" onscroll="actualizarIndicadorSlider()">
+                    <!-- Vale 1 -->
+                    <div class="vale-item" id="vale-0">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE')">
+                            <img src="https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE" class="vale-img" alt="Vale 1">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-0" onclick="solicitarCanje(0)">Canjear Vale</button>
+                    </div>
+                    <!-- Vale 2 -->
+                    <div class="vale-item" id="vale-1">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1-XBYSH_-2rB2sGKLfiR9n_eKgNo2gFVz')">
+                            <img src="https://lh3.googleusercontent.com/d/1-XBYSH_-2rB2sGKLfiR9n_eKgNo2gFVz" class="vale-img" alt="Vale 2">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-1" onclick="solicitarCanje(1)">Canjear Vale</button>
+                    </div>
+                    <!-- Vale 3 -->
+                    <div class="vale-item" id="vale-2">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/15zwY175MueN2FGktyjcfViDwUkbfhgrP')">
+                            <img src="https://lh3.googleusercontent.com/d/15zwY175MueN2FGktyjcfViDwUkbfhgrP" class="vale-img" alt="Vale 3">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-2" onclick="solicitarCanje(2)">Canjear Vale</button>
+                    </div>
+                    <!-- Vale 4 -->
+                    <div class="vale-item" id="vale-3">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1rF18GsVKOeQVresB7TMD3NnwgzyaWOtW')">
+                            <img src="https://lh3.googleusercontent.com/d/1rF18GsVKOeQVresB7TMD3NnwgzyaWOtW" class="vale-img" alt="Vale 4">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-3" onclick="solicitarCanje(3)">Canjear Vale</button>
+                    </div>
+                    <!-- Vale 5 -->
+                    <div class="vale-item" id="vale-4">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1Ue6LXi_BZlKIpyTvraYm3rlzqdw4R_6w')">
+                            <img src="https://lh3.googleusercontent.com/d/1Ue6LXi_BZlKIpyTvraYm3rlzqdw4R_6w" class="vale-img" alt="Vale 5">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-4" onclick="solicitarCanje(4)">Canjear Vale</button>
+                    </div>
+                    <!-- Vale 6 -->
+                    <div class="vale-item" id="vale-5">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1Pg9PyX-4xWPzqNNBe9n4DmBLKsXKaxzg')">
+                            <img src="https://lh3.googleusercontent.com/d/1Pg9PyX-4xWPzqNNBe9n4DmBLKsXKaxzg" class="vale-img" alt="Vale 6">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-5" onclick="solicitarCanje(5)">Canjear Vale</button>
+                    </div>
+                    <!-- Vale 7 -->
+                    <div class="vale-item" id="vale-6">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlnlfKDMdd7Mpd')">
+                            <img src="https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlnlfKDMdd7Mpd" class="vale-img" alt="Vale 7">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-6" onclick="solicitarCanje(6)">Canjear Vale</button>
+                    </div>
+                    <!-- Vale 8 -->
+                    <div class="vale-item" id="vale-7">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1fZI0-Y9qRx3UhnwlhcHK4Qbsqb6El6Cr')">
+                            <img src="https://lh3.googleusercontent.com/d/1fZI0-Y9qRx3UhnwlhcHK4Qbsqb6El6Cr" class="vale-img" alt="Vale 8">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-7" onclick="solicitarCanje(7)">Canjear Vale</button>
+                    </div>
+                    <!-- Vale 9 -->
+                    <div class="vale-item" id="vale-8">
+                        <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1sjYYwlZqT2_TNoBjeh1vVinJ03iGJQHR')">
+                            <img src="https://lh3.googleusercontent.com/d/1sjYYwlZqT2_TNoBjeh1vVinJ03iGJQHR" class="vale-img" alt="Vale 9">
+                            <div class="vale-used-stamp">USADO</div>
+                        </div>
+                        <button class="canjear-btn" id="btn-vale-8" onclick="solicitarCanje(8)">Canjear Vale</button>
+                    </div>
+                </div>
+
+                <!-- Controles del Slider -->
+                <div class="vale-controls">
+                    <button class="vale-nav-btn" onclick="moverSlider(-1)">❮</button>
+                    <div class="vale-indicators" id="valeIndicators">
+                        <div class="indicator-dot active"></div>
+                        <div class="indicator-dot"></div>
+                        <div class="indicator-dot"></div>
+                        <div class="indicator-dot"></div>
+                        <div class="indicator-dot"></div>
+                        <div class="indicator-dot"></div>
+                        <div class="indicator-dot"></div>
+                        <div class="indicator-dot"></div>
+                        <div class="indicator-dot"></div>
+                    </div>
+                    <button class="vale-nav-btn" onclick="moverSlider(1)">❯</button>
+                </div>
+            </div>
+
+            <button class="volver-box-btn" onclick="cerrarRegalo(4)" style="margin-top: 6px;">VOLVER A LOS REGALOS</button>
+        </div>
     </div>
 
     <script>
@@ -703,6 +1026,7 @@
         let reproduciendo = false;
         let regaloActualIndex = 1; 
         let secuenciaCompletada = false;
+        let valeSeleccionadoParaCanje = null;
 
         let matrixInterval = null;
         const canvas = document.getElementById("matrix");
@@ -998,8 +1322,9 @@
             document.getElementById('gift-1').classList.remove('active-gift');
             document.getElementById('gift-2').classList.remove('active-gift');
             document.getElementById('gift-3').classList.remove('active-gift');
+            document.getElementById('gift-4').classList.remove('active-gift');
 
-            if (!secuenciaCompletada && regaloActualIndex <= 3) {
+            if (!secuenciaCompletada && regaloActualIndex <= 4) {
                 document.getElementById(`gift-${regaloActualIndex}`).classList.add('active-gift');
             }
         }
@@ -1021,6 +1346,7 @@
             document.getElementById('gift-1-content').classList.add('hidden');
             document.getElementById('gift-2-content').classList.add('hidden');
             document.getElementById('gift-3-content').classList.add('hidden');
+            document.getElementById('gift-4-content').classList.add('hidden');
 
             actualizarDestacadoRegalos();
         }
@@ -1032,6 +1358,8 @@
             if (numeroRegalo === 3) {
                 document.getElementById('letter-subscreen').classList.remove('hidden');
                 document.getElementById('cake-subscreen').classList.add('hidden');
+            } else if (numeroRegalo === 4) {
+                cargarEstadoVales();
             }
         }
 
@@ -1057,7 +1385,7 @@
             
             if (!secuenciaCompletada) {
                 if (regaloActualIndex === numeroRegalo) {
-                    if (regaloActualIndex < 3) {
+                    if (regaloActualIndex < 4) {
                         regaloActualIndex++;
                     } else {
                         secuenciaCompletada = true; 
@@ -1104,6 +1432,61 @@
                 const nuevaTiempo = (clickX / width) * audioPlayer.duration;
                 audioPlayer.currentTime = nuevaTiempo;
             }
+        }
+
+        /* Lógica del Mini-Evento de Vales y LocalStorage */
+        function moverSlider(direccion) {
+            const slider = document.getElementById('valesSlider');
+            const itemWidth = slider.clientWidth;
+            slider.scrollBy({ left: direccion * itemWidth, behavior: 'smooth' });
+        }
+
+        function actualizarIndicadorSlider() {
+            const slider = document.getElementById('valesSlider');
+            const index = Math.round(slider.scrollLeft / slider.clientWidth);
+            const dots = document.querySelectorAll('#valeIndicators .indicator-dot');
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function cargarEstadoVales() {
+            for (let i = 0; i < 9; i++) {
+                const estado = localStorage.getItem(`vale_usado_${i}`);
+                const valeEl = document.getElementById(`vale-${i}`);
+                const btnEl = document.getElementById(`btn-vale-${i}`);
+                if (estado === 'true') {
+                    valeEl.classList.add('used');
+                    btnEl.innerText = 'Canjeado';
+                } else {
+                    valeEl.classList.remove('used');
+                    btnEl.innerText = 'Canjear Vale';
+                }
+            }
+        }
+
+        function solicitarCanje(index) {
+            const estado = localStorage.getItem(`vale_usado_${index}`);
+            if (estado === 'true') return; // Ya usado
+            valeSeleccionadoParaCanje = index;
+            document.getElementById('confirm-modal').classList.add('show');
+        }
+
+        function cerrarModalConfirmacion() {
+            document.getElementById('confirm-modal').classList.remove('show');
+            valeSeleccionadoParaCanje = null;
+        }
+
+        function ejecutarCanje() {
+            if (valeSeleccionadoParaCanje !== null) {
+                localStorage.setItem(`vale_usado_${valeSeleccionadoParaCanje}`, 'true');
+                cargarEstadoVales();
+            }
+            cerrarModalConfirmacion();
         }
     </script>
 </body>
