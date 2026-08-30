@@ -652,7 +652,7 @@
             </div>
 
             <audio id="audio-player" preload="metadata">
-                <source src="https://github.com/Caem35/coraz0n/raw/refs/heads/main/MILO%20J%20-%20M.A.I%20(Video%20Oficial)(MP3_160K).mp3" type="audio/mpeg">
+                <source src="https://raw.githubusercontent.com/Caem35/coraz0n/main/MILO%20J%20-%20M.A.I%20(Video%20Oficial)(MP3_160K).mp3" type="audio/mpeg">
                 Tu navegador no soporta audio.
             </audio>
 
@@ -679,15 +679,15 @@
             <!-- Sub-pantalla 3.2: Los Videos del Pastel (Armado + Bucle) -->
             <div id="cake-subscreen" class="hidden">
                 <div class="cake-video-wrapper">
-                    <!-- Video 1: Pastel armándose (Se reproduce 1 vez) -->
+                    <!-- Video 1: Pastel armándose -->
                     <video id="cake-video-1" class="cake-video" playsinline muted>
-                        <source src="https://drive.google.com/uc?export=view&id=1qIdLOwuVBjAUd3JtcUdrqdz3e3CTj7pL" type="video/mp4">
+                        <source src="https://raw.githubusercontent.com/Caem35/coraz0n/main/Video1.mp4" type="video/mp4">
                         Tu navegador no soporta videos.
                     </video>
 
-                    <!-- Video 2: Bucle del final (Oculto hasta que termine el primero) -->
+                    <!-- Video 2: Bucle del final -->
                     <video id="cake-video-2" class="cake-video hidden" playsinline muted loop>
-                        <source src="https://drive.google.com/uc?export=view&id=16ofYoxWXcsO8tyKLbcLckZm-Nk4N-9bR" type="video/mp4">
+                        <source src="https://raw.githubusercontent.com/Caem35/coraz0n/main/Video2.mp4" type="video/mp4">
                         Tu navegador no soporta videos.
                     </video>
                 </div>
@@ -738,7 +738,7 @@
         const cakeVideo1 = document.getElementById('cake-video-1');
         const cakeVideo2 = document.getElementById('cake-video-2');
 
-        // TRUCO CLAVE: Desbloquear el motor de multimedia en el primer toque de la pantalla
+        // Desbloquear permisos de reproducción multimedia en el primer toque de la pantalla
         document.addEventListener('click', function desbloquearMultimedia() {
             if (cakeVideo1) {
                 cakeVideo1.play().then(() => {
@@ -971,7 +971,6 @@
                 textoPregunta.innerText = mensajesNo[contadorNo - 1];
             }
             
-            // CORRECCIÓN: Limitamos el crecimiento máximo de la escala para que no desborde la tarjeta
             let escalaSi = Math.min(1 + (contadorNo * 0.1), 1.35);
             botonSi.style.transform = `scale(${escalaSi})`;
 
