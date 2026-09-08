@@ -673,6 +673,36 @@
             transition: filter 0.3s ease;
         }
 
+        /* Estilos para la Tarjeta de Portada del Talonario */
+        .vale-portada-card {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffebee 100%);
+            border: 2px dashed #f8bbd0;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 6px 18px rgba(216, 27, 96, 0.08);
+        }
+        .vale-portada-img {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 15px rgba(216, 27, 96, 0.15);
+            border: 3px solid white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .vale-portada-img:hover {
+            transform: scale(1.03);
+        }
+
         /* Sello de Canjeado / Usado */
         .vale-used-stamp {
             position: absolute;
@@ -996,7 +1026,16 @@
 
             <div class="vales-carousel-container">
                 <div class="vales-slider" id="valesSlider" onscroll="actualizarIndicadorSlider()">
-                    <!-- Vales 1 al 9 -->
+                    <!-- TARJETA DE PORTADA DE VALES -->
+                    <div class="vale-item">
+                        <div class="vale-portada-card">
+                            <img src="https://lh3.googleusercontent.com/d/1ZtC1q6k91uX1q6k91uX1q6k91uX1q6k" class="vale-portada-img" alt="Portada Vales" onclick="abrirLightbox(this.src)">
+                            <h3 style="color: #ad1457; font-size: 14px; margin-bottom: 2px;">Talonario de Vales</h3>
+                            <p style="font-size: 10.5px; color: #666;">Desliza para ver tus sorpresas ✨</p>
+                        </div>
+                    </div>
+
+                    <!-- Vales 1 al 9 (Mantenidos exactamente intactos) -->
                     <div class="vale-item" id="vale-0">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE')">
                             <img src="https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE" class="vale-img" alt="Vale 1">
@@ -1062,11 +1101,12 @@
                     </div>
                 </div>
 
-                <!-- Controles del Slider -->
+                <!-- Controles del Slider con 10 indicadores (Portada + 9 Vales) -->
                 <div class="vale-controls">
                     <button class="vale-nav-btn" onclick="moverSlider(-1)">❮</button>
                     <div class="vale-indicators" id="valeIndicators">
                         <div class="indicator-dot active"></div>
+                        <div class="indicator-dot"></div>
                         <div class="indicator-dot"></div>
                         <div class="indicator-dot"></div>
                         <div class="indicator-dot"></div>
