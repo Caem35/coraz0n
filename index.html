@@ -5,7 +5,6 @@
 <meta id="viewport-meta" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Para ti, mi amor ❤️</title>
 <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-<!-- Three.js Library para la animación 3D -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 * {
@@ -132,34 +131,30 @@ z-index: 20;
 transform: scale(1.05);
 }
 
-/* Botón de Vales Flotante (Esquina Superior Izquierda - Solo Pantalla de Regalos) */
+/* Botón de Vales Flotante (Esquina Superior Izquierda - Tamaño y forma real del ticket) */
 .coupons-badge {
 position: absolute;
-top: 15px;
-left: 20px;
-background: #fff;
-padding: 5px 10px;
-border-radius: 20px;
-box-shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
-display: flex;
-align-items: center;
-gap: 6px;
-font-size: 12px;
-font-weight: bold;
-color: #ad1457;
+top: 12px;
+left: 15px;
+width: 75px;
+height: 105px;
 cursor: pointer;
 transition: transform 0.2s;
 z-index: 20;
-border: 1px solid #f8bbd0;
+border-radius: 10px;
+overflow: hidden;
+box-shadow: 0 4px 12px rgba(216, 27, 96, 0.25);
+background: transparent;
 }
 .coupons-badge:hover {
-transform: scale(1.05);
+transform: scale(1.08);
 }
 .coupons-badge img {
-width: 18px;
-height: 18px;
+width: 100%;
+height: 100%;
 object-fit: cover;
-border-radius: 50%;
+display: block;
+border-radius: 10px;
 }
 
 /* Contador de Tiempo juntos en Negro */
@@ -837,32 +832,26 @@ color: white;
 </head>
 <body>
 
-<!-- PANTALLA INTRO ANIMACIÓN 3D AUTOMÁTICA -->
 <div id="intro-overlay">
 <canvas id="matrix-canvas-intro"></canvas>
 <div id="canvas-container"></div>
 </div>
 
-<!-- Contenedor del fondo animado de corazones -->
 <div id="hearts-bg"></div>
 
-<!-- Botón de Vales Flotante (Esquina Superior Izquierda) con tu foto de Google Drive en el icono -->
 <div id="coupons-badge" class="coupons-badge hidden" onclick="abrirRegalo(4)">
-<img src="https://lh3.googleusercontent.com/d/1RHmwJL4nq8_a_S7n-epgEoxjAKehv_Nq" alt="Vales Icon"> Vales
+<img src="https://lh3.googleusercontent.com/d/1RHmwJL4nq8_a_S7n-epgEoxjAKehv_Nq" alt="Vales Icon">
 </div>
 
-<!-- Contador de Toques con Corazón Rojo (Esquina Superior Derecha - Siempre Visible) -->
 <div class="heart-counter-badge" onclick="agregarToque(event)">
 <span style="color: #ff1744;">❤️</span> <span id="contador-toques">0</span> clics de amor
 </div>
 
-<!-- Visor de Fotos (Lightbox) Pantalla Completa -->
 <div id="lightbox-overlay" onclick="cerrarLightbox()">
 <button id="lightbox-close" onclick="cerrarLightbox()">×</button>
 <img id="lightbox-img" src="" alt="Foto Ampliada">
 </div>
 
-<!-- Modal de confirmación para canjear ticket -->
 <div id="confirm-modal">
 <div class="confirm-box">
 <p>¿Seguro que quieres usar tu vale ahora? 🎟️✨</p>
@@ -873,14 +862,12 @@ color: white;
 </div>
 </div>
 
-<!-- Easter Egg Matrix con vista de Escritorio Forzada -->
 <div id="easter-egg-overlay">
 <button class="matrix-close-btn" onclick="cerrarEasterEgg()">×</button>
 <canvas id="matrix"></canvas>
 </div>
 
 <div class="container">
-<!-- PANTALLA 1: LA PREGUNTA -->
 <div id="question-screen">
 <img class="sticker-img" src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Sticker Tierno">
 
@@ -892,9 +879,7 @@ color: white;
 </div>
 </div>
 
-<!-- PANTALLA 2: SECCIÓN DE REGALOS -->
 <div id="gifts-screen" class="hidden">
-<!-- Contador de tiempo juntos en Negro -->
 <div class="time-counter-box">
 <div class="time-counter-title">⏳ Nuestro Tiempo Juntos ⏳</div>
 <div class="time-digits" id="time-counter-display"></div>
@@ -905,28 +890,23 @@ color: white;
 <h1>¡Sabía que dirías que sí, mi vida! 💕</h1>
 
 <div class="gifts-grid">
-<!-- CAJA 1: COLLAGE -->
 <div id="gift-1" class="gift-card" onclick="abrirRegalo(1)">
 <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 1">
 </div>
-<!-- CAJA 2: MÚSICA -->
 <div id="gift-2" class="gift-card" onclick="abrirRegalo(2)">
 <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 2">
 </div>
-<!-- CAJA 3: CARTA Y PASTEL -->
 <div id="gift-3" class="gift-card" onclick="abrirRegalo(3)">
 <img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 3">
 </div>
 </div>
 </div>
 
-<!-- CONTENIDO REGALO 1 (COLLAGE GRANDE CON LIGHTBOX) -->
 <div id="gift-1-content" class="hidden content-box">
 <img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos" onclick="abrirLightbox(this.src)">
 <button class="volver-box-btn" onclick="cerrarRegalo(1)">VOLVER A LOS REGALOS</button>
 </div>
 
-<!-- CONTENIDO REGALO 2 (REPRODUCTOR CON VINILO AL COSTADO) -->
 <div id="gift-2-content" class="hidden content-box">
 <div class="player-wrapper">
 <div class="player-card">
@@ -958,9 +938,7 @@ Tu navegador no soporta audio.
 <button class="volver-box-btn" onclick="cerrarRegalo(2)">VOLVER A LOS REGALOS</button>
 </div>
 
-<!-- CONTENIDO REGALO 3 (CARTA + VIDEOS DEL PASTEL) -->
 <div id="gift-3-content" class="hidden content-box">
-<!-- Sub-pantalla 3.1: La Carta -->
 <div id="letter-subscreen">
 <h2 style="color: #ad1457; margin-bottom: 4px; font-size: 18px;">Para ti, mi amor ✉️❤️</h2>
 
@@ -975,16 +953,13 @@ Tu navegador no soporta audio.
 <button class="volver-box-btn" onclick="pasarAVideosPastel()">SIGUIENTE REGALO 🎂</button>
 </div>
 
-<!-- Sub-pantalla 3.2: Los Videos del Pastel (Armado + Bucle) -->
 <div id="cake-subscreen" class="hidden">
 <div class="cake-video-wrapper">
-<!-- Video 1: Pastel armándose -->
 <video id="cake-video-1" class="cake-video" playsinline muted>
 <source src="https://raw.githubusercontent.com/Caem35/coraz0n/main/Video1.mp4" type="video/mp4">
 Tu navegador no soporta videos.
 </video>
 
-<!-- Video 2: Bucle del final -->
 <video id="cake-video-2" class="cake-video hidden" playsinline muted loop>
 <source src="https://raw.githubusercontent.com/Caem35/coraz0n/main/Video2.mp4" type="video/mp4">
 Tu navegador no soporta videos.
@@ -995,14 +970,12 @@ Tu navegador no soporta videos.
 </div>
 </div>
 
-<!-- CONTENIDO LOVE COUPON: MINI-EVENTO DE VALES DESLIZABLES CON LOCALSTORAGE -->
 <div id="gift-4-content" class="hidden content-box">
 <h2 style="color: #ad1457; margin-bottom: 2px; font-size: 17px;">Vales Especiales 🎟️✨</h2>
 <p style="font-size: 11.5px; color: #666; margin-bottom: 6px;">Desliza para ver tus vales y canjéalos cuando quieras</p>
 
 <div class="vales-carousel-container">
 <div class="vales-slider" id="valesSlider" onscroll="actualizarIndicadorSlider()">
-<!-- Vales 1 al 9 (Cada uno con su imagen original de vale) -->
 <div class="vale-item" id="vale-0">
 <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE')">
 <img src="https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE" class="vale-img" alt="Vale 1">
@@ -1068,7 +1041,6 @@ Tu navegador no soporta videos.
 </div>
 </div>
 
-<!-- Controles del Slider -->
 <div class="vale-controls">
 <button class="vale-nav-btn" onclick="moverSlider(-1)">❮</button>
 <div class="vale-indicators" id="valeIndicators">
