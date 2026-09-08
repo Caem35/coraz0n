@@ -5,6 +5,8 @@
     <meta id="viewport-meta" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para ti, mi amor ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <!-- Three.js Library para la animación 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -25,6 +27,42 @@
             position: fixed;
             user-select: none;
             -webkit-user-select: none;
+        }
+
+        /* --- ESTILOS DE LA INTRO ANIMACIÓN 3D --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #030008;
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+        #intro-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        #matrix-canvas-intro {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
         }
 
         /* Corazones flotantes de fondo */
@@ -793,6 +831,12 @@
 </head>
 <body>
 
+    <!-- PANTALLA INTRO ANIMACIÓN 3D AUTOMÁTICA -->
+    <div id="intro-overlay">
+        <canvas id="matrix-canvas-intro"></canvas>
+        <div id="canvas-container"></div>
+    </div>
+
     <!-- Contenedor del fondo animado de corazones -->
     <div id="hearts-bg"></div>
 
@@ -842,7 +886,7 @@
             </div>
         </div>
 
-        <!-- PANTALLA 2: SECCIÓN DE REGALOS (TUS 3 CAJITAS ORIGINALES EXACTAS) -->
+        <!-- PANTALLA 2: SECCIÓN DE REGALOS -->
         <div id="gifts-screen" class="hidden">
             <!-- Contador de tiempo juntos en Negro -->
             <div class="time-counter-box">
@@ -952,7 +996,7 @@
 
             <div class="vales-carousel-container">
                 <div class="vales-slider" id="valesSlider" onscroll="actualizarIndicadorSlider()">
-                    <!-- Vale 1 -->
+                    <!-- Vales 1 al 9 -->
                     <div class="vale-item" id="vale-0">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE')">
                             <img src="https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE" class="vale-img" alt="Vale 1">
@@ -960,7 +1004,6 @@
                         </div>
                         <button class="canjear-btn" id="btn-vale-0" onclick="solicitarCanje(0)">Canjear Vale</button>
                     </div>
-                    <!-- Vale 2 -->
                     <div class="vale-item" id="vale-1">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1-XBYSH_-2rB2sGKLfiR9n_eKgNo2gFVz')">
                             <img src="https://lh3.googleusercontent.com/d/1-XBYSH_-2rB2sGKLfiR9n_eKgNo2gFVz" class="vale-img" alt="Vale 2">
@@ -968,7 +1011,6 @@
                         </div>
                         <button class="canjear-btn" id="btn-vale-1" onclick="solicitarCanje(1)">Canjear Vale</button>
                     </div>
-                    <!-- Vale 3 -->
                     <div class="vale-item" id="vale-2">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/15zwY175MueN2FGktyjcfViDwUkbfhgrP')">
                             <img src="https://lh3.googleusercontent.com/d/15zwY175MueN2FGktyjcfViDwUkbfhgrP" class="vale-img" alt="Vale 3">
@@ -976,7 +1018,6 @@
                         </div>
                         <button class="canjear-btn" id="btn-vale-2" onclick="solicitarCanje(2)">Canjear Vale</button>
                     </div>
-                    <!-- Vale 4 -->
                     <div class="vale-item" id="vale-3">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1rF18GsVKOeQVresB7TMD3NnwgzyaWOtW')">
                             <img src="https://lh3.googleusercontent.com/d/1rF18GsVKOeQVresB7TMD3NnwgzyaWOtW" class="vale-img" alt="Vale 4">
@@ -984,7 +1025,6 @@
                         </div>
                         <button class="canjear-btn" id="btn-vale-3" onclick="solicitarCanje(3)">Canjear Vale</button>
                     </div>
-                    <!-- Vale 5 -->
                     <div class="vale-item" id="vale-4">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1Ue6LXi_BZlKIpyTvraYm3rlzqdw4R_6w')">
                             <img src="https://lh3.googleusercontent.com/d/1Ue6LXi_BZlKIpyTvraYm3rlzqdw4R_6w" class="vale-img" alt="Vale 5">
@@ -992,7 +1032,6 @@
                         </div>
                         <button class="canjear-btn" id="btn-vale-4" onclick="solicitarCanje(4)">Canjear Vale</button>
                     </div>
-                    <!-- Vale 6 -->
                     <div class="vale-item" id="vale-5">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1Pg9PyX-4xWPzqNNBe9n4DmBLKsXKaxzg')">
                             <img src="https://lh3.googleusercontent.com/d/1Pg9PyX-4xWPzqNNBe9n4DmBLKsXKaxzg" class="vale-img" alt="Vale 6">
@@ -1000,7 +1039,6 @@
                         </div>
                         <button class="canjear-btn" id="btn-vale-5" onclick="solicitarCanje(5)">Canjear Vale</button>
                     </div>
-                    <!-- Vale 7 -->
                     <div class="vale-item" id="vale-6">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlnlfKDMdd7Mpd')">
                             <img src="https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlnlfKDMdd7Mpd" class="vale-img" alt="Vale 7">
@@ -1008,7 +1046,6 @@
                         </div>
                         <button class="canjear-btn" id="btn-vale-6" onclick="solicitarCanje(6)">Canjear Vale</button>
                     </div>
-                    <!-- Vale 8 -->
                     <div class="vale-item" id="vale-7">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1fZI0-Y9qRx3UhnwlhcHK4Qbsqb6El6Cr')">
                             <img src="https://lh3.googleusercontent.com/d/1fZI0-Y9qRx3UhnwlhcHK4Qbsqb6El6Cr" class="vale-img" alt="Vale 8">
@@ -1016,7 +1053,6 @@
                         </div>
                         <button class="canjear-btn" id="btn-vale-7" onclick="solicitarCanje(7)">Canjear Vale</button>
                     </div>
-                    <!-- Vale 9 -->
                     <div class="vale-item" id="vale-8">
                         <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1sjYYwlZqT2_TNoBjeh1vVinJ03iGJQHR')">
                             <img src="https://lh3.googleusercontent.com/d/1sjYYwlZqT2_TNoBjeh1vVinJ03iGJQHR" class="vale-img" alt="Vale 9">
@@ -1049,6 +1085,225 @@
     </div>
 
     <script>
+        // --- SCRIPT DE LA ANIMACIÓN 3D INTRO AUTOMÁTICA ---
+        const matrixCanvasIntro = document.getElementById('matrix-canvas-intro');
+        const mCtxIntro = matrixCanvasIntro.getContext('2d');
+
+        let mWidthIntro = matrixCanvasIntro.width = window.innerWidth;
+        let mHeightIntro = matrixCanvasIntro.height = window.innerHeight;
+
+        const charsIntro = '0123456789♥♡LOVE';
+        const fontSizeIntro = 16;
+        let columnsIntro = Math.floor(mWidthIntro / fontSizeIntro);
+        let dropsIntro = Array(columnsIntro).fill(0).map(() => Math.random() * -50);
+
+        function drawMatrixIntro() {
+            mCtxIntro.fillStyle = 'rgba(3, 0, 8, 0.15)';
+            mCtxIntro.fillRect(0, 0, mWidthIntro, mHeightIntro);
+
+            mCtxIntro.fillStyle = '#ff1493';
+            mCtxIntro.font = `${fontSizeIntro}px monospace`;
+
+            for (let i = 0; i < dropsIntro.length; i++) {
+                const text = charsIntro[Math.floor(Math.random() * charsIntro.length)];
+                const x = i * fontSizeIntro;
+                const y = dropsIntro[i] * fontSizeIntro;
+
+                mCtxIntro.fillText(text, x, y);
+
+                if (y > mHeightIntro && Math.random() > 0.975) {
+                    dropsIntro[i] = 0;
+                }
+                dropsIntro[i]++;
+            }
+        }
+
+        const introContainer = document.getElementById('canvas-container');
+        const sceneIntro = new THREE.Scene();
+        const cameraIntro = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        cameraIntro.position.z = 100;
+
+        const rendererIntro = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rendererIntro.setSize(window.innerWidth, window.innerHeight);
+        rendererIntro.setPixelRatio(window.devicePixelRatio);
+        introContainer.appendChild(rendererIntro.domElement);
+
+        const particleCountIntro = 4000;
+        const geometryIntro = new THREE.BufferGeometry();
+        const positionsIntro = new Float32Array(particleCountIntro * 3);
+        const targetPositionsIntro = new Float32Array(particleCountIntro * 3);
+
+        for (let i = 0; i < particleCountIntro * 3; i += 3) {
+            positionsIntro[i] = (Math.random() - 0.5) * 300;
+            positionsIntro[i + 1] = (Math.random() - 0.5) * 300;
+            positionsIntro[i + 2] = (Math.random() - 0.5) * 300;
+        }
+        geometryIntro.setAttribute('position', new THREE.BufferAttribute(positionsIntro, 3));
+
+        function createGlowTextureIntro() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            gradient.addColorStop(0.3, 'rgba(255, 105, 180, 0.8)');
+            gradient.addColorStop(1, 'rgba(255, 20, 147, 0)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 64, 64);
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        const materialIntro = new THREE.PointsMaterial({
+            size: 2.5,
+            map: createGlowTextureIntro(),
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+
+        const particleSystemIntro = new THREE.Points(geometryIntro, materialIntro);
+        sceneIntro.add(particleSystemIntro);
+
+        function getOffscreenPointsIntro(text, fontScale = 1) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 400;
+            canvas.height = 400;
+
+            ctx.font = `bold ${Math.floor(80 * fontScale)}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#fff';
+            ctx.fillText(text, 200, 200);
+
+            const imgData = ctx.getImageData(0, 0, 400, 400);
+            const points = [];
+
+            for (let y = 0; y < 400; y += 3) {
+                for (let x = 0; x < 400; x += 3) {
+                    const idx = (y * 400 + x) * 4;
+                    if (imgData.data[idx + 3] > 128) {
+                        points.push({
+                            x: (x - 200) * 0.35,
+                            y: -(y - 200) * 0.35,
+                            z: (Math.random() - 0.5) * 5
+                        });
+                    }
+                }
+            }
+            return points;
+        }
+
+        function getHeartPointsIntro() {
+            const points = [];
+            for (let i = 0; i < particleCountIntro; i++) {
+                const t = Math.random() * Math.PI * 2;
+                const scale = 2.2;
+                let x = 16 * Math.pow(Math.sin(t), 3);
+                let y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+                let z = (Math.random() - 0.5) * 10;
+                points.push({ x: x * scale, y: y * scale, z: z });
+            }
+            const textPoints = getOffscreenPointsIntro('I Love You', 0.45);
+            for (let i = 0; i < textPoints.length && i < points.length; i++) {
+                points[i] = textPoints[i];
+            }
+            return points;
+        }
+
+        function setTargetShapeIntro(points) {
+            for (let i = 0; i < particleCountIntro; i++) {
+                const p = points[i % points.length];
+                targetPositionsIntro[i * 3] = p.x;
+                targetPositionsIntro[i * 3 + 1] = p.y;
+                targetPositionsIntro[i * 3 + 2] = p.z;
+            }
+        }
+
+        const stepsIntro = [
+            { text: '3', scale: 1.5, duration: 1200 },
+            { text: '2', scale: 1.5, duration: 1200 },
+            { text: '1', scale: 1.5, duration: 1200 },
+            { text: 'You', scale: 1.1, duration: 1400 },
+            { text: 'Are', scale: 1.1, duration: 1400 },
+            { text: 'My', scale: 1.1, duration: 1400 },
+            { text: 'Love', scale: 1.1, duration: 1600 },
+            { heart: true, duration: 2500 }
+        ];
+
+        let stepIndexIntro = 0;
+        let isHeartModeIntro = false;
+
+        function nextStepIntro() {
+            if (stepIndexIntro >= stepsIntro.length) {
+                document.getElementById('intro-overlay').classList.add('fade-out');
+                setTimeout(() => {
+                    document.getElementById('intro-overlay').style.display = 'none';
+                }, 1000);
+                return;
+            }
+
+            const step = stepsIntro[stepIndexIntro];
+            if (step.heart) {
+                isHeartModeIntro = true;
+                setTargetShapeIntro(getHeartPointsIntro());
+            } else {
+                setTargetShapeIntro(getOffscreenPointsIntro(step.text, step.scale));
+            }
+
+            if (step.duration > 0) {
+                setTimeout(() => {
+                    stepIndexIntro++;
+                    nextStepIntro();
+                }, step.duration);
+            }
+        }
+
+        setTimeout(nextStepIntro, 500);
+
+        let clockIntro = new THREE.Clock();
+
+        function animateIntro() {
+            requestAnimationFrame(animateIntro);
+            drawMatrixIntro();
+
+            const posAttr = geometryIntro.attributes.position;
+            const posArray = posAttr.array;
+            const speed = 0.08;
+
+            for (let i = 0; i < particleCountIntro * 3; i++) {
+                posArray[i] += (targetPositionsIntro[i] - posArray[i]) * speed;
+            }
+
+            if (isHeartModeIntro) {
+                const time = clockIntro.getElapsedTime();
+                const pulse = 1 + Math.sin(time * 4) * 0.06;
+                particleSystemIntro.scale.set(pulse, pulse, pulse);
+                particleSystemIntro.rotation.y = Math.sin(time * 0.8) * 0.15;
+            } else {
+                particleSystemIntro.rotation.y = Math.sin(clockIntro.getElapsedTime()) * 0.05;
+            }
+
+            posAttr.needsUpdate = true;
+            rendererIntro.render(sceneIntro, cameraIntro);
+        }
+
+        animateIntro();
+
+        window.addEventListener('resize', () => {
+            mWidthIntro = matrixCanvasIntro.width = window.innerWidth;
+            mHeightIntro = matrixCanvasIntro.height = window.innerHeight;
+            columnsIntro = Math.floor(mWidthIntro / fontSizeIntro);
+            dropsIntro = Array(columnsIntro).fill(0).map(() => Math.random() * -50);
+
+            cameraIntro.aspect = window.innerWidth / window.innerHeight;
+            cameraIntro.updateProjectionMatrix();
+            rendererIntro.setSize(window.innerWidth, window.innerHeight);
+        });
+
+
+        // --- SCRIPT PRINCIPAL DE TU SITIO ---
         let contadorNo = 0;
         let toquesCount = 0;
         let reproduciendo = false;
@@ -1087,11 +1342,9 @@
         const durationTimeEl = document.getElementById('duration-time');
         const audioPlayer = document.getElementById('audio-player');
 
-        // Control de los videos del pastel
         const cakeVideo1 = document.getElementById('cake-video-1');
         const cakeVideo2 = document.getElementById('cake-video-2');
 
-        // Desbloquear permisos de reproducción multimedia en el primer toque de la pantalla
         document.addEventListener('click', function desbloquearMultimedia() {
             if (cakeVideo1) {
                 cakeVideo1.play().then(() => {
@@ -1232,9 +1485,7 @@
                         ctx.fillText("Te Amo", x, yy);
                     }
                 }
-
                 drops[i] += 1;
-
                 if (y > canvas.height + fontSize * 30) {
                     drops[i] = 0;
                 }
@@ -1379,17 +1630,13 @@
             document.getElementById('gift-3-content').classList.add('hidden');
             document.getElementById('gift-4-content').classList.add('hidden');
 
-            // Mostrar el botón de vales solo en esta pantalla de regalos
             couponsBadge.classList.remove('hidden');
-
             actualizarDestacadoRegalos();
         }
 
         function abrirRegalo(numeroRegalo) {
             document.getElementById('gifts-screen').classList.add('hidden');
             document.getElementById(`gift-${numeroRegalo}-content`).classList.remove('hidden');
-
-            // Ocultar el botón de vales en cualquier otro apartado/regalo
             couponsBadge.classList.add('hidden');
 
             if (numeroRegalo === 3) {
@@ -1409,7 +1656,6 @@
                 cakeVideo2.classList.add('hidden');
                 cakeVideo1.currentTime = 0;
                 cakeVideo2.pause();
-                
                 cakeVideo1.muted = true;
                 cakeVideo1.play().catch(error => {
                     console.log("Error al reproducir video 1:", error);
@@ -1471,7 +1717,6 @@
             }
         }
 
-        /* Lógica del Mini-Evento de Vales y LocalStorage */
         function moverSlider(direccion) {
             const slider = document.getElementById('valesSlider');
             const itemWidth = slider.clientWidth;
@@ -1508,7 +1753,7 @@
 
         function solicitarCanje(index) {
             const estado = localStorage.getItem(`vale_usado_${index}`);
-            if (estado === 'true') return; // Ya usado
+            if (estado === 'true') return;
             valeSeleccionadoParaCanje = index;
             document.getElementById('confirm-modal').classList.add('show');
         }
