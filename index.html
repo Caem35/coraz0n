@@ -381,15 +381,17 @@ z-index: 99999;
 display: none;
 justify-content: center;
 align-items: center;
-overflow: auto;
+overflow: hidden;
 }
 #easter-egg-overlay.show {
 display: flex;
 }
 #matrix {
 display: block;
-width: 100%;
-height: 100%;
+width: 100vw;
+height: 100vh;
+cursor: pointer;
+touch-action: none;
 }
 .matrix-close-btn {
 position: fixed;
@@ -1019,8 +1021,8 @@ Tu navegador no soporta videos.
 <button class="canjear-btn" id="btn-vale-5" onclick="solicitarCanje(5)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-6">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlnlfKDMdd7Mpd')">
-<img src="https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlnlfKDMdd7Mpd" class="vale-img" alt="Vale 7">
+<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlfKDMdd7Mpd')">
+<img src="https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlfKDMdd7Mpd" class="vale-img" alt="Vale 7">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-6" onclick="solicitarCanje(6)">Canjear Vale</button>
@@ -1425,11 +1427,12 @@ setTimeout(() => { clickHeart.remove(); }, 800);
 
 function abrirEasterEgg() {
 document.getElementById('viewport-meta').setAttribute('content', 'width=1280');
-document.getElementById('easter-egg-overlay').classList.add('show');
+const overlay = document.getElementById('easter-egg-overlay');
+overlay.classList.add('show');
 
 setTimeout(() => {
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 1280;
+canvas.height = window.innerHeight * (1280 / window.innerWidth);
 
 spacing = canvas.width / cols;
 drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
@@ -1444,6 +1447,24 @@ document.getElementById('easter-egg-overlay').classList.remove('show');
 if (matrixInterval) clearInterval(matrixInterval);
 document.getElementById('viewport-meta').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
 }
+
+// CORRECCIÓN DIRECTA DEL CLIC/TOQUE EN EL CANVAS DE MATRIX
+canvas.addEventListener('pointerdown', function(e) {
+const rect = canvas.getBoundingClientRect();
+const scaleX = canvas.width / rect.width;
+const scaleY = canvas.height / rect.height;
+
+const x = (e.clientX - rect.left) * scaleX;
+const y = (e.clientY - rect.top) * scaleY;
+
+hearts.push({
+x: x,
+y: y,
+vx: (Math.random() - 0.5) * 4,
+vy: -Math.random() * 3 - 2,
+life: 0
+});
+});
 
 function drawMatrix() {
 ctx.fillStyle = "rgba(0, 0, 0, 0.03)";
