@@ -131,7 +131,7 @@ z-index: 20;
 transform: scale(1.05);
 }
 
-/* Botón de Vales Flotante (Esquina Superior Izquierda - Tamaño y forma real del ticket) */
+/* Botón de Vales Flotante (Esquina Superior Izquierda) */
 .coupons-badge {
 position: absolute;
 top: 12px;
@@ -299,9 +299,6 @@ z-index: 5;
 .gift-card:hover {
 transform: scale(1.12);
 }
-.gift-card.active-gift:hover {
-transform: scale(1.28);
-}
 
 #gift-1-content {
 width: 100%;
@@ -369,7 +366,7 @@ cursor: pointer;
 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* Easter Egg Matrix con vista de Escritorio Forzada */
+/* Easter Egg Matrix con vista de Escritorio Forzada Optimizada */
 #easter-egg-overlay {
 position: fixed;
 top: 0;
@@ -391,7 +388,11 @@ display: block;
 width: 100vw;
 height: 100vh;
 cursor: pointer;
+/* Evita selecciones de texto, marcas de agua fantasma o menú contextual al tocar */
 touch-action: none;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+user-select: none;
 }
 .matrix-close-btn {
 position: fixed;
@@ -601,7 +602,6 @@ text-align: center;
 width: 100%;
 }
 
-/* Estilos de los videos del pastel amplios y sin bordes */
 .cake-video-wrapper {
 display: flex;
 flex-direction: column;
@@ -625,7 +625,6 @@ display: block;
 margin: -10px auto;
 }
 
-/* Estilos para el Mini-Evento de Vales (Carrusel y Canje) */
 .vales-carousel-container {
 position: relative;
 width: 100%;
@@ -676,7 +675,6 @@ box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 transition: filter 0.3s ease;
 }
 
-/* Sello de Canjeado / Usado */
 .vale-used-stamp {
 position: absolute;
 top: 50%;
@@ -772,7 +770,6 @@ width: 16px;
 border-radius: 4px;
 }
 
-/* Modal de confirmación personalizado para canje */
 #confirm-modal {
 position: fixed;
 top: 0;
@@ -1325,6 +1322,15 @@ const audioPlayer = document.getElementById('audio-player');
 const cakeVideo1 = document.getElementById('cake-video-1');
 const cakeVideo2 = document.getElementById('cake-video-2');
 
+// Precargar el canvas del Easter Egg de inmediato de forma invisible para que no se laguee al abrirse
+function inicializarEasterEggPreviamente() {
+canvas.width = 1280;
+canvas.height = window.innerHeight * (1280 / window.innerWidth);
+spacing = canvas.width / cols;
+drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
+}
+inicializarEasterEggPreviamente();
+
 document.addEventListener('click', function desbloquearMultimedia() {
 if (cakeVideo1) {
 cakeVideo1.play().then(() => {
@@ -1430,16 +1436,8 @@ document.getElementById('viewport-meta').setAttribute('content', 'width=1280');
 const overlay = document.getElementById('easter-egg-overlay');
 overlay.classList.add('show');
 
-setTimeout(() => {
-canvas.width = 1280;
-canvas.height = window.innerHeight * (1280 / window.innerWidth);
-
-spacing = canvas.width / cols;
-drops = Array.from({ length: cols }, () => Math.random() * canvas.height / fontSize);
-
 if (matrixInterval) clearInterval(matrixInterval);
 matrixInterval = setInterval(drawMatrix, 50);
-}, 50);
 }
 
 function cerrarEasterEgg() {
@@ -1448,7 +1446,9 @@ if (matrixInterval) clearInterval(matrixInterval);
 document.getElementById('viewport-meta').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
 }
 
+// Usamos pointerdown y prevenimos el comportamiento por defecto para evitar marcas de agua o selecciones fantasma
 canvas.addEventListener('pointerdown', function(e) {
+e.preventDefault();
 const rect = canvas.getBoundingClientRect();
 const scaleX = canvas.width / rect.width;
 const scaleY = canvas.height / rect.height;
@@ -1531,7 +1531,6 @@ btnSi.style.transform = `scale(${currentScale})`;
 let currentNoScale = Math.max(0.6, 1 - contadorNo * 0.08);
 btnNo.style.transform = `scale(${currentNoScale})`;
 
-// Si se llegó al último mensaje del array, ocultamos el botón No por completo
 if (contadorNo === mensajesNo.length) {
 btnNo.classList.add('hidden');
 }
