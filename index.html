@@ -388,7 +388,6 @@ display: block;
 width: 100vw;
 height: 100vh;
 cursor: pointer;
-/* Evita selecciones de texto, marcas de agua fantasma o menú contextual al tocar */
 touch-action: none;
 -webkit-touch-callout: none;
 -webkit-user-select: none;
@@ -631,7 +630,7 @@ width: 100%;
 display: flex;
 flex-direction: column;
 align-items: center;
-margin-top: 4px;
+margin-top: 2px;
 }
 
 .vales-slider {
@@ -641,7 +640,7 @@ scroll-snap-type: x mandatory;
 scroll-behavior: smooth;
 width: 100%;
 gap: 12px;
-padding: 10px 4px;
+padding: 4px 4px;
 scrollbar-width: none;
 }
 .vales-slider::-webkit-scrollbar {
@@ -660,7 +659,7 @@ position: relative;
 .vale-img-wrapper {
 position: relative;
 width: 100%;
-max-height: 38vh;
+max-height: 33vh;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -668,7 +667,7 @@ align-items: center;
 
 .vale-img {
 width: 100%;
-max-height: 36vh;
+max-height: 31vh;
 object-fit: contain;
 border-radius: 12px;
 box-shadow: 0 6px 18px rgba(0,0,0,0.12);
@@ -707,7 +706,7 @@ display: flex;
 justify-content: space-between;
 width: 100%;
 align-items: center;
-margin-top: 8px;
+margin-top: 4px;
 padding: 0 10px;
 }
 
@@ -715,8 +714,8 @@ padding: 0 10px;
 background: #f8bbd0;
 color: #ad1457;
 border: none;
-width: 32px;
-height: 32px;
+width: 28px;
+height: 28px;
 border-radius: 50%;
 font-weight: bold;
 cursor: pointer;
@@ -734,13 +733,14 @@ transform: scale(1.1);
 background: linear-gradient(135deg, #ff4081 0%, #c51162 100%);
 color: white;
 border: none;
-padding: 8px 16px;
-border-radius: 12px;
+padding: 6px 14px;
+border-radius: 10px;
 font-weight: bold;
-font-size: 12px;
+font-size: 11.5px;
 cursor: pointer;
 box-shadow: 0 4px 12px rgba(216, 27, 96, 0.25);
 transition: transform 0.2s;
+margin-top: 4px;
 }
 .canjear-btn:hover {
 transform: scale(1.05);
@@ -755,7 +755,7 @@ box-shadow: none;
 display: flex;
 gap: 5px;
 justify-content: center;
-margin-top: 6px;
+margin-top: 2px;
 }
 .indicator-dot {
 width: 6px;
@@ -839,7 +839,7 @@ color: white;
 <div id="hearts-bg"></div>
 
 <div id="coupons-badge" class="coupons-badge hidden" onclick="abrirRegalo(4)">
-<img src="https://lh3.googleusercontent.com/d/1RHmwJL4nq8_a_S7n-epgEoxjAKehv_Nq" alt="Vales Icon">
+<img src="vale1.jpg" alt="Vales Icon">
 </div>
 
 <div class="heart-counter-badge" onclick="agregarToque(event)">
@@ -890,26 +890,26 @@ color: white;
 
 <div class="gifts-grid">
 <div id="gift-1" class="gift-card" onclick="abrirRegalo(1)">
-<img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 1">
+<img src="vale1.jpg" alt="Regalo 1">
 </div>
 <div id="gift-2" class="gift-card" onclick="abrirRegalo(2)">
-<img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 2">
+<img src="vale1.jpg" alt="Regalo 2">
 </div>
 <div id="gift-3" class="gift-card" onclick="abrirRegalo(3)">
-<img src="https://lh3.googleusercontent.com/d/11xHqDbzmzEm_GwyUNMrmg045jKjRIuc1" alt="Regalo 3">
+<img src="vale1.jpg" alt="Regalo 3">
 </div>
 </div>
 </div>
 
 <div id="gift-1-content" class="hidden content-box">
-<img src="https://lh3.googleusercontent.com/d/1z8t_dAGTiXNFNzABc_ry_TcZhAwXqw2-" class="gift-img-single" alt="Collage de Fotos" onclick="abrirLightbox(this.src)">
+<img src="vale2.jpg" class="gift-img-single" alt="Collage de Fotos" onclick="abrirLightbox(this.src)">
 <button class="volver-box-btn" onclick="cerrarRegalo(1)">VOLVER A LOS REGALOS</button>
 </div>
 
 <div id="gift-2-content" class="hidden content-box">
 <div class="player-wrapper">
 <div class="player-card">
-<img src="https://lh3.googleusercontent.com/d/1nfwWwZ9rUrCy1INdlQbHhPx_x4L3Dmo8" class="player-cover" alt="Portada Personalizada">
+<img src="vale3.jpg" class="player-cover" alt="Portada Personalizada">
 
 <div class="progress-container" onclick="seekAudio(event)">
 <div id="progress-bar" class="progress-bar"></div>
@@ -970,70 +970,70 @@ Tu navegador no soporta videos.
 </div>
 
 <div id="gift-4-content" class="hidden content-box">
-<h2 style="color: #ad1457; margin-bottom: 2px; font-size: 17px;">Vales Especiales 🎟️✨</h2>
-<p style="font-size: 11.5px; color: #666; margin-bottom: 6px;">Desliza para ver tus vales y canjéalos cuando quieras</p>
+<h2 style="color: #ad1457; margin-bottom: 2px; font-size: 16px;">Vales Especiales 🎟️✨</h2>
+<p style="font-size: 11px; color: #666; margin-bottom: 4px;">Desliza para ver tus vales y canjéalos cuando quieras</p>
 
 <div class="vales-carousel-container">
 <div class="vales-slider" id="valesSlider" onscroll="actualizarIndicadorSlider()">
 <div class="vale-item" id="vale-0">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE')">
-<img src="https://lh3.googleusercontent.com/d/1jd0-wZUif_424jampaoDOur0TyLGt0sE" class="vale-img" alt="Vale 1">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale1.jpg')">
+<img src="vale1.jpg" class="vale-img" alt="Vale 1">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-0" onclick="solicitarCanje(0)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-1">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1-XBYSH_-2rB2sGKLfiR9n_eKgNo2gFVz')">
-<img src="https://lh3.googleusercontent.com/d/1-XBYSH_-2rB2sGKLfiR9n_eKgNo2gFVz" class="vale-img" alt="Vale 2">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale2.jpg')">
+<img src="vale2.jpg" class="vale-img" alt="Vale 2">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-1" onclick="solicitarCanje(1)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-2">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/15zwY175MueN2FGktyjcfViDwUkbfhgrP')">
-<img src="https://lh3.googleusercontent.com/d/15zwY175MueN2FGktyjcfViDwUkbfhgrP" class="vale-img" alt="Vale 3">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale3.jpg')">
+<img src="vale3.jpg" class="vale-img" alt="Vale 3">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-2" onclick="solicitarCanje(2)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-3">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1rF18GsVKOeQVresB7TMD3NnwgzyaWOtW')">
-<img src="https://lh3.googleusercontent.com/d/1rF18GsVKOeQVresB7TMD3NnwgzyaWOtW" class="vale-img" alt="Vale 4">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale4.jpg')">
+<img src="vale4.jpg" class="vale-img" alt="Vale 4">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-3" onclick="solicitarCanje(3)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-4">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1Ue6LXi_BZlKIpyTvraYm3rlzqdw4R_6w')">
-<img src="https://lh3.googleusercontent.com/d/1Ue6LXi_BZlKIpyTvraYm3rlzqdw4R_6w" class="vale-img" alt="Vale 5">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale5.jpg')">
+<img src="vale5.jpg" class="vale-img" alt="Vale 5">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-4" onclick="solicitarCanje(4)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-5">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1Pg9PyX-4xWPzqNNBe9n4DmBLKsXKaxzg')">
-<img src="https://lh3.googleusercontent.com/d/1Pg9PyX-4xWPzqNNBe9n4DmBLKsXKaxzg" class="vale-img" alt="Vale 6">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale6.jpg')">
+<img src="vale6.jpg" class="vale-img" alt="Vale 6">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-5" onclick="solicitarCanje(5)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-6">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlfKDMdd7Mpd')">
-<img src="https://lh3.googleusercontent.com/d/1ClEtgcBzjI2r-eLRyAVlfKDMdd7Mpd" class="vale-img" alt="Vale 7">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale7.jpg')">
+<img src="vale7.jpg" class="vale-img" alt="Vale 7">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-6" onclick="solicitarCanje(6)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-7">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1fZI0-Y9qRx3UhnwlhcHK4Qbsqb6El6Cr')">
-<img src="https://lh3.googleusercontent.com/d/1fZI0-Y9qRx3UhnwlhcHK4Qbsqb6El6Cr" class="vale-img" alt="Vale 8">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale8.jpg')">
+<img src="vale8.jpg" class="vale-img" alt="Vale 8">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-7" onclick="solicitarCanje(7)">Canjear Vale</button>
 </div>
 <div class="vale-item" id="vale-8">
-<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1sjYYwlZqT2_TNoBjeh1vVinJ03iGJQHR')">
-<img src="https://lh3.googleusercontent.com/d/1sjYYwlZqT2_TNoBjeh1vVinJ03iGJQHR" class="vale-img" alt="Vale 9">
+<div class="vale-img-wrapper" onclick="abrirLightbox('vale9.jpg')">
+<img src="vale9.jpg" class="vale-img" alt="Vale 9">
 <div class="vale-used-stamp">USADO</div>
 </div>
 <button class="canjear-btn" id="btn-vale-8" onclick="solicitarCanje(8)">Canjear Vale</button>
@@ -1057,7 +1057,7 @@ Tu navegador no soporta videos.
 </div>
 </div>
 
-<button class="volver-box-btn" onclick="cerrarRegalo(4)" style="margin-top: 6px;">VOLVER A LOS REGALOS</button>
+<button class="volver-box-btn" onclick="cerrarRegalo(4)" style="margin-top: 4px;">VOLVER A LOS REGALOS</button>
 </div>
 </div>
 
@@ -1322,7 +1322,6 @@ const audioPlayer = document.getElementById('audio-player');
 const cakeVideo1 = document.getElementById('cake-video-1');
 const cakeVideo2 = document.getElementById('cake-video-2');
 
-// Precargar el canvas del Easter Egg de inmediato de forma invisible para que no se laguee al abrirse
 function inicializarEasterEggPreviamente() {
 canvas.width = 1280;
 canvas.height = window.innerHeight * (1280 / window.innerWidth);
@@ -1446,7 +1445,6 @@ if (matrixInterval) clearInterval(matrixInterval);
 document.getElementById('viewport-meta').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
 }
 
-// Usamos pointerdown y prevenimos el comportamiento por defecto para evitar marcas de agua o selecciones fantasma
 canvas.addEventListener('pointerdown', function(e) {
 e.preventDefault();
 const rect = canvas.getBoundingClientRect();
