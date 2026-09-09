@@ -1448,7 +1448,6 @@ if (matrixInterval) clearInterval(matrixInterval);
 document.getElementById('viewport-meta').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
 }
 
-// CORRECCIÓN DIRECTA DEL CLIC/TOQUE EN EL CANVAS DE MATRIX
 canvas.addEventListener('pointerdown', function(e) {
 const rect = canvas.getBoundingClientRect();
 const scaleX = canvas.width / rect.width;
@@ -1531,11 +1530,17 @@ let currentScale = 1 + contadorNo * 0.15;
 btnSi.style.transform = `scale(${currentScale})`;
 let currentNoScale = Math.max(0.6, 1 - contadorNo * 0.08);
 btnNo.style.transform = `scale(${currentNoScale})`;
+
+// Si se llegó al último mensaje del array, ocultamos el botón No por completo
+if (contadorNo === mensajesNo.length) {
+btnNo.classList.add('hidden');
+}
 } else {
 contadorNo = 0;
 textoPregunta.innerText = "¡Ya di que sí por favor! 🥺💘";
 btnSi.style.transform = "scale(1)";
 btnNo.style.transform = "scale(1)";
+btnNo.classList.remove('hidden');
 }
 }
 
