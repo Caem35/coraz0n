@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1025,6 +1024,13 @@ Tu navegador no soporta videos.
 </div>
 <button class="canjear-btn" id="btn-vale-6" onclick="solicitarCanje(6)">Canjear Vale</button>
 </div>
+<div class="vale-item" id="vale-7">
+<div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1fZI0-Y9qRx3UhnwlhcHK4Qbsqb6El6Cr')">
+<img src="https://lh3.googleusercontent.com/d/1fZI0-Y9qRx3UhnwlhcHK4Qbsqb6El6Cr" class="vale-img" alt="Vale 8">
+<div class="vale-used-stamp">USADO</div>
+</div>
+<button class="canjear-btn" id="btn-vale-7" onclick="solicitarCanje(7)">Canjear Vale</button>
+</div>
 <div class="vale-item" id="vale-8">
 <div class="vale-img-wrapper" onclick="abrirLightbox('https://lh3.googleusercontent.com/d/1sjYYwlZqT2_TNoBjeh1vVinJ03iGJQHR')">
 <img src="https://lh3.googleusercontent.com/d/1sjYYwlZqT2_TNoBjeh1vVinJ03iGJQHR" class="vale-img" alt="Vale 9">
@@ -1038,6 +1044,7 @@ Tu navegador no soporta videos.
 <button class="vale-nav-btn" onclick="moverSlider(-1)">❮</button>
 <div class="vale-indicators" id="valeIndicators">
 <div class="indicator-dot active"></div>
+<div class="indicator-dot"></div>
 <div class="indicator-dot"></div>
 <div class="indicator-dot"></div>
 <div class="indicator-dot"></div>
@@ -1703,7 +1710,7 @@ cerrarModalConfirmacion();
 }
 
 function cargarEstadoVales() {
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 9; i++) {
 if (localStorage.getItem(`vale_usado_${i}`) === 'true') {
 const valeItem = document.getElementById(`vale-${i}`);
 if (valeItem) {
@@ -1716,4 +1723,4 @@ if (btn) btn.innerText = "Canjeado";
 }
 </script>
 </body>
-</html>
+  </html>
